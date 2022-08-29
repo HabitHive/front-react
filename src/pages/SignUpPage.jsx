@@ -1,8 +1,13 @@
+import Header from "../components/common/Header";
+import Navbar from "../components/common/Navbar";
+
+
 const SignUpPage = () => {
   return (
-    <div>
-      회원가입페이지입니다
-    </div>
+    <>
+      <Header text={"회원가입"}/>
+      <Navbar/>
+    </>
   )
 };
 
