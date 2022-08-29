@@ -1,19 +1,32 @@
 import styled from "styled-components";
 
+import WeekCalendar from "../components/main/daily/WeekCalendar";
+
 const MainDailyPage = () => {
   return (
-    <div>
-      <StLayout>테스트용 레이아웃입니다</StLayout>
-      메인 페이지입니다
-    </div>
+    <>
+      <Header>
+        <div className="container">
+          <h3>My daily</h3>
+          <button>먼슬리로 이동</button>
+        </div>
+      </Header>
+      <Body>
+        <div>
+          <WeekCalendar />
+        </div>
+      </Body>
+    </>
   );
 };
 
 export default MainDailyPage;
 
-const StLayout = styled.div`
-  background-color: aliceblue;
-  max-width: 390px;
-  height: 100vh;
-  margin: 0 auto;
+const Header = styled.div`
+  & .container {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
+
+const Body = styled.div``;
