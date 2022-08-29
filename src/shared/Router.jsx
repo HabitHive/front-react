@@ -12,8 +12,6 @@ import TagBuyPage from "../pages/TagBuyPage";
 
 const Router = () => {
 
-  //유저로그인 상태에 따라 라우터 권한 설정하기(예정)
-
   return (
     <BrowserRouter>
         <Routes>

@@ -1,12 +1,12 @@
 import Header from "../components/common/Header";
-import Navbar from "../components/common/Navbar";
+import SignupForm from "../components/signup/SignupForm";
 
 
 const SignUpPage = () => {
   return (
     <>
       <Header text={"회원가입"}/>
-      <Navbar/>
+      <SignupForm/>
     </>
   )
 };
