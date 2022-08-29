@@ -4,13 +4,13 @@ import LogInPage from "../pages/LogInPage";
 import SignUpPage from "../pages/SignUpPage";
 import MainDailyPage from "../pages/MainDailyPage";
 import MonthlyPage from "../pages/MonthlyPage";
-import NotFound from "../pages/NotFound";
+import NotFoundPage from "../pages/NotFoundPage";
 import PostingPage from "../pages/PostingPage";
 import SurveyPage from "../pages/SurveyPage";
 import MyPage from "../pages/MyPage";
 import TagBuyPage from "../pages/TagBuyPage";
 
-function Router() {
+const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -18,7 +18,7 @@ function Router() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/main" element={<MainDailyPage />} />
         <Route path="/monthly" element={<MonthlyPage />} />
-        <Route path="/*" element={<NotFound />} />
+        <Route path="/*" element={<NotFoundPage />} />
         <Route path="/post" element={<PostingPage />} />
         <Route path="/survey" element={<SurveyPage />} />
         <Route path="/mypage" element={<MyPage />} />
@@ -26,6 +26,6 @@ function Router() {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default Router;
