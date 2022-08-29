@@ -1,5 +1,9 @@
 const LogInPage = () => {
-  return <div></div>;
+  return (
+    <div>
+      로그인페이지입니다
+    </div>
+  )
 };
 
-export default LogInPage;
+export default LogInPage
