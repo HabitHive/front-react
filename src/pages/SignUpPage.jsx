@@ -1,8 +1,12 @@
+import styled from "styled-components";
+import Header from "../components/common/Header";
+
 const SignUpPage = () => {
   return (
-    <div>
-      회원가입페이지입니다
-    </div>
+    <>
+      <Header text={"회원가입"}/>
+
+    </>
   )
 };
 
