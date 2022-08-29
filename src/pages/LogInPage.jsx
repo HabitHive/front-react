@@ -1,5 +1,11 @@
+import styled from "styled-components";
+
 const LogInPage = () => {
-  return <div></div>;
+  return (
+    <p>
+      로그인페이지입니다
+    </p>
+  )
 };
 
-export default LogInPage;
+export default LogInPage

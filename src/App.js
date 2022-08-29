@@ -1,12 +1,9 @@
+import Router from "./shared/Router";
 
-
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-
-    </div>
-  );
+      <Router />
+  )
 }
 
 export default App;
