@@ -1,9 +1,17 @@
+import styled from "styled-components";
+
 const LogInPage = () => {
   return (
-    <div>
+    <StText>
       로그인페이지입니다
-    </div>
+    </StText>
   )
 };
 
 export default LogInPage
+
+
+const StText = styled.div`
+  width: 100px;
+  height: 100px;
+`
