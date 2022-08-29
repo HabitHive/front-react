@@ -1,7 +1,14 @@
+import Navbar from "../components/common/Navbar";
+
 const NotFound = () => {
   return (
-    <div>잘못된 접근입니다</div>
+    <>
+      <h1>404 NOTFOUND</h1>
+      <p>잘못된 접근입니다</p>
+      <Navbar/>
+    </>
   );
 }
 
 export default NotFound;
+
