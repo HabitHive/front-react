@@ -9,18 +9,29 @@ import axios from "../../axios/axios";
 const SignupForm = () => {
   const navigate = useNavigate();
 
+  const initValue = {
+    email: "",
+    password: "",
+    pwConfirm: "",
+    nickname: ""
+  }
+
   //회원가입 유효성검사
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({ 
+    mode: 'onChange',
+    defaultValues: initValue,
+  });
 
-  //최초 비밀번호 입력값으로 중복 확인
+  //password 중복체크용
   const watchPW = watch('password')
   
   const onSubmit = (data) => {
+    delete data.pwConfirm
     axios
       // .post(`/user/signup`, data) 백서버 연결할 때 사용
       .post(`/signup`, data)
