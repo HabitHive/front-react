@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { BiCalendar } from "react-icons/bi";
 
 import React, {
-  Component,
   useState,
   useEffect,
   useRef,
@@ -11,13 +10,6 @@ import React, {
 } from "react";
 import Year from "react-live-clock";
 import Month from "react-live-clock";
-import Day from "react-live-clock";
-import { nanoid } from "nanoid";
-
-import Moment from "react-moment";
-import "moment-timezone";
-import moment from "moment-timezone";
-// import timezone from "timezone";
 
 let now = new Date();
 
@@ -46,23 +38,22 @@ const GetAllDate = (today, lastday) => {
   return dates;
 };
 
-//요일 표시 평일 검정, 토요일 파랑, 일요일/공휴일 빨강
-const GetAllWeek = (todayWeek) => {
-  let strWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+//요일 표시
+const GetAllWeek = (todayweek) => {
+  let strweek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   let weeklist = [];
 
   //첫번째 오늘 날짜 적용
-  weeklist[0] = strWeek[todayWeek];
-  //todayWeak=5
-  //weaklist[0] = Fri
+  weeklist[0] = strweek[todayweek];
+  // console.log(weeklist);
 
   for (let i = 1; i <= 6; i++) {
-    todayWeek++;
-    if (todayWeek > 6) {
-      todayWeek = 0;
-      weeklist[i] = strWeek[todayWeek];
+    todayweek++;
+    if (todayweek > 6) {
+      todayweek = 0;
+      weeklist[i] = strweek[todayweek];
     } else {
-      weeklist[i] = strWeek[todayWeek];
+      weeklist[i] = strweek[todayweek];
     }
   }
 
@@ -70,42 +61,22 @@ const GetAllWeek = (todayWeek) => {
 };
 
 const WeekCalendar = (props) => {
-  // const timezone = now.getTimezoneOffset();
-  // console.log(timezone); //-540 (분) 나오는데 60으로 나누면, -9 시간 UTC보다 9시간빠른것
-  console.log(new Date()); //Tue Aug 30 2022 16:45:45 GMT+0900 (한국 표준시)
-  // console.log(moment().tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss")); //2022-08-30 17:16:38
-  // console.log(moment().tz("Asia/Seoul").utc().format("YYYY-MM-DD HH:mm:ss")); //2022-08-30 08:18:10
-  // console.log(moment().tz("Asia/Seoul").format("YYYY-MM-DD HH:mm:ss Z")); //2022-08-30 17:20:10 +09:00
+  // console.log(new Date()); //Tue Aug 30 2022 16:45:45 GMT+0900 (한국 표준시)
 
-  // const [today, setToday] = useState(now.getDate());
-  // const [lastday, setLastDay] = useState(
-  //   new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
-  // );
-  const todayWeek = now.getDay();
-  const today = now.getDate();
-  const lastday = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  const todayweek = now.getDay(); //오늘의 요일 숫자 ( 0(일) ~ 6(토) )
+  const today = now.getDate(); //오늘날짜
+  const lastday = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); //이번달 마지막날짜 //31,없으면 []
 
   const [daylist, setDaylist] = useState([]); //이번달 남은날짜
   const [weeklist, setWeeklist] = useState([]);
 
-  const thisYear = now.getFullYear(); //올해
-  // console.log(thisYear); //2022
-  const thisMonth = now.getMonth() + 1; //이번달 (0부터 시작이라 +1)
-  // console.log(thisMonth); //8
-  const monthNameShort = now.toLocaleString("en-US", { month: "short" });
-  // console.log(monthNameShort);
-  const thisWeek = now.getDay(); //이번주 요일 ( 0(일) ~ 6(토) )
-  // console.log(todayWeek); //2 =>화요일
-  // const weekNameShort = new Intl.DateTimeFormat
-  // console.log(new Intl.DateTimeFormat("en-US").format(now));//  8/30/2022
+  const thisYear = now.getFullYear(); //올해 4자릿수
+  const thisMonth = now.getMonth() + 1; //이번달숫자 (0부터 시작이라 +1)
+  const monthNameShort = now.toLocaleString("en-US", { month: "short" }); //이번달 영어로 3자리표현
+  const thisWeek = now.getDay(); //오늘의 요일 숫자( 0(일) ~ 6(토) )
   // console.log(now.toString().slice(0, 3)); // 영어 형식으로 요일 받아오기 //Tue
-  // const today = now.getDate(); //오늘날짜
-  // console.log(today); //30
   const currentTime =
-    now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-  // console.log(todayTime); //20:40:23
-  // const lastday = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); //이번달의 마지막날짜
-  // console.log(lastday); //31
+    now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds(); //현재시각 24시표현법:nn분:nn초
 
   const getList = useCallback(() => {
     setDaylist(daylist.concat(today));
@@ -113,12 +84,14 @@ const WeekCalendar = (props) => {
 
   //전체날의 배열을 한번만 저장해서 실행함.
   const alldate = useMemo(() => GetAllDate(today, lastday), [daylist]);
-  console.log(alldate);
+  // console.log(alldate); //[1,2,3...7]
+  // const alldate = useEffect(() => GetAllDate(today,lastday),[daylist]);
 
-  const allweek = useMemo(() => GetAllWeek(todayWeek), [weeklist]);
+  const allweek = useMemo(() => GetAllWeek(todayweek), [weeklist]);
+  // console.log(allweek); // ['Tue', ~,'Wed']
 
   const CalendarDay = GetAllDate(today, lastday);
-  const CalendarWeek = GetAllWeek(todayWeek);
+  const CalendarWeek = GetAllWeek(todayweek);
 
   // console.log(CalendarDay[0]); //31
   // console.log(CalendarWeek[0]); //Wed
@@ -135,18 +108,18 @@ const WeekCalendar = (props) => {
     { week: CalendarWeek[5], day: CalendarDay[5] },
     { week: CalendarWeek[6], day: CalendarDay[6] },
   ];
-  console.log(CalendarObject);
-  console.log(CalendarObject[0]); //{week: 'Wed', day: 31}
-  console.log(CalendarObject.day); //undefined
-  console.log(CalendarObject[0].week); //Wed
-  console.log(CalendarObject[0].day); //31
+  // console.log(CalendarObject);
+  // console.log(CalendarObject[0]); //{week: 'Wed', day: 31}
+  // console.log(CalendarObject.day); //undefined
+  // console.log(CalendarObject[0].week); //Wed
+  // console.log(CalendarObject[0].day); //31
 
   useEffect(() => {
     return () => console.log("Clean up");
   }, []);
 
   const Week = useRef(null);
-  // const unixTimestamp = 1661820402;
+
   return (
     <div>
       <StCalendar>
@@ -161,11 +134,6 @@ const WeekCalendar = (props) => {
                 interval={0} //시간 자동업데이트 기간. 1000ms가 기본값. 0은 비활성화
               />
             </span>
-            {/* <span>
-            <Moment unix tz="Asia/Seoul">
-              {unixTimestamp}
-            </Moment>
-          </span> */}
             &nbsp;&nbsp;
             <span className="Month">
               <Month
