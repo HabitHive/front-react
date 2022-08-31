@@ -13,7 +13,7 @@ const LoginForm = () => {
     password: ""
   }
 
-  //회원가입 유효성검사
+  //유효성검사
   const {
     register,
     handleSubmit,
@@ -78,20 +78,19 @@ const LoginForm = () => {
           카카오톡
         </StLoginBtn>
 
-      </StLoginForm>
+      </StLoginForm> 
     </>
   )
 }
 export default LoginForm
-
-
-const StLogo = styled.img`
+            
+const StLogo = styled.div`
   width: 200px;
   height: 200px;
-  margin: auto;
+  margin: 0 auto 30px;
   background-color: gray;
-  display: flex;
-  align-self: center;
+  position: relative;
+  top: 30px;
 `
 
 const StLoginForm = styled.form`
