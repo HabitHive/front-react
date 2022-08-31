@@ -15,10 +15,15 @@ const Category = () => {
   const userCategory = useRef([]);
 
   // 함수명? 리팩토링 할 떄 확인하기
-  // e.prevent.default() 도대체 언제 사용???
+  // e.preventDefault() 도대체 언제 사용???
   const categoryHandler = (value) => {
-    if (userCategory.current.length > 2) {
-      alert("안돼")
+    // 최대 3개까지 선택할 수 있도록 개수 제한
+    if (userCategory.current.length === 3) {
+      Swal.fire({
+        icon: "info",
+        title: "최대 3개까지 선택 가능합니다",
+        confirmButtonText: "닫기"
+      });
       return
     } 
     userCategory.current.push(value)
@@ -26,22 +31,18 @@ const Category = () => {
   }
 
 
-  // 개수 제한 두기
   const categorySubmitHandler = () => {
     const category = userCategory.current
     axios.post(`/survey`, {category}) // api 확인 필요
       .then((res) => {
-        // navigate("/");
-        Swal.fire({
-          icon: "success",
-          title: "로그인 완료"
-        });
+        // navigate("/"); 온보딩페이지 넣어주기
       })
       .catch((err)=>{
         console.log(err);
         Swal.fire({
           icon: "error",
           title: "에러메시지 나중에 넣기",
+          confirmButtonText: "확인"
         });
       })
   }
