@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../../axios/axios";
 
+import SubmitBtn from "../common/SubmitBtn";
+
 const LoginForm = () => {
   const navigate = useNavigate();
 
@@ -62,9 +64,7 @@ const LoginForm = () => {
           })}
         />
 
-        <StLoginBtn>
-          로그인
-        </StLoginBtn>
+        <SubmitBtn btnName={"로그인"}/>
 
         <StLogintoSingup onClick={()=>{navigate("/signup")}}>
           아직 회원이 아니신가요?
@@ -74,9 +74,7 @@ const LoginForm = () => {
           <span>or</span>
         </StHorizonLine>
 
-        <StLoginBtn>
-          카카오톡
-        </StLoginBtn>
+        <SubmitBtn btnName={"카카오톡"}/>
 
       </StLoginForm> 
     </>
@@ -119,16 +117,6 @@ const StLoginInput = styled.input`
     box-shadow: 0 0 0px white inset !important;
     -webkit-text-fill-color: #000000 !important;
   }
-`
-
-const StLoginBtn = styled.button`
-  width: 100%;
-  min-height: 55px;
-  margin-top: 30px;
-  cursor: pointer;
-  border: none;
-  font-size: 20px;
-  font-weight: bolder;
 `
 
 const StLogintoSingup = styled.p`

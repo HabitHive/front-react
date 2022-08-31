@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../../axios/axios";
 
+import SubmitBtn from "../common/SubmitBtn";
+
 const SignupForm = () => {
   const navigate = useNavigate();
 
@@ -136,9 +138,7 @@ const SignupForm = () => {
         <p> <FiAlertCircle/> 특수문자는 사용할 수 없습니다 </p>
       )}
 
-      <StSignupBtn>
-        가입하기
-      </StSignupBtn>
+      <SubmitBtn btnName={"가입하기"}/>
     </StSignupForm>
   )
 }
@@ -182,15 +182,4 @@ const StSignupInput = styled.input`
     box-shadow: 0 0 0px white inset !important;
     -webkit-text-fill-color: #000000 !important;
   }
-`
-
-const StSignupBtn = styled.button`
-  width: 100%;
-  min-height: 55px;
-  position: relative;
-  top: 15%;
-  cursor: pointer;
-  border: none;
-  font-size: 20px;
-  font-weight: bolder;
 `
