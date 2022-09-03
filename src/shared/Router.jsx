@@ -4,7 +4,7 @@ import LogInPage from "../pages/LogInPage";
 import SignUpPage from "../pages/SignUpPage";
 import MainDailyPage from "../pages/MainDailyPage";
 import MonthlyPage from "../pages/MonthlyPage";
-import NotFoundPage from "../pages/NotFoundPage"
+import NotFoundPage from "../pages/NotFoundPage";
 import PostingPage from "../pages/PostingPage";
 import SurveyPage from "../pages/SurveyPage";
 import MyPage from "../pages/MyPage";
@@ -12,7 +12,6 @@ import TagBuyPage from "../pages/TagBuyPage";
 import OnboardingPage from "../pages/OnboardingPage";
 
 const Router = () => {
-
   return (
     <BrowserRouter>
         <Routes>
