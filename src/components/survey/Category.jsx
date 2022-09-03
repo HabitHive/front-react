@@ -17,9 +17,9 @@ const Category = () => {
   const categorySubmitHandler = () => {
     const category = userCategory.current
     axios.post(`/survey`, category)
-    // axios.post(`/user/interest`, category) 서버 열리면 변경하기
+    // axios.put(`/user/interest`, category) 서버 열리면 변경하기
       .then((res) => {
-        // navigate("/"); 온보딩페이지 넣어주기
+        navigate("/onboarding");
       })
       .catch((err)=>{
         console.log(err);
