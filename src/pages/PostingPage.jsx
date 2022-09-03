@@ -3,6 +3,7 @@ import { FiChevronLeft } from "react-icons/fi";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import styled from "styled-components";
 
 let now = new Date();
 const PostingPage = () => {
@@ -15,8 +16,8 @@ const PostingPage = () => {
         <FiChevronLeft />
         <span>데일리 설정</span>
       </div>
-      <div className="bodycontainer">
-        <span className="tagtitle"> 운동하기 ( 30일 )</span>
+      <BodyContainer>
+        <div className="tagtitle"> 운동하기 ( 30일 )</div>
         <div className="startdate">
           <DatePicker
             selected={startDate}
@@ -27,7 +28,7 @@ const PostingPage = () => {
             // minDate={subDays(new Date(), 5)}
             // maxDate={addDays(new Date(), 5)}
             // excludeDateIntervals={[{start: subDays(new Date(), 5), end: addDays(new Date(), 5) }]}
-            calendarStartDay={0}
+            // calendarStartDay={0}
           />
           <DatePicker
             selected={endDate}
@@ -46,13 +47,13 @@ const PostingPage = () => {
             showTimeSelectOnly
             timeIntervals={30}
             timeCaption="Time"
-            dateFormat="hh:mm aa"
+            dateFormat="h:mm aa"
           />
         </div>
         <div className="endtime"></div>
         <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={30}
@@ -61,10 +62,25 @@ const PostingPage = () => {
         />
         <div className="enddate"></div>
         <div className="repeatday"></div>
-      </div>
+      </BodyContainer>
       <button>저장</button>
     </div>
   );
 };
 
 export default PostingPage;
+
+const BodyContainer = styled.div`
+  /* justify-content: center; */
+
+  .tagtitle {
+    background-color: coral;
+    border-radius: 10px;
+    width: 400px;
+    height: 30px;
+    display: flex;
+    /* text-align: center; */
+    justify-content: center;
+    align-items: center;
+  }
+`;
