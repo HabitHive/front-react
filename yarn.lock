@@ -3848,7 +3848,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-date-fns@^2.24.0:
+date-fns@^2.24.0, date-fns@^2.29.2:
   version "2.29.2"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.2.tgz#0d4b3d0f3dff0f920820a070920f0d9662c51931"
   integrity sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==
@@ -8544,6 +8544,13 @@ react-live-clock@^6.0.6:
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/react-live-clock/-/react-live-clock-6.0.6.tgz#600fe367b026337eecf77649beb076ab53131363"
   integrity sha512-UDRz8c+eOqxeplcsK6FSHx7OAmnLKS0/R4sfJsxaSNvZ3QkEL8si9Zi41muc6To8LsVerV1WV/FynYkgBXIWFg==
+
+react-lodash@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-lodash/-/react-lodash-0.1.2.tgz#be2b00574093eae0f3e942dff1f48d48e8211d59"
+  integrity sha512-0yE7/CjDgF72tRKZka6sZf0XUx1uG0lcpBZqhKp7oRo84K1ZzPMNiEUjAEcsXw6rsYHLqwttClO4BhPJ7e+R5w==
+  dependencies:
+    lodash "^4.17.11"
 
 react-moment@^1.1.2:
   version "1.1.2"
