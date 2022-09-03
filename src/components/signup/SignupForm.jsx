@@ -42,6 +42,7 @@ const SignupForm = () => {
           icon: "success",
           title: "회원가입 완료",
           text: "로그인 이후 이용해 주세요",
+          confirmButtonText: "확인"
         });
         navigate("/");
       })
@@ -50,6 +51,7 @@ const SignupForm = () => {
         Swal.fire({
           icon: "error",
           title: "에러메시지 나중에 넣기",
+          confirmButtonText: "확인"
         });
       });
   };
