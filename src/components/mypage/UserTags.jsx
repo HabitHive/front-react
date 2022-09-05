@@ -47,7 +47,7 @@ const UserTags = () => {
       setStillTags(res.data[0].stillTags)
       setSuccessTags(res.data[0].successTags)
       setFailTags(res.data[0].failTags)
-      setLoading(false)
+      // setLoading(false)
     })
     .catch((err) => {
       console.log(err);
@@ -56,7 +56,7 @@ const UserTags = () => {
 
   useEffect(()=>{
     getUserTags(today)
-  },[loading])
+  },[])
 
   return(
     <>
