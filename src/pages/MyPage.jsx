@@ -4,6 +4,7 @@ import Profile from "../components/mypage/Profile";
 import UserTags from "../components/mypage/UserTags";
 
 const MyPage = () => {
+
   return (
     <>
       <Header text={"마이페이지"}/>
