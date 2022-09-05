@@ -24,11 +24,13 @@ const LoginForm = () => {
     defaultValues: initValue,
   });
 
+  //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
   const onSubmit = (data) => {
     axios
       // .post(`/user/login`, data) 백서버 연결할 때 사용
       .post(`/login`, data)
       .then((res) => {
+        localStorage.setItem('accessToken', res.data.accessToken)
         Swal.fire({
           icon: "success",
           title: "로그인 완료",

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router"
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+  
   return (
     <StNavContainer>
       <StNavUl>
@@ -14,11 +14,15 @@ const Navbar = () => {
         </StNavli>
         <StNavli onClick={()=>{navigate('/buy')}}>
           <StNavIcon/>
-          태그
+          습관
         </StNavli>
         <StNavli onClick={()=>{navigate('/mypage')}}>
           <StNavIcon/>
           마이           
+        </StNavli>
+        <StNavli onClick={()=>{navigate('/mypage')}}>
+          <StNavIcon/>
+          펫           
         </StNavli>
       </StNavUl>
     </StNavContainer>
