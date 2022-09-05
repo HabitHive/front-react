@@ -1,9 +1,13 @@
 import styled from "styled-components"
+import Loading from "../common/Loading";
 
 import axios from "../../axios/axios"
 import { useEffect, useState } from "react";
 
 const UserTags = () => {
+  // 로딩화면
+  const [loading, setLoading] = useState(true);
+
   //태그 목록 분류
   const [stillTags, setStillTags] = useState({});
   const [successTags, setSuccessTags] = useState({});
@@ -43,6 +47,7 @@ const UserTags = () => {
       setStillTags(res.data[0].stillTags)
       setSuccessTags(res.data[0].successTags)
       setFailTags(res.data[0].failTags)
+      setLoading(false)
     })
     .catch((err) => {
       console.log(err);
@@ -51,57 +56,57 @@ const UserTags = () => {
 
   useEffect(()=>{
     getUserTags(today)
-  },[])
-
-  console.log(stillTags)
-  console.log(successTags)
-  console.log(failTags)
+  },[loading])
 
   return(
-    <StTagsWrap>
-      <StTagTitle>
-        진행 중인 습관
-      </StTagTitle>
-      {
-        stillTags.map((stillTag, tagName)=>{
-          return (
-          <StTagShadowBox display={"flex"} key={tagName}>
-            <StStillTag>
-              <StStillTagName>
-                {stillTag.tagName}
-              </StStillTagName>
-              <StStillTagWeek>
-                월
-              </StStillTagWeek>
-            </StStillTag>
-            <StStillTagdDay>
-              D-{stillTag.dDay}
-            </StStillTagdDay>
-          </StTagShadowBox>
-          )
-        })
+    <>
+      {loading ? <Loading /> :
+      <StTagsWrap>
+        <StTagTitle>
+          진행 중인 습관
+        </StTagTitle>
+        {
+          stillTags.map((stillTag, tagName)=>{
+            return (
+            <StTagShadowBox display={"flex"} key={tagName}>
+              <StStillTag>
+                <StStillTagName>
+                  {stillTag.tagName}
+                </StStillTagName>
+                <StStillTagWeek>
+                  월
+                </StStillTagWeek>
+              </StStillTag>
+              <StStillTagdDay>
+                D-{stillTag.dDay}
+              </StStillTagdDay>
+            </StTagShadowBox>
+            )
+          })
+        }
+
+
+        <StTagTitle>
+          도전했던 습관
+        </StTagTitle>
+        <StDoneTagBtn className={ successBtnToggle ? "active" : null }
+          onClick={successBtnHandler}
+        >
+          완주한 습관
+        </StDoneTagBtn>
+        <StDoneTagBtn className={ failBtnToggle ? "active" : null }
+          onClick={failBtnHandler}
+        >
+          완주 못한 습관
+        </StDoneTagBtn>
+        <StTagShadowBox height={"150px"}>
+          <StDoneTag>
+            물 마시기
+          </StDoneTag>
+        </StTagShadowBox>
+      </StTagsWrap>
       }
-
-
-      <StTagTitle>
-        도전했던 습관
-      </StTagTitle>
-      <StDoneTagBtn className={ successBtnToggle ? "active" : null }
-        onClick={successBtnHandler}
-      >
-        완주한 습관
-      </StDoneTagBtn>
-      <StDoneTagBtn className={ failBtnToggle ? "active" : null }
-        onClick={failBtnHandler}
-      >
-        완주 못한 습관
-      </StDoneTagBtn>
-      <StTagShadowBox height={"150px"}>
-        <StDoneTag>
-          물 마시기
-        </StDoneTag>
-      </StTagShadowBox>
-    </StTagsWrap>
+    </>
   )
 }
 export default UserTags
