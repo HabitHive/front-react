@@ -31,9 +31,11 @@ const Navbar = () => {
 export default Navbar
 
 const StNavContainer = styled.nav`
-  width: 488px;
+  width: 100%;
+  max-width: 488px;
   position: fixed;
   bottom: 0;
+  background-color: white;
 `
 
 const StNavUl = styled.ul`
