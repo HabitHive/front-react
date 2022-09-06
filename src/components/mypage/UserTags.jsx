@@ -4,6 +4,7 @@ import Loading from "../common/Loading";
 import axios from "../../axios/axios"
 import { useEffect, useState } from "react";
 
+import TagWeekday from "./TagWeekday";
 import ToggleTags from "./ToggleTags";
 
 const UserTags = () => {
@@ -72,9 +73,7 @@ const UserTags = () => {
                 <StStillTagName>
                   {stillTag.tagName}
                 </StStillTagName>
-                <StStillTagWeek>
-                  
-                </StStillTagWeek>
+                <TagWeekday weekData={stillTag.week}/>
               </StStillTag>
               <StStillTagdDay>
                 D-{stillTag.dDay}
@@ -140,17 +139,18 @@ const StStillTagName =  styled.div`
   background-color: grey; 
   color: white;
   padding: 5px 8px;
+  margin-right: 10px;
 `
 
-const StStillTagWeek =  styled.div`
-  background-color: lightgray;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  font-size: 15px;
-  text-align: center;
-  margin: 0 10px;
-`
+// const StStillTagWeek =  styled.div`
+//   background-color: lightgray;
+//   width: 20px;
+//   height: 20px;
+//   border-radius: 100%;
+//   font-size: 15px;
+//   text-align: center;
+//   margin: 0 10px;
+// `
 
 const StStillTagdDay =  styled.div`
   width: 50px;
