@@ -15,7 +15,8 @@ const Loading = () => {
 export default Loading
 
 const StLoadingBackground = styled.div`
-  width: 100%;
+  width: 488px;
+  margin: auto;
   height: 100vh;
   background-color: white;
   position: absolute;

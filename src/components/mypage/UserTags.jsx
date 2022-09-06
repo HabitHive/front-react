@@ -4,8 +4,10 @@ import Loading from "../common/Loading";
 import axios from "../../axios/axios"
 import { useEffect, useState } from "react";
 
+import ToggleTags from "./ToggleTags";
+
 const UserTags = () => {
-  // 로딩화면
+  // true일 때 로딩화면이 보여진다
   const [loading, setLoading] = useState(true);
 
   //태그 목록 분류
@@ -23,8 +25,6 @@ const UserTags = () => {
   //도전했던 습관 버튼 토글
   const [successBtnToggle, setSuccessBtnToggle] = useState(true);
   const [failBtnToggle, setFailBtnToggle] = useState(false);
-
-
   const successBtnHandler = () => {
     if (successBtnToggle===true) {
       return
@@ -33,13 +33,12 @@ const UserTags = () => {
       setFailBtnToggle(false)
     }
   }
-
   const failBtnHandler = () => {
     setFailBtnToggle(true)
     setSuccessBtnToggle(false)
   }
 
-  // 마운트 시 유저 정보 불러오기
+  // 유저의 태그 정보 불러온 후 로딩화면 닫기
   const getUserTags = async (today) => {
     // await axios.put(`/user/mypage/tag`, today) 백서버 연결할 때 사용
     await axios.get(`/tag`)
@@ -47,7 +46,7 @@ const UserTags = () => {
       setStillTags(res.data[0].stillTags)
       setSuccessTags(res.data[0].successTags)
       setFailTags(res.data[0].failTags)
-      // setLoading(false)
+      setLoading(false)
     })
     .catch((err) => {
       console.log(err);
@@ -68,13 +67,13 @@ const UserTags = () => {
         {
           stillTags.map((stillTag, tagName)=>{
             return (
-            <StTagShadowBox display={"flex"} key={tagName}>
+            <StTagShadowBox justify={"space-between"} key={tagName}>
               <StStillTag>
                 <StStillTagName>
                   {stillTag.tagName}
                 </StStillTagName>
                 <StStillTagWeek>
-                  월
+                  
                 </StStillTagWeek>
               </StStillTag>
               <StStillTagdDay>
@@ -100,9 +99,10 @@ const UserTags = () => {
           완주 못한 습관
         </StDoneTagBtn>
         <StTagShadowBox height={"150px"}>
-          <StDoneTag>
-            물 마시기
-          </StDoneTag>
+        {successBtnToggle ?
+          <ToggleTags tags={successTags}/> :
+          <ToggleTags tags={failTags}/>
+        }
         </StTagShadowBox>
       </StTagsWrap>
       }
@@ -126,8 +126,8 @@ const StTagShadowBox = styled.div`
   min-height: ${props=>props.height};
   box-shadow: 3px 3px 8px lightgrey;
   padding: 10px;
-  display: ${props=>props.display};
-  justify-content: space-between;
+  display: flex;
+  justify-content: ${props=>props.justify};
 `
 
 const StStillTag =  styled.div`
@@ -175,12 +175,4 @@ const StDoneTagBtn =  styled.button`
     background-color: grey; 
     color: white;
   }
-`
-
-const StDoneTag =  styled.div`
-  width: max-content;
-  background-color: grey; 
-  color: white;
-  padding: 5px 8px;
-  border-radius: 5px;
 `
