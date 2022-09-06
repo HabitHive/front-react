@@ -5,28 +5,29 @@ import spinner from "../../assets/spinner.gif"
 const Loading = () => {
   return(
     <StLoadingBackground>
-      <StLoadingImg src={spinner} alt="로딩 중..."/>
-      <p>로딩 중...</p>
+      <StLoadingWrap>
+        <img src={spinner} alt="로딩 중..."/>
+        <StLoadingTxt>로딩 중...</StLoadingTxt>
+      </StLoadingWrap>
     </StLoadingBackground>
   )
 }
 export default Loading
 
 const StLoadingBackground = styled.div`
-  width: 100%;
+  width: 488px;
+  margin: auto;
   height: 100vh;
   background-color: white;
   position: absolute;
   top: 0;
-  & > p {
-    position: relative;
-    top: 33%;
-    left: 35%;  
-  }
 `
 
-const StLoadingImg = styled.img`
-  position: relative;
-  top: 30%;
-  left: 35%;
+const StLoadingWrap = styled.div`
+  width: fit-content;
+  margin: 300px auto;
+`
+
+const StLoadingTxt = styled.div`
+  width: max-content;
 `

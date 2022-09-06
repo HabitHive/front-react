@@ -3,9 +3,15 @@ import Loading from "../common/Loading";
 
 import axios from "../../axios/axios"
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+
+import TagWeekday from "./TagWeekday";
+import ToggleTags from "./ToggleTags";
 
 const UserTags = () => {
-  // 로딩화면
+  const navigate = useNavigate();
+
+  // true일 때 로딩화면이 보여진다
   const [loading, setLoading] = useState(true);
 
   //태그 목록 분류
@@ -23,8 +29,6 @@ const UserTags = () => {
   //도전했던 습관 버튼 토글
   const [successBtnToggle, setSuccessBtnToggle] = useState(true);
   const [failBtnToggle, setFailBtnToggle] = useState(false);
-
-
   const successBtnHandler = () => {
     if (successBtnToggle===true) {
       return
@@ -33,13 +37,12 @@ const UserTags = () => {
       setFailBtnToggle(false)
     }
   }
-
   const failBtnHandler = () => {
     setFailBtnToggle(true)
     setSuccessBtnToggle(false)
   }
 
-  // 마운트 시 유저 정보 불러오기
+  // 유저의 태그 정보 불러온 후 로딩화면 닫기
   const getUserTags = async (today) => {
     // await axios.put(`/user/mypage/tag`, today) 백서버 연결할 때 사용
     await axios.get(`/tag`)
@@ -56,55 +59,66 @@ const UserTags = () => {
 
   useEffect(()=>{
     getUserTags(today)
-  },[loading])
+  },[])
 
   return(
     <>
       {loading ? <Loading /> :
-      <StTagsWrap>
-        <StTagTitle>
-          진행 중인 습관
-        </StTagTitle>
-        {
-          stillTags.map((stillTag, tagName)=>{
-            return (
-            <StTagShadowBox display={"flex"} key={tagName}>
-              <StStillTag>
-                <StStillTagName>
-                  {stillTag.tagName}
-                </StStillTagName>
-                <StStillTagWeek>
-                  월
-                </StStillTagWeek>
-              </StStillTag>
-              <StStillTagdDay>
-                D-{stillTag.dDay}
-              </StStillTagdDay>
-            </StTagShadowBox>
-            )
-          })
-        }
+      <>
+        <StTagsWrap>
+          <StTagTitle>
+            진행 중인 습관
+          </StTagTitle>
+          { stillTags.length === 0 ? <StTagHelpTxt> 현재 진행 중인 습관이 없습니다 </StTagHelpTxt> :
+            stillTags.map((stillTag, tagName)=>{
+              return (
+              <StTagShadowBox justify={"space-between"} key={tagName}>
+                <StStillTag>
+                  <StStillTagName>
+                    {stillTag.tagName}
+                  </StStillTagName>
+                  <TagWeekday weekData={stillTag.week}/>
+                </StStillTag>
+                <StStillTagdDay>
+                  D-{stillTag.dDay}
+                </StStillTagdDay>
+              </StTagShadowBox>
+              )
+            })
+          }
 
+          <StTagTitle>
+            도전했던 습관
+          </StTagTitle>
+          <StDoneTagBtn className={ successBtnToggle ? "active" : null }
+            onClick={successBtnHandler}
+          >
+            완주한 습관
+          </StDoneTagBtn>
+          <StDoneTagBtn className={ failBtnToggle ? "active" : null }
+            onClick={failBtnHandler}
+          >
+            완주 못한 습관
+          </StDoneTagBtn>
+          <StTagShadowBox height={"150px"}>
+          {successBtnToggle ?
+            <ToggleTags tags={successTags}/> :
+            <ToggleTags tags={failTags}/>
+          }
+          </StTagShadowBox>
+        </StTagsWrap>
 
-        <StTagTitle>
-          도전했던 습관
-        </StTagTitle>
-        <StDoneTagBtn className={ successBtnToggle ? "active" : null }
-          onClick={successBtnHandler}
-        >
-          완주한 습관
-        </StDoneTagBtn>
-        <StDoneTagBtn className={ failBtnToggle ? "active" : null }
-          onClick={failBtnHandler}
-        >
-          완주 못한 습관
-        </StDoneTagBtn>
-        <StTagShadowBox height={"150px"}>
-          <StDoneTag>
-            물 마시기
-          </StDoneTag>
-        </StTagShadowBox>
-      </StTagsWrap>
+        <StSubNav>
+          <ul>
+            <StSubNavMenu onClick={()=>{navigate("/onboarding")}}>
+              ■ 사용자 가이드
+            </StSubNavMenu>
+            <StSubNavMenu>
+              ■ 로그아웃
+            </StSubNavMenu>
+          </ul>
+        </StSubNav>  
+      </>
       }
     </>
   )
@@ -119,6 +133,13 @@ const StTagTitle = styled.h3`
   margin: 10px 0;
 `
 
+const StTagHelpTxt = styled.p`
+  font-size: 13px;
+  text-align: center;
+  margin: 20px 0;
+  color: #a5a5a5;
+`
+
 const StTagShadowBox = styled.div`
   background-color: white;
   width: 100%;
@@ -126,8 +147,8 @@ const StTagShadowBox = styled.div`
   min-height: ${props=>props.height};
   box-shadow: 3px 3px 8px lightgrey;
   padding: 10px;
-  display: ${props=>props.display};
-  justify-content: space-between;
+  display: flex;
+  justify-content: ${props=>props.justify};
 `
 
 const StStillTag =  styled.div`
@@ -140,16 +161,7 @@ const StStillTagName =  styled.div`
   background-color: grey; 
   color: white;
   padding: 5px 8px;
-`
-
-const StStillTagWeek =  styled.div`
-  background-color: lightgray;
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  font-size: 15px;
-  text-align: center;
-  margin: 0 10px;
+  margin-right: 10px;
 `
 
 const StStillTagdDay =  styled.div`
@@ -177,10 +189,15 @@ const StDoneTagBtn =  styled.button`
   }
 `
 
-const StDoneTag =  styled.div`
-  width: max-content;
-  background-color: grey; 
-  color: white;
-  padding: 5px 8px;
-  border-radius: 5px;
+const StSubNav = styled.nav`
+  & ul {
+    list-style: none;
+  }
+`
+
+const StSubNavMenu = styled.li`
+  font-size: 20px;
+  font-weight: 700;
+  margin: 20px -10px;
+  cursor: pointer;
 `
