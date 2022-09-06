@@ -69,7 +69,7 @@ const UserTags = () => {
           <StTagTitle>
             진행 중인 습관
           </StTagTitle>
-          {
+          { stillTags.length === 0 ? <StTagHelpTxt> 현재 진행 중인 습관이 없습니다 </StTagHelpTxt> :
             stillTags.map((stillTag, tagName)=>{
               return (
               <StTagShadowBox justify={"space-between"} key={tagName}>
@@ -131,6 +131,13 @@ const StTagsWrap = styled.div`
 
 const StTagTitle = styled.h3`
   margin: 10px 0;
+`
+
+const StTagHelpTxt = styled.p`
+  font-size: 13px;
+  text-align: center;
+  margin: 20px 0;
+  color: #a5a5a5;
 `
 
 const StTagShadowBox = styled.div`
