@@ -15,6 +15,10 @@ const PostingPage = () => {
   const [startDate, setStartDate] = useState(null); //시작/종료날짜 입력 전엔 placeholder보여주기위한 null
   const [endDate, setEndDate] = useState(null);
 
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [sDate, eDate] = dateRange;
+  console.log(dateRange);
+
   return (
     <div>
       {/* <FiChevronLeft /> */}
@@ -26,7 +30,7 @@ const PostingPage = () => {
       <BodyContainer>
         <div className="tagTitle"> 운동하기 ( 30일 )</div>
         <div className="startDate">
-          <span className="startDateText">시작날짜</span>
+          {/* <span className="startDateText">시작날짜</span>
           <DatePicker
             className="startDateInput"
             calendarImg={calendarImg}
@@ -42,8 +46,27 @@ const PostingPage = () => {
             // maxDate={addDays(new Date(), 5)}
             // excludeDateIntervals={[{start: subDays(new Date(), 5), end: addDays(new Date(), 5) }]}
             // calendarStartDay={0}
+          /> */}
+          <span className="startDateText">날짜 설정</span>
+          <DatePicker
+            className="startDateInput"
+            calendarImg={calendarImg}
+            selected={startDate}
+            selectsRange={true}
+            startDate={sDate}
+            endDate={eDate}
+            dateFormat="yyyy.MM.dd" // 날짜 표현 형식
+            minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
+            onChange={(update) => {
+              setDateRange(update);
+            }}
+            // excludeDateIntervals={[
+            //   {start:startDate, end:addDays(startDate,30)},
+            // ]}
+            placeholderText="날짜 설정하기"
           />
-          <div className="endDate">
+
+          {/* <div className="endDate">
             <span className="endDateText">종료날짜</span>
             <DatePicker
               className="endDateInput"
@@ -57,7 +80,7 @@ const PostingPage = () => {
               maxDate={addDays(startDate, 30)}
               placeholderText="종료날짜 설정하기"
             />
-          </div>
+          </div> */}
         </div>
         <div className="startTime">
           <span className="startTimeText">시작시간</span>
@@ -89,39 +112,42 @@ const PostingPage = () => {
         </div>
 
         <div className="repeatDay">
-          <input id="sun" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="sun" id="sunLabel">
-            {"일"}
-          </label>
-          <input id="mon" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="mon" id="sunLabel">
-            {"월"}
-          </label>
-          <input id="tue" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="tue" id="sunLabel">
-            {"화"}
-          </label>
-          <input id="wed" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="wed" id="sunLabel">
-            {"수"}
-          </label>
-          <input id="thu" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="thu" id="sunLabel">
-            {"목"}
-          </label>
-          <input id="fri" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="fri" id="sunLabel">
-            {"금"}
-          </label>
-          <input id="sat" className="sunCheck" type="checkbox"></input>
-          <label htmlFor="sat" id="sunLabel">
-            {"토"}
-          </label>
+          <span className="repeatDayText">반복요일</span>
+          <div>
+            <input id="sun" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="sun" id="sunLabel">
+              {"일"}
+            </label>
+            <input id="mon" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="mon" id="sunLabel">
+              {"월"}
+            </label>
+            <input id="tue" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="tue" id="sunLabel">
+              {"화"}
+            </label>
+            <input id="wed" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="wed" id="sunLabel">
+              {"수"}
+            </label>
+            <input id="thu" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="thu" id="sunLabel">
+              {"목"}
+            </label>
+            <input id="fri" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="fri" id="sunLabel">
+              {"금"}
+            </label>
+            <input id="sat" className="sunCheck" type="checkbox"></input>
+            <label htmlFor="sat" id="sunLabel">
+              {"토"}
+            </label>
+          </div>
         </div>
       </BodyContainer>
-      <Button>
-        <button className="submit">저장</button>
-      </Button>
+      <div className="buttonContainer">
+        <Button className="submit">저장</Button>
+      </div>
     </div>
   );
 };
@@ -267,21 +293,21 @@ const BodyContainer = styled.div`
   }
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   display: flex;
   justify-content: center;
-  text-align: center;
-  width: 100%;
-  transform: translateY(120px);
+  align-items: center;
+  /* text-align: center; */
+  cursor: pointer;
+  width: 224px;
+  height: 48px;
+  color: #fff;
+  transform: translateY(160px);
+  /* margin-left: 100px; */
 
-  & .submit {
-    /* 보라그라데이션 */
-    width: 224px;
-    height: 48px;
-    color: #fff;
-    background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-    border: 1px solid #674ded;
-    box-shadow: 2px 2px 10px 4px rgba(88, 56, 255, 0.25);
-    border-radius: 16px;
-  }
+  /* 보라그라데이션 */
+  background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+  border: 1px solid #674ded;
+  box-shadow: 2px 2px 10px 4px rgba(88, 56, 255, 0.25);
+  border-radius: 16px;
 `;
