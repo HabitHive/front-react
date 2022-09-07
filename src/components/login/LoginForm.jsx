@@ -24,14 +24,17 @@ const LoginForm = () => {
     defaultValues: initValue,
   });
 
+  //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
   const onSubmit = (data) => {
     axios
       // .post(`/user/login`, data) 백서버 연결할 때 사용
       .post(`/login`, data)
       .then((res) => {
+        localStorage.setItem('accessToken', res.data.accessToken)
         Swal.fire({
           icon: "success",
-          title: "로그인 완료"
+          title: "로그인 완료",
+          confirmButtonText: "확인"
         });
         navigate("/main");
       })
@@ -40,6 +43,7 @@ const LoginForm = () => {
         Swal.fire({
           icon: "error",
           title: "에러메시지 나중에 넣기",
+          confirmButtonText: "확인",
         });
       });
   };
@@ -64,17 +68,16 @@ const LoginForm = () => {
           })}
         />
 
-        <SubmitBtn btnName={"로그인"}/>
-
-        <StLogintoSingup onClick={()=>{navigate("/signup")}}>
-          아직 회원이 아니신가요?
-        </StLogintoSingup>
-
-        <StHorizonLine>
-          <span>or</span>
-        </StHorizonLine>
-
-        <SubmitBtn btnName={"카카오톡"}/>
+        <StBtnWrap>
+          <SubmitBtn btnName={"로그인"}/>
+          <StLogintoSingup onClick={()=>{navigate("/signup")}}>
+            아직 회원이 아니신가요?
+          </StLogintoSingup>
+          <StHorizonLine>
+            <span>or</span>
+          </StHorizonLine>
+          <SubmitBtn btnName={"카카오톡 로그인"}/>
+        </StBtnWrap>
 
       </StLoginForm> 
     </>
@@ -119,7 +122,13 @@ const StLoginInput = styled.input`
   }
 `
 
+const StBtnWrap = styled.div`
+  
+`
+
 const StLogintoSingup = styled.p`
+  position: relative;
+  top: 40px;
   width: 100%;
   color: gray;
   text-align: center;
@@ -134,7 +143,7 @@ const StLogintoSingup = styled.p`
 
 const StHorizonLine = styled.div`
   width: 100%;
-  margin-top: 30px;
+  margin-top: 100px;
   text-align: center;
   border-bottom: 1px solid #aaa;
   line-height: 0.5px;

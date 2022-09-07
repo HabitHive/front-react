@@ -42,6 +42,7 @@ const SignupForm = () => {
           icon: "success",
           title: "회원가입 완료",
           text: "로그인 이후 이용해 주세요",
+          confirmButtonText: "확인"
         });
         navigate("/");
       })
@@ -50,6 +51,7 @@ const SignupForm = () => {
         Swal.fire({
           icon: "error",
           title: "에러메시지 나중에 넣기",
+          confirmButtonText: "확인"
         });
       });
   };
@@ -125,7 +127,7 @@ const SignupForm = () => {
         {...register("nickname", {
           required: true,
           maxLength: 10,
-          pattern: /(?=.*[a-z0-9가-힣])[a-z0-9가-힣]+$/,
+          pattern: /(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]+$/,
         })}
       />
       {errors.nickname && errors.nickname.type === "required" && (
@@ -135,7 +137,7 @@ const SignupForm = () => {
         <p> <FiAlertCircle/> 최대 10자까지 가능합니다</p>
       )}
       {errors.nickname && errors.nickname.type === "pattern" && (
-        <p> <FiAlertCircle/> 특수문자는 사용할 수 없습니다 </p>
+        <p> <FiAlertCircle/> 특수문자 및 자모음은 사용할 수 없습니다 </p>
       )}
 
       <SubmitBtn btnName={"가입하기"}/>
