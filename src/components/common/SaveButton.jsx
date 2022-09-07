@@ -14,7 +14,6 @@ const StButton = styled.button`
   width: 224px;
   height: 48px;
   color: #fff;
-  transform: translateY(160px);
 
   /* 보라그라데이션 */
   background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);

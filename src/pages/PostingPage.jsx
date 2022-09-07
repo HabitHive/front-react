@@ -9,6 +9,7 @@ import { addDays, subDays } from "date-fns";
 
 import calendarImg from "../assets/images/calendar.png";
 import timeImg from "../assets/images/timeIcon.png";
+import SaveButton from "../components/common/SaveButton";
 
 let now = new Date();
 const PostingPage = () => {
@@ -145,9 +146,9 @@ const PostingPage = () => {
           </div>
         </div>
       </BodyContainer>
-      <div className="buttonContainer">
-        <Button className="submit">저장</Button>
-      </div>
+      <ButtonContainer>
+        <SaveButton btnName={"저장"} />
+      </ButtonContainer>
     </div>
   );
 };
@@ -293,21 +294,7 @@ const BodyContainer = styled.div`
   }
 `;
 
-const Button = styled.button`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* text-align: center; */
-  cursor: pointer;
-  width: 224px;
-  height: 48px;
-  color: #fff;
-  transform: translateY(160px);
-  /* margin-left: 100px; */
-
-  /* 보라그라데이션 */
-  background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-  border: 1px solid #674ded;
-  box-shadow: 2px 2px 10px 4px rgba(88, 56, 255, 0.25);
-  border-radius: 16px;
 `;
