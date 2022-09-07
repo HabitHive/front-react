@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "@mobiscroll/react-lite/dist/css/mobiscroll.min.css";
-// import {
-//   Datepicker,
-//   Button,
-//   Page,
-//   setOptions,
-//   localeKo,
-// } from "@mobiscroll/react-lite";
+import {
+  Datepicker,
+  Button,
+  Page,
+  setOptions,
+  localeKo,
+} from "@mobiscroll/react-lite";
 import moment from "moment";
 
 // setOptions({
@@ -33,14 +33,20 @@ const MonthlyCalendar = () => {
 
   return (
     <div>
-      <Calendar onChange={onChange} value={value} minDate={new Date(today)} />
+      <Calendar
+        onChange={(event) => {
+          console.log(event);
+        }}
+        value={value}
+        minDate={new Date(today)}
+      />
       <div className="clickdate">{moment(value).format("MM월 DD일")}</div>
       <div>
         <p>My tag</p>
       </div>
-      {/* 
+
       <Datepicker controls={["calendar"]} display="inline" />
-      <Datepicker controls={["time"]} stepMinute={30} touchUi={true} /> */}
+      <Datepicker controls={["time"]} stepMinute={30} touchUi={true} />
     </div>
   );
 };
