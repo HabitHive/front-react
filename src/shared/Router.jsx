@@ -21,7 +21,6 @@ const Router = () => {
   const dispatch = useDispatch();
 
   const isLog = useSelector(state=>state.user.isLog)
-  console.log(isLog)
   
   const token = localStorage.getItem("token")
 
