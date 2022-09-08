@@ -4,10 +4,13 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../../axios/axios";
+import { setUser } from "../../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 import SubmitBtn from "../common/SubmitBtn";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const initValue = {
@@ -30,7 +33,7 @@ const LoginForm = () => {
       // .post(`/user/login`, data) 백서버 연결할 때 사용
       .post(`/login`, data)
       .then((res) => {
-        localStorage.setItem('accessToken', res.data.accessToken)
+        dispatch(setUser(res.data))
         Swal.fire({
           icon: "success",
           title: "로그인 완료",

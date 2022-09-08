@@ -64,7 +64,6 @@ const UserTags = () => {
   return(
     <>
       {loading ? <Loading /> :
-      <>
         <StTagsWrap>
           <StTagTitle>
             진행 중인 습관
@@ -106,19 +105,7 @@ const UserTags = () => {
             <ToggleTags tags={failTags}/>
           }
           </StTagShadowBox>
-        </StTagsWrap>
-
-        <StSubNav>
-          <ul>
-            <StSubNavMenu onClick={()=>{navigate("/onboarding")}}>
-              ■ 사용자 가이드
-            </StSubNavMenu>
-            <StSubNavMenu>
-              ■ 로그아웃
-            </StSubNavMenu>
-          </ul>
-        </StSubNav>  
-      </>
+        </StTagsWrap> 
       }
     </>
   )
@@ -187,17 +174,4 @@ const StDoneTagBtn =  styled.button`
     background-color: grey; 
     color: white;
   }
-`
-
-const StSubNav = styled.nav`
-  & ul {
-    list-style: none;
-  }
-`
-
-const StSubNavMenu = styled.li`
-  font-size: 20px;
-  font-weight: 700;
-  margin: 20px -10px;
-  cursor: pointer;
 `

@@ -12,21 +12,39 @@ import PostingPage from "../pages/PostingPage";
 import EditingPage from "../pages/EditingPage";
 import MyPage from "../pages/MyPage";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import setToken from "../axios/setToken";
+
+import { setLogin } from "../redux/modules/user";
+
 const Router = () => {
+  const dispatch = useDispatch();
+
+  const isLog = useSelector(state=>state.user.isLog)
+  
+  const token = localStorage.getItem("token")
+
+  useEffect(()=>{
+    setToken(token)
+    if (token) {
+      dispatch(setLogin())
+    }
+  })
+
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={<LogInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/*" element={<NotFoundPage />} />
-            <Route path="/onboarding" element={<OnboardingPage />} />
-            <Route path="/survey" element={<SurveyPage />} />
-            <Route path="/buy" element={<TagBuyPage />} />
-            <Route path="/main" element={<MainDailyPage />} />
-            <Route path="/monthly" element={<MonthlyPage />} />
-            <Route path="/post" element={<PostingPage />} />
-            <Route path="/edit" element={<EditingPage />} />
-            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/" element={isLog ? <MainDailyPage/> : <LogInPage/>}/>
+            <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
+            <Route path="/onboarding" element={<OnboardingPage/>}/>
+            <Route path="/survey" element={<SurveyPage/>}/>
+            <Route path="/main" element={<MainDailyPage/>}/>
+            <Route path="/monthly" element={<MonthlyPage/>}/>
+            <Route path="/buy" element={<TagBuyPage/>}/>
+            <Route path="/post" element={<PostingPage/>}/>
+            <Route path="/mypage" element={<MyPage/>}/>
+            <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
     </BrowserRouter>
   );

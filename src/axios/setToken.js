@@ -1,11 +1,10 @@
-import instance from './axios'
+import instance from "./axios"
 
-const setToken = (accessToken) => {
-    if(accessToken) {
-        instance.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken
+const setToken = (token) => {
+    if(token) {
+        instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
     } else {
         delete instance.defaults.headers.common['Authorization']
     }
 }
-
 export default setToken
