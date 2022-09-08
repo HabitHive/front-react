@@ -3,7 +3,7 @@ import Header from "../common/Header";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { addDays, subDays } from "date-fns";
+import { setHours, setMinutes } from "date-fns";
 
 import { useState } from "react";
 
@@ -13,19 +13,23 @@ import SaveButton from "../common/SaveButton";
 
 let now = new Date();
 const PostForm = () => {
-  const [startDate, setStartDate] = useState(null); //시작/종료날짜 입력 전엔 placeholder보여주기위한 null
+  const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
+  const [endTime, setEndTime] = useState(null);
+  // if (startTime) {
+  //   console.log(startTime.getHours());
+  // }
+
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [sDate, eDate] = dateRange;
-  console.log(dateRange);
-  // Thu Sep 08 2022 00:00:00 GMT+0900 (한국 표준시) {}
-  // Sat Oct 08 2022 00:00:00 GMT+0900 (한국 표준시) {}
-
-  // const setDateRange = () => {
-
-  // }
-  // setEndDate(  startDate.setDate(startDate.getDate()+30))
+  // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택됨
+  const dateRange = (update) => {
+    const firstDate = new Date(update[0]);
+    const lastDate = firstDate.setDate(firstDate.getDate() + 29);
+    // console.log(new Date(lastDate));
+    setStartDate(update[0]);
+    setEndDate(new Date(lastDate));
+  };
 
   return (
     <div>
@@ -40,19 +44,11 @@ const PostForm = () => {
             calendarImg={calendarImg}
             selected={startDate}
             selectsRange={true}
-            startDate={sDate}
-            endDate={eDate}
+            startDate={startDate}
+            endDate={endDate}
             dateFormat="yyyy.MM.dd" // 날짜 표현 형식
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
-            onChange={
-              // (update) => {
-              //   setDateRange(update);
-              // }
-              setDateRange
-            }
-            // excludeDateIntervals={[
-            //   {start:startDate, end:addDays(startDate,30)},
-            // ]}
+            onChange={dateRange}
             placeholderText="날짜 설정하기"
           />
         </div>
@@ -61,11 +57,11 @@ const PostForm = () => {
             <span className="startTimeText">시작시간</span>
             <DatePicker
               className="startTimeInput"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={startTime}
+              onChange={(time) => setStartTime(time)}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={30}
+              timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
               placeholderText="시작시간 설정하기"
@@ -75,11 +71,17 @@ const PostForm = () => {
             <span className="endTimeText">종료시간</span>
             <DatePicker
               className="endTimeInput"
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              selected={endTime}
+              onChange={(time) => setEndTime(time)}
+              minTime={setHours(
+                setMinutes(new Date(), startTime?.getMinutes()),
+                startTime?.getHours()
+              )}
+              maxTime={setHours(setMinutes(new Date(), 50), 23)}
+              disabled={startTime === null}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={30}
+              timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
               placeholderText="종료시간 설정하기"
