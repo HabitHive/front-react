@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "@mobiscroll/react-lite/dist/css/mobiscroll.min.css";
@@ -32,7 +33,7 @@ const MonthlyCalendar = () => {
   // };
 
   return (
-    <div>
+    <>
       <Calendar
         onChange={(event) => {
           console.log(event);
@@ -47,7 +48,7 @@ const MonthlyCalendar = () => {
 
       <Datepicker controls={["calendar"]} display="inline" />
       <Datepicker controls={["time"]} stepMinute={30} touchUi={true} />
-    </div>
+    </>
   );
 };
 

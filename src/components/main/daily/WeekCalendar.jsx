@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { BiCalendar } from "react-icons/bi";
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 
 import React, {
   useState,
@@ -8,10 +9,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import Year from "react-live-clock";
 import Month from "react-live-clock";
-
-let now = new Date();
 
 // 당일기준 해당 월의 마지막 날까지 출력하기 위한 반복함수
 const GetAllDate = (today, lastday) => {
@@ -59,10 +57,8 @@ const GetAllWeek = (todayweek) => {
 
   return weeklist;
 };
-
+let now = new Date();
 const WeekCalendar = (props) => {
-  // console.log(new Date()); //Tue Aug 30 2022 16:45:45 GMT+0900 (한국 표준시)
-
   const todayweek = now.getDay(); //오늘의 요일 숫자 ( 0(일) ~ 6(토) )
   const today = now.getDate(); //오늘날짜
   const lastday = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); //이번달 마지막날짜 //31,없으면 []
@@ -70,11 +66,11 @@ const WeekCalendar = (props) => {
   const [daylist, setDaylist] = useState([]); //이번달 남은날짜
   const [weeklist, setWeeklist] = useState([]);
 
-  const thisYear = now.getFullYear(); //올해 4자릿수
   const thisMonth = now.getMonth() + 1; //이번달숫자 (0부터 시작이라 +1)
-  const monthNameShort = now.toLocaleString("en-US", { month: "short" }); //이번달 영어로 3자리표현
-  const thisWeek = now.getDay(); //오늘의 요일 숫자( 0(일) ~ 6(토) )
-  // console.log(now.toString().slice(0, 3)); // 영어 형식으로 요일 받아오기 //Tue
+  // const monthNameShort = now.toLocaleString("en-US", { month: "short" }); //이번달 영어로 3자리표현
+  const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
+  const thisWeekDay = now.getDay(); //오늘의 요일 숫자( 0(일) ~ 6(토))
+  console.log(now.toString().slice(0, 3)); // 영어 형식으로 요일 받아오기 //Tue
   const currentTime =
     now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds(); //현재시각 24시표현법:nn분:nn초
 
@@ -115,24 +111,24 @@ const WeekCalendar = (props) => {
   // console.log(CalendarObject[0].day); //31
 
   useEffect(() => {
-    return () => console.log("Clean up");
+    // return () => console.log("Clean up");
   }, []);
 
   const Week = useRef(null);
 
   return (
-    <div>
+    <STWeekCalender>
       <StCalendar>
         <div className="Year-Month">
           <p>
             <span className="Year">
-              <Year
+              {/* <Year
                 id="Year"
                 format={"YYYY"} //년도 형식 ( 2022 ) , 4글자
                 ticking={false} // true 시 오류남
                 // timezone={"KR/Pacific"}
                 interval={0} //시간 자동업데이트 기간. 1000ms가 기본값. 0은 비활성화
-              />
+              /> */}
             </span>
             &nbsp;&nbsp;
             <span className="Month">
@@ -166,22 +162,29 @@ const WeekCalendar = (props) => {
 
         <DayContainer className="Day" onChange={getList}>
           <div className="daylistContainer">
-            {CalendarObject.map((calendarItem, index) => (
-              <div className="daylistSelector" key={index}>
-                <div
-                  className="week"
-                  // ,
-                  // CalendarObject.week === "Sun" ? "Sun" : "week",
-                  // CalendarObject.week === "Sat" ? "Sat" : "week"
+            <button>
+              <FaChevronLeft />
+            </button>
+            <div>
+              {CalendarObject.map((calendarItem, index) => (
+                <div className="daylistSelector" key={index}>
+                  <div
+                    className="week"
+                    // ,
+                    // CalendarObject.week === "Sun" ? "Sun" : "week",
+                    // CalendarObject.week === "Sat" ? "Sat" : "week"
+                    ref={Week}
+                  >
+                    {calendarItem.week}
+                  </div>
 
-                  ref={Week}
-                >
-                  {calendarItem.week}
+                  <div className="day">{calendarItem.day}</div>
                 </div>
-
-                <div className="day">{calendarItem.day}</div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button>
+              <FaChevronRight />
+            </button>
 
             {/* <div>
               {alldate.map((value, item) => {
@@ -220,129 +223,102 @@ const WeekCalendar = (props) => {
               </div>
             ))} */}
           </div>
-          <div className="CalendarIconContainer">
-            {/* <button className="calendarButton"></button> */}
-            {/* 버튼은 이벤트용 안보이게 만듦 */}
-            <span className="CalendarIconText">전체 보기</span>
-            <BiCalendar className="calendarIcon" />
-          </div>
         </DayContainer>
       </StCalendar>
-    </div>
+    </STWeekCalender>
   );
 };
 
 export default WeekCalendar;
-
+const STWeekCalender = styled.div`
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 15%;
+`;
 const StCalendar = styled.div`
-  margin-bottom: 140px;
   /* padding-left: 40px; */
   justify-content: center;
   align-items: center;
   text-align: center;
 
-  height: 20vh;
   width: 100%;
   overflow: initial;
   & .Year-Month {
     font-style: italic;
     color: #1864ab;
-    .Year {
-      font-size: 2.4rem;
-    }
     & .Month {
-      font-size: 1.55rem;
+      position: absolute;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 14px;
+      text-align: center;
     }
   }
 
   /* 캘린더 일전체 컨테이너 */
   & .Day {
-    position: relative;
     justify-content: center;
     align-content: center;
     text-align: center;
-    float: left;
-    width: auto;
-    height: 3.5rem;
-    font-size: 1.4rem;
-    color: #009600;
-    /* color: #005096; */
-    left: 17%;
 
+    /* width: 100%; */
+    height: 3.5rem;
+    font-size: 14px;
+    /* left: 17%; */
+    & .daylistContainer {
+      display: flex;
+      justify-content: space-between;
+      & button {
+        border: none;
+        border-radius: 50%;
+        size: small;
+      }
+    }
     /* 오늘자 기준 날짜 배열 Daylist */
-    .daylistSelector {
-      justify-content: center; //수평 중앙 정렬
-      align-items: center; //수직 중앙 정렬
+    & .daylistSelector {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
       float: left;
-      margin-left: 4rem;
+      margin-right: 8px;
       cursor: pointer;
 
-      width: 70px;
-      height: 110px;
-
-      border-radius: 40px;
-      padding-top: 40px;
-
-      .Sun {
-        color: red !important;
-      }
-      .Sat {
-        color: #156fb9 !important;
-      }
+      width: 40px;
+      height: 60px;
+      border-radius: 8px;
 
       &:hover {
-        background: rgb(12, 86, 129);
+        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
         color: white;
-        .week {
+        & .week {
+          color: white;
+        }
+        & .day {
           color: white;
         }
       }
 
       &:nth-child(1) {
-        border: 0.04rem solid rgb(12, 86, 129);
+        border: 0.04rem solid #6334ff;
       }
-      .week {
-        justify-content: center; //수평 중앙 정렬
-        align-items: center; //수직 중앙 정렬
+      & .week {
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        font-size: 0.8em;
-        color: black;
-        margin-bottom: 20px;
+        font-size: 10px;
+        color: #999999;
+        margin-bottom: 6px;
       }
-      .day {
-        font-weight: bold;
-      }
-    }
-
-    .CalendarIconContainer {
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-
-      width: 150px;
-      height: 100px;
-      font-style: bold;
-      cursor: pointer;
-      color: #353535;
-
-      .CalendarIconText {
-        font-size: 23px;
-      }
-      .CalendarIconSpan {
-        position: absolute;
-        left: 50%;
-        right: 40%;
-        margin-top: 40px;
-
-        /* 실제 버튼처럼 보이는 아이콘 */
-        .calendarIcon {
-          color: #3535;
-          text-align: center;
-          margin-bottom: -12px;
-          font-size: 3rem;
-          cursor: pointer;
-        }
+      & .day {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+        color: #999999;
       }
     }
   }
