@@ -1,22 +1,23 @@
 import styled from "styled-components"
 
-const TagLists = ({lists, setSelectedTag}) => {
+const TagLists = ({lists, setSelectedTag, setDrawer}) => {
 
   const tagSelectHandler = (list) =>  {
-    setSelectedTag(list)
+    setSelectedTag(list.list)
+    setDrawer(true)
   }
 
   return(
     <>
-      {lists.map((list, tagId)=>{
+      {lists?.map((list, tagId)=>{
         return(
           <StTag key={tagId}
-            onClick={list=>tagSelectHandler(list)}
+            onClick={()=>tagSelectHandler({list})}
           >
             {list.tagName}
             <StTagCategories>
               {
-                (list.category).map((category, i)=>{
+                (list.category)?.map((category, i)=>{
                   return(
                     <StCategory key={i}>
                       {category}
