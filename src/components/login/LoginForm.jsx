@@ -8,6 +8,7 @@ import { setUser } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
 import SubmitBtn from "../common/SubmitBtn";
+import SaveButton from "../common/SaveButton"
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -30,8 +31,8 @@ const LoginForm = () => {
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
   const onSubmit = (data) => {
     axios
-      // .post(`/user/login`, data) 백서버 연결할 때 사용
-      .post(`/login`, data)
+      // .post(`/user/login`, data) // 백서버 연결할 때 사용
+      .post(`/login`, data) 
       .then((res) => {
         dispatch(setUser(res.data))
         Swal.fire({
@@ -39,7 +40,7 @@ const LoginForm = () => {
           title: "로그인 완료",
           confirmButtonText: "확인"
         });
-        navigate("/main");
+        // navigate("/"); 나중에 풀기
       })
       .catch((err) => {
         console.log(err);
@@ -51,38 +52,52 @@ const LoginForm = () => {
       });
   };
 
+  const onSubmitKakao = (e) => {
+    e.preventDefault();
+    axios.get(`/kakao`)
+    .then((res)=>{
+      dispatch(setUser(res.data))
+      Swal.fire({
+        icon: "success",
+        title: "로그인 완료",
+        confirmButtonText: "확인"
+      });
+    })
+    .catch((err)=>console.log(err))
+  }
+
   return(
     <>
       <StLogo/>
-
-      <StLoginForm onSubmit={handleSubmit(onSubmit)}>
-        <StLoginInput
-          placeholder="이메일을 입력해주세요"
-          type="email"
-          {...register("email", {
-            required: true
-          })}
-        />
-        <StLoginInput
-          placeholder="비밀번호를 입력해주세요"
-          type="password"
-          {...register("password", {
-            required: true,
-          })}
-        />
-
-        <StBtnWrap>
+      <StLoginWrap>
+        <StLoginForm onSubmit={handleSubmit(onSubmit)}>
+          <StLoginInput
+            placeholder="이메일을 입력해주세요"
+            type="email"
+            {...register("email", {
+              required: true
+            })}
+          />
+          <StLoginInput
+            placeholder="비밀번호를 입력해주세요"
+            type="password"
+            {...register("password", {
+              required: true,
+            })}
+          />
           <SubmitBtn btnName={"로그인"}/>
           <StLogintoSingup onClick={()=>{navigate("/signup")}}>
             아직 회원이 아니신가요?
           </StLogintoSingup>
-          <StHorizonLine>
-            <span>or</span>
-          </StHorizonLine>
-          <SubmitBtn btnName={"카카오톡 로그인"}/>
-        </StBtnWrap>
+        </StLoginForm> 
 
-      </StLoginForm> 
+        <StHorizonLine>
+          <span>or</span>
+        </StHorizonLine>
+        <SubmitBtn btnName={"카카오톡 로그인"}
+          onClick={(e)=>onSubmitKakao(e)}
+        />
+      </StLoginWrap>
     </>
   )
 }
@@ -97,13 +112,16 @@ const StLogo = styled.div`
   top: 30px;
 `
 
+const StLoginWrap = styled.div`
+  height: 90vh;
+  padding: 20px;
+`
+
 const StLoginForm = styled.form`
-  height: 80vh;
   display: flex;
   flex-direction: column;
   position: relative;
   top: 50px;
-  padding: 20px;
 `
 
 const StLoginInput = styled.input`
@@ -125,13 +143,7 @@ const StLoginInput = styled.input`
   }
 `
 
-const StBtnWrap = styled.div`
-  
-`
-
 const StLogintoSingup = styled.p`
-  position: relative;
-  top: 40px;
   width: 100%;
   color: gray;
   text-align: center;

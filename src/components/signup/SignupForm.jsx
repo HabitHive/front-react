@@ -4,11 +4,14 @@ import { FiAlertCircle } from "react-icons/fi"
 
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/modules/user";
 import axios from "../../axios/axios";
 
 import SubmitBtn from "../common/SubmitBtn";
 
 const SignupForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const initValue = {
@@ -35,16 +38,17 @@ const SignupForm = () => {
   const onSubmit = (data) => {
     delete data.pwConfirm
     axios
-      // .post(`/user/signup`, data) 백서버 연결할 때 사용
-      .post(`/signup`, data)
+      .post(`/user/signup`, data) //백서버 연결할 때 사용
+      // .post(`/signup`, data) //로컬테스트용 
       .then((res) => {
+        dispatch(setUser(res.data))
         Swal.fire({
           icon: "success",
           title: "회원가입 완료",
           text: "로그인 이후 이용해 주세요",
           confirmButtonText: "확인"
         });
-        navigate("/");
+        navigate("/onboarding");
       })
       .catch((err) => {
         console.log(err);

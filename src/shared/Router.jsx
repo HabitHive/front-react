@@ -16,21 +16,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import setToken from "../axios/setToken";
 
-import { setLogin } from "../redux/modules/user";
+import { setUser } from "../redux/modules/user";
 
 const Router = () => {
   const dispatch = useDispatch();
 
   const isLog = useSelector(state=>state.user.isLog)
-  
-  const token = localStorage.getItem("token")
+  const user = useSelector(state=>state.user)
 
-  useEffect(()=>{
-    setToken(token)
-    if (token) {
-      dispatch(setLogin())
-    }
-  })
+  // console.log(user)
+
+  // useEffect(()=>{
+  //   if (user) {
+  //     dispatch(setUser())
+  //   }
+  //   setToken(user)
+  // })
 
   return (
     <BrowserRouter>
@@ -39,7 +40,7 @@ const Router = () => {
             <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
             <Route path="/onboarding" element={<OnboardingPage/>}/>
             <Route path="/survey" element={<SurveyPage/>}/>
-            <Route path="/main" element={<MainDailyPage/>}/>
+            {/* <Route path="/main" element={<MainDailyPage/>}/> */}
             <Route path="/monthly" element={<MonthlyPage/>}/>
             <Route path="/buy" element={<TagBuyPage/>}/>
             <Route path="/post" element={<PostingPage/>}/>

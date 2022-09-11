@@ -1,8 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   isLog: false,
+  token: ""
 }
+
+export const __getNewToken = createAsyncThunk(
+  "getNewToken",
+  async (payload, thunkApi) => {
+    try {
+      return console.log(thunkApi)
+    } catch (err) {
+      return console.log(err)
+    }
+  }
+)
 
 // userSlice라는 이름으로 유저 Slice 생성
 export const userSlice = createSlice({
@@ -11,9 +23,10 @@ export const userSlice = createSlice({
   reducers: { 
     setUser: (state, action) => {
       state.isLog = true
-      localStorage.setItem('token', action.payload.accessToken)
+      state.token = action.payload.token
+      localStorage.setItem('token', action.payload.token)
     },
-    setLogin: (state, action) => {
+    setLogin: (state) => {
       state.isLog = true
     },
     deleteToken: (state, action) => {
