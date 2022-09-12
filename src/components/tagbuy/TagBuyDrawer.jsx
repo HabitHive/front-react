@@ -2,12 +2,24 @@ import styled, {keyframes} from "styled-components"
 import { VscChromeClose } from "react-icons/vsc"
 import { BsStars } from "react-icons/bs"
 
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { __addTag } from "../../redux/modules/tagbuy";
+
 import TagLists from "./TagLists";
 
 const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
+  const dispatch = useDispatch();
 
-  const drawerHandler = () =>{
+  const [bought, setBought] = useState();
+
+  //Drawer 닫기
+  const drawerHandler = () => {
     setDrawer(false)
+  }
+
+  const tagSubmitHandler = (e) => {
+    dispatch(__addTag(bought));
   }
 
   return (
@@ -25,24 +37,30 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
         <StDrawerBody>
           <span>기간선택</span>
           <StDrawerPeriodSelect
-            onChange={e=>console.log(e.target.value)}
+            onChange={e=>{
+              setBought({
+                ...bought,
+                period: Number(e.target.value),
+                tagId: selectedTag[0].tagId
+              })
+            }}
           >
             <StDrawerLable style={{width:"100%"}}>
               EVENT!! 1일
-              <input type="radio" value="1" name="period"/>
+              <input type="radio" value={1} name="period"/>
             </StDrawerLable>
             <div>
               <StDrawerLable>
                 5일
-                <input type="radio" value="5" name="period"/>
+                <input type="radio" value={5} name="period"/>
               </StDrawerLable>
               <StDrawerLable>
                 15일
-                <input type="radio" value="15" name="period"/>
+                <input type="radio" value={15} name="period"/>
               </StDrawerLable>
               <StDrawerLable>
                 30일
-                <input type="radio" value="30" name="period"/>
+                <input type="radio" value={30} name="period"/>
               </StDrawerLable>
             </div>
           </StDrawerPeriodSelect> 
@@ -67,10 +85,14 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
             </StDrawerCalc>
         </StDrawerFooter>
         <StDrawerBtnWrap>
-          <StDrawerCancleBtn>
+          <StDrawerCancleBtn
+            onClick={drawerHandler}
+          >
             취소하기
           </StDrawerCancleBtn>
-          <StDrawerSubmitBtn>
+          <StDrawerSubmitBtn
+            onClick={tagSubmitHandler}
+          >
             구매하기
           </StDrawerSubmitBtn>
         </StDrawerBtnWrap>
@@ -107,7 +129,7 @@ const StDrawer = styled.div`
   border-radius: 16px 16px 0 0;
   padding: 30px;
 
-  animation-duration: 0.35s;
+  animation-duration: 0.4s;
   animation-timing-function: ease-out;
   animation-name: ${slideUp};
   animation-fill-mode: forwards;
@@ -149,6 +171,7 @@ const StDrawerLable = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   & input {
     visibility: hidden;
   }

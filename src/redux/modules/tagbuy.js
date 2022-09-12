@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "../../axios/axios";
 
+//point 추가 필요
 const initialState = {
   randomTagList: [],
   tagList: []
@@ -13,6 +14,15 @@ export const __getTagBuyList = createAsyncThunk(
   async (payload, api) => {
     const res = await axios.get(`/list`) //로컬테스트용
     return res.data[0]
+  }
+)
+
+// 예외처리 추가하기
+export const __addTag = createAsyncThunk(
+  "addTag",
+  async (payload, api) => {
+    await axios.post(`/tagbuy`, payload) //로컬테스트용
+    return 
   }
 )
 
