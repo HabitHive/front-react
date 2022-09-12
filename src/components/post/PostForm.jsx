@@ -268,19 +268,20 @@ const BodyContainer = styled.div`
       margin-top: 8px;
       display: flex;
       & #sunLabel {
-        display: block;
-        text-align: center;
-        background-color: #ebebeb; //미클릭시 초기색
-        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ebebeb; //미클릭시 배경 초기색
+        /* color: #fff; */
         color: black;
         border: none;
         border-radius: 50%;
         box-sizing: border-box;
         cursor: pointer;
-        width: 80%;
-        height: 80%;
-        /* width: 32px;
-        height: 32px; */
+        /* width: 80%;
+        height: 80%; */
+        width: 50px;
+        height: 50px;
         padding: 9px;
         margin: 0 16px 0 0;
         &:last-child {
