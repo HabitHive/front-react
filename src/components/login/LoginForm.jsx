@@ -4,10 +4,11 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../../axios/axios";
-import { setUser } from "../../redux/modules/user";
+import { setUser, __kakaoLogin } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
 import SubmitBtn from "../common/SubmitBtn";
+import { useEffect } from "react";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -26,12 +27,12 @@ const LoginForm = () => {
     mode: 'onChange',
     defaultValues: initValue,
   });
-
+  
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
   const onSubmit = (data) => {
     axios
-      // .post(`/user/login`, data) 백서버 연결할 때 사용
-      .post(`/login`, data)
+      .post(`/user/login`, data) // 백서버 연결할 때 사용
+      // .post(`/login`, data) 
       .then((res) => {
         dispatch(setUser(res.data))
         Swal.fire({
@@ -39,7 +40,7 @@ const LoginForm = () => {
           title: "로그인 완료",
           confirmButtonText: "확인"
         });
-        navigate("/main");
+        // navigate("/"); 나중에 풀기
       })
       .catch((err) => {
         console.log(err);
@@ -51,38 +52,54 @@ const LoginForm = () => {
       });
   };
 
+  // 카카오 로그인 시 쿼리문으로 token 값을 받아온다
+  const onSubmitKakao = () => {
+    window.location.href = `${process.env.REACT_APP_ENDPOINT}/kakao`
+  }
+
+  // 카카오 로그인 token 값
+  let token = new URL(window.location.href).searchParams.get("token");
+
+  useEffect(()=>{
+    if (token) {
+      dispatch(__kakaoLogin(token))
+      navigate('/')
+    }
+  },[token])
+
+
   return(
     <>
       <StLogo/>
-
-      <StLoginForm onSubmit={handleSubmit(onSubmit)}>
-        <StLoginInput
-          placeholder="이메일을 입력해주세요"
-          type="email"
-          {...register("email", {
-            required: true
-          })}
-        />
-        <StLoginInput
-          placeholder="비밀번호를 입력해주세요"
-          type="password"
-          {...register("password", {
-            required: true,
-          })}
-        />
-
-        <StBtnWrap>
+      <StLoginWrap>
+        <StLoginForm onSubmit={handleSubmit(onSubmit)}>
+          <StLoginInput
+            placeholder="이메일을 입력해주세요"
+            type="email"
+            {...register("email", {
+              required: true
+            })}
+          />
+          <StLoginInput
+            placeholder="비밀번호를 입력해주세요"
+            type="password"
+            {...register("password", {
+              required: true,
+            })}
+          />
           <SubmitBtn btnName={"로그인"}/>
           <StLogintoSingup onClick={()=>{navigate("/signup")}}>
             아직 회원이 아니신가요?
           </StLogintoSingup>
-          <StHorizonLine>
-            <span>or</span>
-          </StHorizonLine>
-          <SubmitBtn btnName={"카카오톡 로그인"}/>
-        </StBtnWrap>
+        </StLoginForm> 
 
-      </StLoginForm> 
+        <StHorizonLine>
+          <span>or</span>
+        </StHorizonLine>
+        <SubmitBtn btnName={"카카오톡 로그인"}
+          onClick={onSubmitKakao}
+        />
+      </StLoginWrap>
     </>
   )
 }
@@ -97,13 +114,16 @@ const StLogo = styled.div`
   top: 30px;
 `
 
+const StLoginWrap = styled.div`
+  height: 90vh;
+  padding: 20px;
+`
+
 const StLoginForm = styled.form`
-  height: 80vh;
   display: flex;
   flex-direction: column;
   position: relative;
   top: 50px;
-  padding: 20px;
 `
 
 const StLoginInput = styled.input`
@@ -125,13 +145,7 @@ const StLoginInput = styled.input`
   }
 `
 
-const StBtnWrap = styled.div`
-  
-`
-
 const StLogintoSingup = styled.p`
-  position: relative;
-  top: 40px;
   width: 100%;
   color: gray;
   text-align: center;

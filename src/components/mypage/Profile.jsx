@@ -8,8 +8,8 @@ const Profile = () => {
   const [user, setUser] = useState({});
 
   const getUserInfo = async () => {
-    // await axios.get(`/user/mypage/info`) 백서버 연결할 때 사용
-    await axios.get(`/info`)
+    await axios.get(`/user/mypage/info`) //백서버 연결할 때 사용
+    // await axios.get(`/info`)
     .then((res) => {
       setUser(res.data[0])
     })

@@ -22,13 +22,12 @@ const Router = () => {
   const dispatch = useDispatch();
 
   const isLog = useSelector(state=>state.user.isLog)
-  
   const token = localStorage.getItem("token")
 
   useEffect(()=>{
-    setToken(token)
     if (token) {
       dispatch(setLogin())
+      setToken(token)
     }
   })
 
@@ -39,7 +38,7 @@ const Router = () => {
             <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
             <Route path="/onboarding" element={<OnboardingPage/>}/>
             <Route path="/survey" element={<SurveyPage/>}/>
-            <Route path="/main" element={<MainDailyPage/>}/>
+            {/* <Route path="/main" element={<MainDailyPage/>}/> */}
             <Route path="/monthly" element={<MonthlyPage/>}/>
             <Route path="/buy" element={<TagBuyPage/>}/>
             <Route path="/post" element={<PostingPage/>}/>
