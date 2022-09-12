@@ -5,6 +5,7 @@ import HedaerImg from "../assets/images/mainDailyHeader.png";
 import { HiCalendar } from "react-icons/hi";
 
 import { useNavigate } from "react-router";
+import Navbar from "../components/common/Navbar";
 
 const MainDailyPage = () => {
   const navigate = useNavigate();
@@ -31,8 +32,13 @@ const MainDailyPage = () => {
         <WeekCalendar />
       </StHeaderContainer>
       <Body>
-        <div></div>
+        <div>
+          <input type="checkbox"></input>
+        </div>
       </Body>
+      <Footer>
+        <Navbar />
+      </Footer>
     </>
   );
 };
@@ -82,5 +88,7 @@ const StHeaderContainer = styled.div`
     }
   }
 `;
+
+const Footer = styled.div``;
 
 const Body = styled.div``;

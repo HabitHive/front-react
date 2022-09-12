@@ -70,7 +70,7 @@ const WeekCalendar = (props) => {
   // const monthNameShort = now.toLocaleString("en-US", { month: "short" }); //이번달 영어로 3자리표현
   const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
   const thisWeekDay = now.getDay(); //오늘의 요일 숫자( 0(일) ~ 6(토))
-  console.log(now.toString().slice(0, 3)); // 영어 형식으로 요일 받아오기 //Tue
+  // console.log(now.toString().slice(0, 3)); // 영어 형식으로 요일 받아오기 //Tue
   const currentTime =
     now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds(); //현재시각 24시표현법:nn분:nn초
 
@@ -141,24 +141,6 @@ const WeekCalendar = (props) => {
             </span>
           </p>
         </div>
-
-        {/* <span>
-          <Day
-            format={"DD"}
-            ticking={false}
-            // timezone={"KR/Pacific"}
-            interval={0}
-          />
-        </span> */}
-
-        {/* <span>
-              {thisYear}년 &nbsp;&nbsp;
-              {thisMonth}월 &nbsp;&nbsp;
-              {monthNameShort}&nbsp;&nbsp;
-              {now.getDate()}일&nbsp;&nbsp;
-              {now.toString().slice(0, 3)}
-            </span>
-            <br /> */}
 
         <DayContainer className="Day" onChange={getList}>
           <div className="daylistContainer">
@@ -274,6 +256,7 @@ const StCalendar = styled.div`
         border: none;
         border-radius: 50%;
         size: small;
+        cursor: pointer;
       }
     }
     /* 오늘자 기준 날짜 배열 Daylist */
