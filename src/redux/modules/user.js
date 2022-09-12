@@ -5,14 +5,17 @@ const initialState = {
   token: ""
 }
 
-export const __getNewToken = createAsyncThunk(
-  "getNewToken",
-  async (payload, thunkApi) => {
-    try {
-      return console.log(thunkApi)
-    } catch (err) {
-      return console.log(err)
-    }
+export const __basicLogin = createAsyncThunk(
+  "basicLogin",
+  (payload, api) => {
+    return payload
+  }
+)
+
+export const __kakaoLogin = createAsyncThunk(
+  "kakaoLogin",
+  (payload, api) => {
+    return payload
   }
 )
 
@@ -34,11 +37,19 @@ export const userSlice = createSlice({
       localStorage.removeItem("token")
     },
   },
+  extraReducers: (builder) => {
+    builder
+    .addCase(__kakaoLogin.fulfilled, (state, action) => {
+      state.isLog = true
+      state.token = action.payload
+      localStorage.setItem('token', action.payload)
+    })
+  }
 });
 
 // actions
 //dispatch로 액션을 전달해 상태를 어떻게 변화시킬지를 결정함
-export const { setUser, deleteToken, setLogin } = userSlice.actions;
+export const { setUser, setLogin, deleteToken } = userSlice.actions;
 
 //reducer
 export default userSlice.reducer;

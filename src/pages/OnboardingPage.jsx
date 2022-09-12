@@ -1,8 +1,9 @@
+import PageSlide from "../components/onboarding/PageSlide";
 
 const OnboardingPage = () => {
   return (
     <>
-      <p>온보디잉~~~</p>
+      <PageSlide/>
     </>
   );
 }

@@ -4,11 +4,11 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../../axios/axios";
-import { setUser } from "../../redux/modules/user";
+import { setUser, __kakaoLogin } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
 import SubmitBtn from "../common/SubmitBtn";
-import SaveButton from "../common/SaveButton"
+import { useEffect } from "react";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -27,12 +27,12 @@ const LoginForm = () => {
     mode: 'onChange',
     defaultValues: initValue,
   });
-
+  
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
   const onSubmit = (data) => {
     axios
-      // .post(`/user/login`, data) // 백서버 연결할 때 사용
-      .post(`/login`, data) 
+      .post(`/user/login`, data) // 백서버 연결할 때 사용
+      // .post(`/login`, data) 
       .then((res) => {
         dispatch(setUser(res.data))
         Swal.fire({
@@ -52,19 +52,21 @@ const LoginForm = () => {
       });
   };
 
-  const onSubmitKakao = (e) => {
-    e.preventDefault();
-    axios.get(`/kakao`)
-    .then((res)=>{
-      dispatch(setUser(res.data))
-      Swal.fire({
-        icon: "success",
-        title: "로그인 완료",
-        confirmButtonText: "확인"
-      });
-    })
-    .catch((err)=>console.log(err))
+  // 카카오 로그인 시 쿼리문으로 token 값을 받아온다
+  const onSubmitKakao = () => {
+    window.location.href = `${process.env.REACT_APP_ENDPOINT}/kakao`
   }
+
+  // 카카오 로그인 token 값
+  let token = new URL(window.location.href).searchParams.get("token");
+
+  useEffect(()=>{
+    if (token) {
+      dispatch(__kakaoLogin(token))
+      navigate('/')
+    }
+  },[token])
+
 
   return(
     <>
@@ -95,7 +97,7 @@ const LoginForm = () => {
           <span>or</span>
         </StHorizonLine>
         <SubmitBtn btnName={"카카오톡 로그인"}
-          onClick={(e)=>onSubmitKakao(e)}
+          onClick={onSubmitKakao}
         />
       </StLoginWrap>
     </>

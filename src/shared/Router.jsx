@@ -16,22 +16,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import setToken from "../axios/setToken";
 
-import { setUser } from "../redux/modules/user";
+import { setLogin } from "../redux/modules/user";
 
 const Router = () => {
   const dispatch = useDispatch();
 
   const isLog = useSelector(state=>state.user.isLog)
-  const user = useSelector(state=>state.user)
+  const token = localStorage.getItem("token")
 
-  // console.log(user)
-
-  // useEffect(()=>{
-  //   if (user) {
-  //     dispatch(setUser())
-  //   }
-  //   setToken(user)
-  // })
+  useEffect(()=>{
+    if (token) {
+      dispatch(setLogin())
+      setToken(token)
+    }
+  })
 
   return (
     <BrowserRouter>

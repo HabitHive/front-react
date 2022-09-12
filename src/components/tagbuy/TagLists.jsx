@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const TagLists = ({lists, setSelectedTag, setDrawer}) => {
+const TagLists = ({lists, setSelectedTag, setDrawer, disabled}) => {
 
   const tagSelectHandler = (list) =>  {
     setSelectedTag(list.list)

@@ -44,8 +44,8 @@ const UserTags = () => {
 
   // 유저의 태그 정보 불러온 후 로딩화면 닫기
   const getUserTags = async (today) => {
-    // await axios.put(`/user/mypage/tag`, today) //백서버 연결할 때 사용
-    await axios.get(`/tag`)
+    await axios.put(`/user/mypage/tag`, today) //백서버 연결할 때 사용
+    // await axios.get(`/tag`) // 로컬테스트용
     .then((res) => {
       setStillTags(res.data[0].stillTags)
       setSuccessTags(res.data[0].successTags)

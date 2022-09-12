@@ -32,7 +32,7 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
             onClick={drawerHandler}
           />
         </StDrawerHeader>
-        <TagLists lists={selectedTag}/>
+        <TagLists lists={selectedTag} disabled={"disabled"}/>
 
         <StDrawerBody>
           <span>기간선택</span>
