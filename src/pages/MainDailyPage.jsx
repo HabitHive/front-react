@@ -3,6 +3,7 @@ import styled from "styled-components";
 import WeekCalendar from "../components/main/daily/WeekCalendar";
 import HedaerImg from "../assets/images/mainDailyHeader.png";
 import { HiCalendar } from "react-icons/hi";
+import DailyTag from "../components/main/daily/DailyTag";
 
 import { useNavigate } from "react-router";
 import Navbar from "../components/common/Navbar";
@@ -31,14 +32,12 @@ const MainDailyPage = () => {
         </div>
         <WeekCalendar />
       </StHeaderContainer>
-      <Body>
-        <div>
-          <input type="checkbox"></input>
-        </div>
-      </Body>
-      <Footer>
+      <StBodyContainer>
+        <DailyTag />
+      </StBodyContainer>
+      <StFooterContainer>
         <Navbar />
-      </Footer>
+      </StFooterContainer>
     </>
   );
 };
@@ -88,7 +87,6 @@ const StHeaderContainer = styled.div`
     }
   }
 `;
+const StBodyContainer = styled.div``;
 
-const Footer = styled.div``;
-
-const Body = styled.div``;
+const StFooterContainer = styled.div``;

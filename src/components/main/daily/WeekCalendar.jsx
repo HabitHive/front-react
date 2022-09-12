@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import Month from "react-live-clock";
+// import Month from "react-live-clock";
 
 // 당일기준 해당 월의 마지막 날까지 출력하기 위한 반복함수
 const GetAllDate = (today, lastday) => {
@@ -67,7 +67,6 @@ const WeekCalendar = (props) => {
   const [weeklist, setWeeklist] = useState([]);
 
   const thisMonth = now.getMonth() + 1; //이번달숫자 (0부터 시작이라 +1)
-  // const monthNameShort = now.toLocaleString("en-US", { month: "short" }); //이번달 영어로 3자리표현
   const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
   const thisWeekDay = now.getDay(); //오늘의 요일 숫자( 0(일) ~ 6(토))
   // console.log(now.toString().slice(0, 3)); // 영어 형식으로 요일 받아오기 //Tue
@@ -121,23 +120,16 @@ const WeekCalendar = (props) => {
       <StCalendar>
         <div className="Year-Month">
           <p>
-            <span className="Year">
-              {/* <Year
-                id="Year"
-                format={"YYYY"} //년도 형식 ( 2022 ) , 4글자
-                ticking={false} // true 시 오류남
-                // timezone={"KR/Pacific"}
-                interval={0} //시간 자동업데이트 기간. 1000ms가 기본값. 0은 비활성화
-              /> */}
-            </span>
+            <span className="Year"></span>
             &nbsp;&nbsp;
             <span className="Month">
-              <Month
+              {monthNameLong}
+              {/* <Month
                 format={"MMM"}
                 ticking={false}
                 // timezone={"KR/Pacific"}
                 interval={0}
-              />
+              /> */}
             </span>
           </p>
         </div>
@@ -261,6 +253,7 @@ const StCalendar = styled.div`
     }
     /* 오늘자 기준 날짜 배열 Daylist */
     & .daylistSelector {
+      overflow: auto;
       display: flex;
       flex-direction: column;
       justify-content: center;
