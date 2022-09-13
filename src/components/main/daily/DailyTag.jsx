@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { setDefaultLocale } from "react-datepicker";
 import styled from "styled-components";
 
 const DailyTag = () => {
@@ -31,7 +30,7 @@ const DailyTag = () => {
     <>
       <STTodayTagList>
         {data.length === 0 ? (
-          <div>오늘의 목표가 없습니다</div>
+          <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
           data.map((list, i) => (
             <div className="tagList" key={list.scheduleId}>
@@ -64,7 +63,14 @@ export default DailyTag;
 const STTodayTagList = styled.div`
   /* background-color: coral; */
   width: 100%;
+  display: flex;
   margin-top: 24px;
+
+  & .empty {
+    /* background-color: blue; */
+    flex-direction: column;
+    color: #808080;
+  }
   //체크박스랑 말풍선영역 묶인곳
   & .tagList {
     margin: 0 20px 12px 20px;
