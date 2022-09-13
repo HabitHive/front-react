@@ -23,8 +23,10 @@ export const __getTagBuyList = createAsyncThunk(
 export const __addTag = createAsyncThunk(
   "addTag",
   async (payload, api) => {
+    console.log(payload)
     const res = await axios.post(`/tag/buy`, payload) //백서버 연결
     // await axios.post(`/tagbuy`, payload) //로컬테스트용
+    console.log(res)
     return 
   }
 )
