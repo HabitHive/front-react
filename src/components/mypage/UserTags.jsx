@@ -15,11 +15,11 @@ const UserTags = () => {
   const tags = useSelector(state=>state.profile.userTags)
 
   //태그 목록 분류
-  const stillTags = tags.stillTag;
+  const stillTags = tags.stillTags;
   const successTags = tags.successTags;
   const failTags = tags.failTags;
 
-  console.log(stillTags)
+  console.log(tags)
 
   //request 에 오늘 날짜와 함께 요청
   const now = new Date();

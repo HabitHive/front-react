@@ -43,9 +43,7 @@ export const profileSlice = createSlice({
     })
     builder
     .addCase(__getUserTags.fulfilled, (state, action) => {
-      state.userTags.stillTags = action.payload.stillTags
-      state.userTags.successTags = action.payload.successTags
-      state.userTags.failTags = action.payload.failTags
+      state.userTags = action.payload
     })
   }
 });

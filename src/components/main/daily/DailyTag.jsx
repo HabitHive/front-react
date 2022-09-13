@@ -7,25 +7,26 @@ const DailyTag = () => {
   // const [user, setUser] = useState({});
   const [data, setData] = useState([]);
 
-  const getUserTagDate = async () => {
-    await axios
-      // .get("http://43.200.163.13")
-      .get("http://localhost:5000/tags")
-      .then((response) => {
-        console.log(response.data[0].result[0].category);
-        setData(response.data[0].result);
-      })
-      .catch((error) => {
-        console.log("무언가 오류가 났습니다");
-        // if (tagList === 0) {
-        //   return <div>{"오늘은 목표가 없습니다"}</div>
-        // }
-      });
-  };
+  // const getUserTagDate = async () => {
+  //   await axios
+  //     // .get("http://43.200.163.13")
+  //     .get("http://localhost:5000/tags")
+  //     .then((response) => {
+  //       console.log(response.data[0].result[0].category);
+  //       setData(response.data[0].result);
+  //     })
+  //     .catch((error) => {
+  //       console.log("무언가 오류가 났습니다");
+  //       // if (tagList === 0) {
+  //       //   return <div>{"오늘은 목표가 없습니다"}</div>
+  //       // }
+  //     });
+  // };
 
-  useEffect(() => {
-    getUserTagDate();
-  }, []);
+  // useEffect(() => {
+  //   getUserTagDate();
+  // }, []);
+
   return (
     <>
       <STTodayTagList>
