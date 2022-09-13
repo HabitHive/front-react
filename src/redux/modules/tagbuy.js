@@ -15,7 +15,7 @@ export const __getTagBuyList = createAsyncThunk(
   async (payload, api) => {
     const res = await axios.get(`/tag/list`) //백서버 연결
     // const res = await axios.get(`/list`) //로컬테스트용
-    return res.data[0]
+    return res.data.result
   }
 )
 
@@ -38,15 +38,15 @@ export const tagBuySlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(__getTagBuyList.fulfilled, (state, action) => {
-      state.randomTagList = action.payload.result.randomTagList
-      state.tagList = action.payload.result.tagList
+      state.randomTagList = action.payload.randomTagList
+      state.tagList = action.payload.tagList
     })
   }
 });
 
 // actions
 //dispatch로 액션을 전달해 상태를 어떻게 변화시킬지를 결정함
-export const { tagBuy } = tagBuySlice.actions;
+export const {} = tagBuySlice.actions;
 
 //reducer
 export default tagBuySlice.reducer;

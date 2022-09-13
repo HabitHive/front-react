@@ -7,6 +7,8 @@ const TagLists = ({lists, setSelectedTag, setDrawer, disabled}) => {
     setDrawer(true)
   }
 
+  console.log(lists)
+
   return(
     <>
       {lists?.map((list, tagId)=>{

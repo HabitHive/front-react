@@ -1,26 +1,18 @@
 import styled from "styled-components"
-import Swal from "sweetalert2";
 
-import axios from "../../axios/axios"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { __getProfile } from "../../redux/modules/mypage";
+
 
 const Profile = () => {
-  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+
+  const profile = useSelector(state=>state.profile)
 
   const getUserInfo = async () => {
-    await axios.get(`/user/mypage/info`) //백서버 연결할 때 사용
-    // await axios.get(`/info`)
-    .then((res) => {
-      setUser(res.data[0])
-    })
-    .catch((err) => {
-      console.log(err);
-      Swal.fire({
-        icon: "error",
-        title: "에러메시지 나중에 넣기",
-        confirmButtonText: "확인",
-      });
-    });
+    dispatch(__getProfile())
   };
 
   useEffect(()=>{
@@ -33,9 +25,9 @@ const Profile = () => {
       <StUserImg>
         <StPetImg/>
       </StUserImg>
-      <p>{user.nickname}</p>
+      <p>{profile.nickname}</p>
       <StPoint>
-        ✨{user.point} <span>point</span>
+        ✨{profile.point} <span>point</span>
       </StPoint>
     </StProfileWrap>
   </>

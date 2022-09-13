@@ -13,21 +13,22 @@ import EditingPage from "../pages/EditingPage";
 import MyPage from "../pages/MyPage";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import setToken from "../axios/setToken";
 
 import { setLogin } from "../redux/modules/user";
+import setToken from "../axios/setToken";
+import { useLayoutEffect } from "react";
 
 const Router = () => {
   const dispatch = useDispatch();
-
-  const isLog = useSelector(state=>state.user.isLog)
+  
   const token = localStorage.getItem("token")
+  const isLog = useSelector(state=>state.user.isLog)
 
-  useEffect(()=>{
+  // 마운트가 완료되기 전에 먼저 실행된다
+  useLayoutEffect(()=>{
     if (token) {
-      dispatch(setLogin())
       setToken(token)
+      dispatch(setLogin(token))
     }
   })
 
