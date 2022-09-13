@@ -29,7 +29,7 @@ export const __logout = createAsyncThunk(
     const res = await axios.delete(`/user/logout`, payload) // 백서버 연결할 때 사용
     // const res = await axios.post(`/login`, payload) // 로컬테스트용
     console.log(res)
-    return 
+    return
   }
 )
 

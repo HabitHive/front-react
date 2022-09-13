@@ -5,16 +5,18 @@ import { useDispatch } from "react-redux";
 
 import { deleteToken } from "../../redux/modules/user";
 import { __logout } from "../../redux/modules/user";
+import Swal from "sweetalert2";
 
 const SubNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const logoutHandler = () => {
-    dispatch(__logout())
-    navigate("/")
-  }
 
+  const logoutHandler = async () => {
+    localStorage.removeItem("token")
+    dispatch(__logout())
+    navigate("/") // 동기처리하기
+  }
+ 
   return (
     <StSubNav>
       <ul>
@@ -23,11 +25,7 @@ const SubNav = () => {
         >
           ■ 사용자 가이드
         </StSubNavMenu>
-        <StSubNavMenu
-          onClick={()=>{
-            logoutHandler()
-          }}
-        >
+        <StSubNavMenu onClick={logoutHandler}>
           ■ 로그아웃
         </StSubNavMenu>
       </ul>
