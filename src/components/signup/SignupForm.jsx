@@ -41,6 +41,7 @@ const SignupForm = () => {
       .post(`/user/signup`, data) //백서버 연결할 때 사용
       // .post(`/signup`, data) //로컬테스트용 
       .then((res) => {
+        console.log(res)
         dispatch(setUser(res.data))
         Swal.fire({
           icon: "success",

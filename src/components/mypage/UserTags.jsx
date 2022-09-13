@@ -1,23 +1,25 @@
 import styled from "styled-components"
-import Loading from "../common/Loading";
 
-import axios from "../../axios/axios"
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
 
+import { __getUserTags } from "../../redux/modules/mypage";
 import TagWeekday from "./TagWeekday";
 import ToggleTags from "./ToggleTags";
 
 const UserTags = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // true일 때 로딩화면이 보여진다
-  const [loading, setLoading] = useState(true);
+  const tags = useSelector(state=>state.profile.userTags)
 
   //태그 목록 분류
-  const [stillTags, setStillTags] = useState({});
-  const [successTags, setSuccessTags] = useState({});
-  const [failTags, setFailTags] = useState({});
+  const stillTags = tags.stillTags;
+  const successTags = tags.successTags;
+  const failTags = tags.failTags;
+
+  console.log(tags)
 
   //request 에 오늘 날짜와 함께 요청
   const now = new Date();
@@ -42,72 +44,53 @@ const UserTags = () => {
     setSuccessBtnToggle(false)
   }
 
-  // 유저의 태그 정보 불러온 후 로딩화면 닫기
-  const getUserTags = async (today) => {
-    await axios.put(`/user/mypage/tag`, today) //백서버 연결할 때 사용
-    // await axios.get(`/tag`) // 로컬테스트용
-    .then((res) => {
-      setStillTags(res.data[0].stillTags)
-      setSuccessTags(res.data[0].successTags)
-      setFailTags(res.data[0].failTags)
-      setLoading(false)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  };
-
   useEffect(()=>{
-    getUserTags(today)
+    dispatch(__getUserTags(today))
   },[])
 
   return(
-    <>
-      {loading ? <Loading /> :
-        <StTagsWrap>
-          <StTagTitle>
-            진행 중인 습관
-          </StTagTitle>
-          { stillTags.length === 0 ? <StTagHelpTxt> 현재 진행 중인 습관이 없습니다 </StTagHelpTxt> :
-            stillTags.map((stillTag, tagName)=>{
-              return (
-              <StTagShadowBox justify={"space-between"} key={tagName}>
-                <StStillTag>
-                  <StStillTagName>
-                    {stillTag.tagName}
-                  </StStillTagName>
-                  <TagWeekday weekData={stillTag.week}/>
-                </StStillTag>
-                <StStillTagdDay>
-                  D-{stillTag.dDay}
-                </StStillTagdDay>
-              </StTagShadowBox>
-              )
-            })
-          }
+      <StTagsWrap>
+        <StTagTitle>
+          진행 중인 습관
+        </StTagTitle>
+        { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 습관이 없습니다 </StTagHelpTxt> :
+          stillTags?.map((stillTag, tagName)=>{
+            return (
+            <StTagShadowBox justify={"space-between"} key={tagName}>
+              <StStillTag>
+                <StStillTagName>
+                  {stillTag.tagName}
+                </StStillTagName>
+                <TagWeekday weekData={stillTag.week}/>
+              </StStillTag>
+              <StStillTagdDay>
+                D-{stillTag.dDay}
+              </StStillTagdDay>
+            </StTagShadowBox>
+            )
+          })
+        }
 
-          <StTagTitle>
-            도전했던 습관
-          </StTagTitle>
-          <StDoneTagBtn className={ successBtnToggle ? "active" : null }
-            onClick={successBtnHandler}
-          >
-            완주한 습관
-          </StDoneTagBtn>
-          <StDoneTagBtn className={ failBtnToggle ? "active" : null }
-            onClick={failBtnHandler}
-          >
-            완주 못한 습관
-          </StDoneTagBtn>
-          <StTagShadowBox height={"150px"}>
-          {successBtnToggle ?
-            <ToggleTags tags={successTags}/> :
-            <ToggleTags tags={failTags}/>
-          }
-          </StTagShadowBox>
-        </StTagsWrap> 
-      }
-    </>
+        <StTagTitle>
+          도전했던 습관
+        </StTagTitle>
+        <StDoneTagBtn className={ successBtnToggle ? "active" : null }
+          onClick={successBtnHandler}
+        >
+          완주한 습관
+        </StDoneTagBtn>
+        <StDoneTagBtn className={ failBtnToggle ? "active" : null }
+          onClick={failBtnHandler}
+        >
+          완주 못한 습관
+        </StDoneTagBtn>
+        <StTagShadowBox height={"150px"}>
+        {successBtnToggle ?
+          <ToggleTags tags={successTags}/> :
+          <ToggleTags tags={failTags}/>
+        }
+        </StTagShadowBox>
+      </StTagsWrap> 
   )
 }
 export default UserTags

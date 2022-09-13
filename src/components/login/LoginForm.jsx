@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import axios from "../../axios/axios";
-import { setUser, __kakaoLogin } from "../../redux/modules/user";
+import { setUser, __basicLogin, __kakaoLogin } from "../../redux/modules/user";
 import { useDispatch } from "react-redux";
 
 import SubmitBtn from "../common/SubmitBtn";
@@ -30,26 +30,27 @@ const LoginForm = () => {
   
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
   const onSubmit = (data) => {
-    axios
-      .post(`/user/login`, data) // 백서버 연결할 때 사용
-      // .post(`/login`, data) 
-      .then((res) => {
-        dispatch(setUser(res.data))
-        Swal.fire({
-          icon: "success",
-          title: "로그인 완료",
-          confirmButtonText: "확인"
-        });
-        // navigate("/"); 나중에 풀기
-      })
-      .catch((err) => {
-        console.log(err);
-        Swal.fire({
-          icon: "error",
-          title: "에러메시지 나중에 넣기",
-          confirmButtonText: "확인",
-        });
-      });
+    dispatch(__basicLogin(data))
+    // axios
+    //   .post(`/user/login`, data) // 백서버 연결할 때 사용
+    //   // .post(`/login`, data) 
+    //   .then((res) => {
+    //     dispatch(setUser(res.data))
+    //     Swal.fire({
+    //       icon: "success",
+    //       title: "로그인 완료",
+    //       confirmButtonText: "확인"
+    //     });
+    //     // navigate("/"); 나중에 풀기
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "에러메시지 나중에 넣기",
+    //       confirmButtonText: "확인",
+    //     });
+    //   });
   };
 
   // 카카오 로그인 시 쿼리문으로 token 값을 받아온다
@@ -58,14 +59,14 @@ const LoginForm = () => {
   }
 
   // 카카오 로그인 token 값
-  let token = new URL(window.location.href).searchParams.get("token");
+  let socialToken = new URL(window.location.href).searchParams.get("token");
 
   useEffect(()=>{
-    if (token) {
-      dispatch(__kakaoLogin(token))
+    if (socialToken) {
+      dispatch(__kakaoLogin(socialToken))
       navigate('/')
     }
-  },[token])
+  },[socialToken])
 
 
   return(

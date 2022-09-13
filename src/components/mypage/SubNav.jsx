@@ -4,13 +4,14 @@ import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux";
 
 import { deleteToken } from "../../redux/modules/user";
+import { __logout } from "../../redux/modules/user";
 
 const SubNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const logoutHandler = () => {
-    dispatch(deleteToken())
+    dispatch(__logout())
     navigate("/")
   }
 

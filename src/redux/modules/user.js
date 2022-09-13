@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import axios from "../../axios/axios";
+
 const initialState = {
   isLog: false,
   token: ""
@@ -7,8 +9,10 @@ const initialState = {
 
 export const __basicLogin = createAsyncThunk(
   "basicLogin",
-  (payload, api) => {
-    return payload
+  async (payload, api) => {
+    const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
+    // const res = await axios.post(`/login`, payload) // 로컬테스트용
+    return res.data.token
   }
 )
 
@@ -16,6 +20,16 @@ export const __kakaoLogin = createAsyncThunk(
   "kakaoLogin",
   (payload, api) => {
     return payload
+  }
+)
+
+export const __logout = createAsyncThunk(
+  "logout",
+  async (payload, api) => {
+    const res = await axios.delete(`/user/logout`, payload) // 백서버 연결할 때 사용
+    // const res = await axios.post(`/login`, payload) // 로컬테스트용
+    console.log(res)
+    return 
   }
 )
 
@@ -29,8 +43,9 @@ export const userSlice = createSlice({
       state.token = action.payload.token
       localStorage.setItem('token', action.payload.token)
     },
-    setLogin: (state) => {
+    setLogin: (state, action) => {
       state.isLog = true
+      state.token = action.payload
     },
     deleteToken: (state, action) => {
       state.isLog = false
@@ -39,10 +54,20 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(__kakaoLogin.fulfilled, (state, action) => {
+    .addCase(__basicLogin.fulfilled, (state, action) => {
+      localStorage.setItem('token', action.payload)
       state.isLog = true
       state.token = action.payload
+    })
+    .addCase(__basicLogin.rejected, (state, action) => {
       localStorage.setItem('token', action.payload)
+      state.isLog = true
+      state.token = action.payload
+    })
+    .addCase(__kakaoLogin.fulfilled, (state, action) => {
+      localStorage.setItem('token', action.payload)
+      state.isLog = true
+      state.token = action.payload
     })
   }
 });
