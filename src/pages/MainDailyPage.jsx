@@ -3,10 +3,12 @@ import styled from "styled-components";
 import WeekCalendar from "../components/main/daily/WeekCalendar";
 import HedaerImg from "../assets/images/mainDailyHeader.png";
 import { HiCalendar } from "react-icons/hi";
-import DailyTag from "../components/main/daily/DailyTag";
 
 import { useNavigate } from "react-router";
 import Navbar from "../components/common/Navbar";
+
+import DailyTag from "../components/main/daily/DailyTag";
+import MyTag from "../components/main/daily/MyTag";
 
 const MainDailyPage = () => {
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ const MainDailyPage = () => {
       </StHeaderContainer>
       <StBodyContainer>
         <DailyTag />
+        <MyTag />
       </StBodyContainer>
       <StFooterContainer>
         <Navbar />
@@ -87,6 +90,8 @@ const StHeaderContainer = styled.div`
     }
   }
 `;
-const StBodyContainer = styled.div``;
+const StBodyContainer = styled.div`
+  position: relative;
+`;
 
 const StFooterContainer = styled.div``;
