@@ -19,8 +19,6 @@ const UserTags = () => {
   const successTags = tags.successTags;
   const failTags = tags.failTags;
 
-  console.log(tags)
-
   //request 에 오늘 날짜와 함께 요청
   const now = new Date();
   const nowYear = now.getFullYear();

@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <StNavContainer>
       <StNavUl>
-        <StNavli onClick={()=>{navigate('/main')}}>
+        <StNavli onClick={()=>{navigate('/')}}>
           <StNavIcon/>
           홈
         </StNavli>
