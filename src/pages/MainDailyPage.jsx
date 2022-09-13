@@ -14,7 +14,7 @@ const MainDailyPage = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <STContainer>
       <StHeaderContainer>
         <div className="headerImgContainer">
           <img
@@ -41,17 +41,23 @@ const MainDailyPage = () => {
       <StFooterContainer>
         <Navbar />
       </StFooterContainer>
-    </>
+    </STContainer>
   );
 };
 
 export default MainDailyPage;
+
+const STContainer = styled.div`
+  /* display: flex;
+  flex-direction: column; */
+`;
 
 const StHeaderContainer = styled.div`
   background: linear-gradient(138.07deg, #e8d1fc -1.75%, #a6b8f6 85.02%);
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.12);
   opacity: 0.8;
   width: 100%;
+  height: 214px;
   position: relative;
   & .headerImgContainer {
     /* background: url("../assets/images/mainDailyHeader.png"); */
@@ -91,7 +97,12 @@ const StHeaderContainer = styled.div`
   }
 `;
 const StBodyContainer = styled.div`
+  /* background-color: pink; */
+  /* flex: 1; */
   position: relative;
 `;
 
-const StFooterContainer = styled.div``;
+const StFooterContainer = styled.div`
+  width: 100%;
+  height: 30px;
+`;

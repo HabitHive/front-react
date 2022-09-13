@@ -1,35 +1,35 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
+
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { __getMyTags } from "../../../redux/modules/mytag";
 
 const MyTag = () => {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState([]);
 
-  const getUserTag = async () => {
-    await axios
-      // .get("http://43.200.163.13")
-      .get("http://localhost:5000/tags")
-      .then((response) => {
-        // console.log(response.data[0].result[0].category);
-        const categories = response.data[0].result[0].category;
-        setData(categories);
-      })
-      .catch((error) => {
-        console.log("오류가 났습니다");
-      });
-  };
+  const categories = useSelector((state) => state.myTags);
+  console.log(categories);
+
+  const now = new Date();
+  const thisYear = now.getFullYear();
+  const thisMonth =
+    now.getMonth() + 1 > 9 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1);
+  const thisDate = now.getDate() > 9 ? now.getDate() : "0" + now.getDate();
+  const today = `${thisYear}-${thisMonth}-${thisDate}`;
 
   useEffect(() => {
-    getUserTag();
+    dispatch(__getMyTags(today));
   }, []);
 
   return (
     <>
       <STMyTag>
-        <div className="myTitle">My habbit</div>
+        <div className="myTitle">My habit</div>
         <hr className="hr"></hr>
         <div className="tagCategories">
-          {data?.map((category, i) => {
+          {categories?.map((category, i) => {
             return (
               <div className="category" key={i}>
                 {category}
@@ -48,11 +48,12 @@ const STMyTag = styled.div`
   /* width: 320px; */
   display: flex;
   flex-direction: column;
-  position: absolute;
+  /* position: absolute; */
+  position: fixed;
   z-index: 2;
-  left: 20px;
-  bottom: 24px;
-  width: 92%;
+  bottom: 76px;
+  width: 90%;
+  max-width: 420px;
   height: 180px;
   padding: 12px 16px;
 
