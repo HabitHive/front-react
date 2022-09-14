@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/modules/user";
 import axios from "../../axios/axios";
 
-import SubmitBtn from "../common/SubmitBtn";
+import SaveButtonLong from "../common/SaveButtonLong";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -145,7 +145,7 @@ const SignupForm = () => {
         <p> <FiAlertCircle/> 특수문자 및 자모음은 사용할 수 없습니다 </p>
       )}
 
-      <SubmitBtn btnName={"가입하기"}/>
+      <SaveButtonLong btnName={"가입하기"}/>
     </StSignupForm>
   )
 }

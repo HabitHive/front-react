@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Swal from "sweetalert2";
 
-import SubmitBtn from "../common/SubmitBtn"
+import SaveButtonLong from "../common/SaveButtonLong"
 import categories from "./categories"
 import CategoryBtn from "./CategoryBtn";
 
@@ -36,6 +36,7 @@ const Category = () => {
       <StCategoryTxt>
         최대 3개
       </StCategoryTxt>
+      
 
       <StCategoryWrap>
         {
@@ -51,7 +52,7 @@ const Category = () => {
         }
       </StCategoryWrap>
 
-      <SubmitBtn btnName={"선택완료"}
+      <SaveButtonLong btnName={"선택완료"}
         onClick={categorySubmitHandler}
       />
     </>
