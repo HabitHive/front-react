@@ -1,13 +1,13 @@
 import styled from "styled-components"
 
-const SubmitBtn = (props) => {
+const SaveButtonLong = (props) => {
   return(
     <StSubmitBtn onClick={props.onClick} top={props.top} left={props.left}>
       {props.btnName}
     </StSubmitBtn>
   )
 }
-export default SubmitBtn
+export default SaveButtonLong
 
 const StSubmitBtn = styled.button`
   cursor: pointer;
@@ -20,8 +20,8 @@ const StSubmitBtn = styled.button`
   border-radius: 16px;
 
   color: white;
-  font-size: 20px;
-  font-weight: bolder;
+  font-weight: 700;
+  font-size: 16px;
 
   background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
   box-shadow: 2px 2px 10px 4px rgba(88, 56, 255, 0.25);
