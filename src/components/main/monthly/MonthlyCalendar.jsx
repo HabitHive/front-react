@@ -4,32 +4,47 @@ import "./Calendar.css";
 import moment from "moment";
 
 import React, { useState, useEffect } from "react";
-import { __getDate } from "../../../redux/modules/date";
+import { __getMonth } from "../../../redux/modules/month";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const MonthlyCalendar = () => {
   // const [date, setDate] = React.useState(new Date());
-  const dispatch = useDispatch();
   const now = new Date();
+  const dispatch = useDispatch();
   const [value, setValue] = useState(now);
+  const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
+
   const today = now.getDate();
+  console.log(pickDate);
+  const piDate = useSelector((state) => state.getMonth);
+  console.log(piDate);
 
-  const getDate = async () => {
-    const pickDate = moment(value).format("YYYY-MM-DD");
-    dispatch(__getDate(pickDate));
-  };
+  // const getMonth = async () => {
+  //   dispatch(__getMonth(pickDate));
+  // };
 
-  useEffect(() => {
-    getDate();
-  }, []);
+  // const getDay = async () => {
+  //   // dispatch(__getDayTag());
+  // };
+
+  // useEffect(() => {
+  //   getMonth();
+  // }, []);
 
   return (
     <>
       <Calendar
         onChange={(event) => {
-          setValue(event);
-          getDate();
+          // setValue(event);
+          // getMonth();
         }}
+        onClickDay={(value, event) => {
+          setValue(event);
+        }}
+        // ondblclick ={(event) => {
+
+        // }}
         value={value}
         minDate={new Date(today)}
         showNeighboringMonth={false}
