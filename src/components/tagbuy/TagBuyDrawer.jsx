@@ -112,7 +112,7 @@ const StDrawerBg = styled.div`
   display: ${props=>props.display};
 `
 
-const slideUp = keyframes`
+const CarouselUp = keyframes`
   from {
     transform: translateY(100px);
   } to {
@@ -131,7 +131,7 @@ const StDrawer = styled.div`
 
   animation-duration: 0.4s;
   animation-timing-function: ease-out;
-  animation-name: ${slideUp};
+  animation-name: ${CarouselUp};
   animation-fill-mode: forwards;
 `
   
