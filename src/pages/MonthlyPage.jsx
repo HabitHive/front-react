@@ -2,13 +2,33 @@ import styled from "styled-components";
 
 import MonthlyCalendar from "../components/main/monthly/MonthlyCalendar";
 import DailyTag from "../components/main/daily/DailyTag";
+import Header from "../components/common/Header";
+import moment from "moment";
 import { FiChevronLeft } from "react-icons/fi";
 
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/common/Header";
+import { useSelector, useDispatch } from "react-redux";
+import { __getMonth } from "../redux/modules/month";
 
 const MonthlyPage = () => {
-  const navigate = useNavigate;
+  const dispatch = useDispatch();
+  const now = new Date();
+  const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
+
+  const today = now.getDate(); //오늘날짜
+
+  const [value, setValue] = useState(now);
+  const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
+
+  // const getMonthInfo = async () => {
+  //   dispatch(__getMonth());
+  // };
+
+  useEffect(() => {
+    dispatch(__getMonth(pickDate));
+  }, []);
+
   return (
     <STContainer>
       <HeaderContainer>
@@ -32,7 +52,10 @@ const MonthlyPage = () => {
         <div className="dailyBox">
           <div className="topBox">
             <div className="titleText">나의 일별 목표</div>
-            <div className="titleDate">juasefaf 1123</div>
+            <div className="titleDate">
+              {monthNameLong}&nbsp;&nbsp;
+              {today}
+            </div>
           </div>
           <div className="dailyList">
             <DailyTag />

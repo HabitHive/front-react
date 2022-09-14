@@ -3,7 +3,7 @@ import userSlice from '../modules/user'
 import tagBuySlice from '../modules/tagbuy'
 import profileSlice from '../modules/mypage'
 import myTagSlice from "../modules/mytag"
-import getDateSlice from "../modules/date"
+import getMonthSlice from "../modules/month"
 
 const store = configureStore({
   reducer: {
@@ -11,7 +11,7 @@ const store = configureStore({
     tagBuy: tagBuySlice,
     profile: profileSlice,
     myTag: myTagSlice,
-    getDate: getDateSlice,
+    getMonth: getMonthSlice,
   }
 }) 
 
