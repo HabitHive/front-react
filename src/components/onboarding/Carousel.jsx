@@ -1,11 +1,13 @@
 import styled from "styled-components"
 
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
-import carousel1 from "../../assets/carousel1.png"
-
+import carouselContents from "./carouselContents"
+import SaveButtonLong from "../common/SaveButtonLong"
 
 const Carousel = () => {
+  const navigate = useNavigate();
   
   // StCarouselContent 위치 값
   const [positionX, setPositionX] = useState(0);
@@ -16,72 +18,59 @@ const Carousel = () => {
     }
     setPositionX(positionX+100)
   }
+
+  const dots = [0,100,200,300]
  
   return(
     <>
       <StCarouselLayout>
 
         <StCarouselContent positionX={positionX}>
-
-          <StCarouselImg>
-            <StCarouselParagraph>
-              <StCarouselTitle>
-                내 관심사에 맞는 습관을 추천
-              </StCarouselTitle>
-              <StCarouselTxt>
-                여러분의 관심사 및 습관 빈도를 분석하여 꼭 맞는 습관을<br/>
-                추천드립니다.
-              </StCarouselTxt>
-            </StCarouselParagraph>
-          </StCarouselImg>
-
-          <StCarouselImg>
-            <StCarouselParagraph>
-              <StCarouselTitle>
-                포인트로 습관을 구매
-              </StCarouselTitle>
-              <StCarouselTxt>
-                가입 축하 포인트로 자유롭게 습관을 구입해 봅시다.<br/>
-                구입한 습관을 일전표에 추가하여 나만의 목표를 짜보세요!
-              </StCarouselTxt>
-            </StCarouselParagraph>
-          </StCarouselImg>
-
-          <StCarouselImg>
-            <StCarouselParagraph>
-              <StCarouselTitle>
-                습관을 완료하여 포인트 획득
-              </StCarouselTitle>
-              <StCarouselTxt>
-                일정표에 추가한 목표를 달성하세요. 일일 완료 포인트에<br/>
-                기간 내 매일 완료 시 추가 포인트를 드립니다.
-              </StCarouselTxt>
-            </StCarouselParagraph>
-          </StCarouselImg>
-
-          <StCarouselImg>
-            <StCarouselParagraph>
-              <StCarouselTitle>
-                포인트로 나만의 펫을 육성
-              </StCarouselTitle>
-              <StCarouselTxt>
-                습관을 구매하고 남은 포인트로 펫을 키워보세요!<br/>
-                또 다른 재미와 목표가 될 거예요.
-              </StCarouselTxt>
-            </StCarouselParagraph>
-          </StCarouselImg>
-          
+          {
+            carouselContents.map((data, img)=>{
+              return(
+                <StCarouselImg key={img} img={data.img}>
+                  <StCarouselParagraph>
+                    <StCarouselTitle>
+                      {data.title}
+                    </StCarouselTitle>
+                    <StCarouselTxt>
+                      {data.txt}
+                    </StCarouselTxt>
+                  </StCarouselParagraph>
+                </StCarouselImg>
+              )
+            })
+          }
         </StCarouselContent>
       </StCarouselLayout>
       
       <StCarouselBottom>
         <StCarouselDotwrap>
-          <StCarouselActiveDot/>
-          <StCarouselDot/>
-          <StCarouselDot/>
-          <StCarouselDot/>
+          {
+            dots.map((dot, i)=>{
+              return(
+                <StCarouselDot key={i}
+                  className={dot === positionX ? "active" : null}
+                />
+              )
+            })
+          }
         </StCarouselDotwrap>
-        <StCarouselBtn onClick={carouselHandler} >Next</StCarouselBtn>
+        {
+          positionX !== 300 ? 
+            <StCarouselBtnWrap>
+              <StCarouselLink onClick={()=>navigate("/survey")}>skip</StCarouselLink>
+              <StCarouselBtn onClick={carouselHandler} >Next</StCarouselBtn>
+            </StCarouselBtnWrap>
+          : <SaveButtonLong 
+              onClick={()=>navigate("/survey")}
+              btnName={"시작하기"}
+              top={56}
+              left={20}
+            />
+        }
+            
       </StCarouselBottom>
     </>
   )
@@ -90,7 +79,7 @@ export default Carousel
 
 const StCarouselLayout = styled.div`
   position: relative;
-  width: 100%;
+  width: 360px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -98,7 +87,7 @@ const StCarouselLayout = styled.div`
 `
 
 const StCarouselContent = styled.div`
-  width: 100%;
+  width: 360px;
   height: 750px;
   position: absolute;
   top: 0;
@@ -109,60 +98,80 @@ const StCarouselContent = styled.div`
 
 const StCarouselImg = styled.div`
   flex: none;
-  width: 100%;
-  height: 580px;
-  background-image: url(${carousel1});
+  width: 360px;
+  height: 464px;
+  background-image: url(${props=>props.img});
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 `
 
 const StCarouselParagraph = styled.div`
   position: relative;
-  top: 580px;
-  padding: 30px;
+  top: 464px;
+  margin: 32px 20px 0 20px;
 `
 
 const StCarouselTitle = styled.h1`
-  font-size: 25px;
+  font-size: 22px;
+  color: #343434;
 `
 
 const StCarouselTxt = styled.p`
-  padding-top: 20px;
-  font-size: 18px;
+  padding-top: 14px;
+  font-size: 14px;
   font-weight: 400;
+  color: #2D2D2D;
 `
 
 const StCarouselBottom = styled.div`
-  position: absolute;
-  bottom: 90px;
-  width: 488px;
+  position: relative;
+  bottom: 144px;
+  width: 360px;
 `
 
 const StCarouselDotwrap = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 120px;
+  width: 96px;
   margin: auto;
 `
 
 const StCarouselDot = styled.div`
   background-color: #D9D9D9;
-  width: 13px;
-  height: 13px;
+  width: 10px;
+  height: 10px;
   border-radius: 100%;
+  &.active{
+    background-color: #674DED;
+    width: 30px;
+    border-radius: 100px;
+  }
 `
 
-const StCarouselActiveDot = styled.div`
-  background-color: #674DED;
-  width: 39px;
-  height: 13px;
-  border-radius: 100px;
+const StCarouselBtnWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 70px 20px 0 20px;
+`
+
+const StCarouselLink = styled.button`
+  all: unset;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999999;
 `
 
 const StCarouselBtn = styled.button`
   all: unset;
   cursor: pointer;
   background-color: #674DED;
+  width: 80px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
 `
 
