@@ -1,53 +1,43 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "@mobiscroll/react-lite/dist/css/mobiscroll.min.css";
-import {
-  Datepicker,
-  Button,
-  Page,
-  setOptions,
-  localeKo,
-} from "@mobiscroll/react-lite";
+import "./Calendar.css";
 import moment from "moment";
 
-// setOptions({
-//   locale: localeKo,
-//   theme: "ios",
-//   themeVariant: "light",
-// });
-let now = new Date();
+import React, { useState, useEffect } from "react";
+import { __getDate } from "../../../redux/modules/date";
+import { useDispatch } from "react-redux";
+
 const MonthlyCalendar = () => {
-  // const [openPicker, setOpenPicker] = React.useState(false);
   // const [date, setDate] = React.useState(new Date());
-  const [value, onChange] = useState(now);
+  const dispatch = useDispatch();
+  const now = new Date();
+  const [value, setValue] = useState(now);
   const today = now.getDate();
 
-  // const show = () => {
-  //   setOpenPicker(true);
-  // };
+  const getDate = async () => {
+    const pickDate = moment(value).format("YYYY-MM-DD");
+    dispatch(__getDate(pickDate));
+  };
 
-  // const onClose = () => {
-  //   setOpenPicker(false);
-  // };
+  useEffect(() => {
+    getDate();
+  }, []);
 
   return (
     <>
       <Calendar
         onChange={(event) => {
-          console.log(event);
+          setValue(event);
+          getDate();
         }}
         value={value}
         minDate={new Date(today)}
+        showNeighboringMonth={false}
+        calendarType="US" //일요일 시작
+        prev2Label={null} //년도변경버튼 숨기기
+        next2Label={null} //년도변경버튼 숨기기
+        locale="en"
       />
-      <div className="clickdate">{moment(value).format("MM월 DD일")}</div>
-      <div>
-        <p>My tag</p>
-      </div>
-
-      <Datepicker controls={["calendar"]} display="inline" />
-      <Datepicker controls={["time"]} stepMinute={30} touchUi={true} />
     </>
   );
 };
