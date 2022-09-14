@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "../../axios/axios";
+import Swal from "sweetalert2";
 
 const initialState = {
   isLog: false,
@@ -11,8 +12,13 @@ export const __basicLogin = createAsyncThunk(
   "basicLogin",
   async (payload, api) => {
     const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
-    // const res = await axios.post(`/login`, payload) // 로컬테스트용
-    return res.data.token
+    .then(res=>{
+      return res.data.token
+    })
+    .catch(err=>{
+      console.log(err)
+      return api.rejectWithValue(err)
+    })
   }
 )
 
@@ -27,7 +33,6 @@ export const __logout = createAsyncThunk(
   "logout",
   async (payload, api) => {
     const res = await axios.delete(`/user/logout`, payload) // 백서버 연결할 때 사용
-    // const res = await axios.post(`/login`, payload) // 로컬테스트용
     console.log(res)
     return
   }
@@ -60,9 +65,7 @@ export const userSlice = createSlice({
       state.token = action.payload
     })
     .addCase(__basicLogin.rejected, (state, action) => {
-      localStorage.setItem('token', action.payload)
-      state.isLog = true
-      state.token = action.payload
+      state.isLog = false
     })
     .addCase(__kakaoLogin.fulfilled, (state, action) => {
       localStorage.setItem('token', action.payload)

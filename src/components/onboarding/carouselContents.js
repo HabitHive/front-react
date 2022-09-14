@@ -1,6 +1,6 @@
 // image 파일
-import carousel1 from "../../assets/carousel1.png"
-import carousel2 from "../../assets/carousel2.png"
+import carousel1 from "../../assets/onboardingImg/carousel1.png"
+import carousel2 from "../../assets/onboardingImg/carousel2.png"
 
 const carouselContents = [
   {
