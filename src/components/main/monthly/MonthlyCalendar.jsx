@@ -41,9 +41,9 @@ const MonthlyCalendar = () => {
         }}
         onClickDay={(value, event) => {
           setValue(event);
+          
         }}
         // ondblclick ={(event) => {
-
         // }}
         value={value}
         minDate={new Date(today)}

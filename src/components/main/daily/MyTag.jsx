@@ -8,9 +8,7 @@ const MyTag = () => {
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
-
   const categories = useSelector((state) => state.myTags);
-  console.log(categories);
 
   const now = new Date();
   const thisYear = now.getFullYear();
@@ -52,7 +50,7 @@ const STMyTag = styled.div`
   position: fixed;
   z-index: 2;
   bottom: 76px;
-  width: 90%;
+  width: 320px;
   max-width: 420px;
   height: 180px;
   padding: 12px 16px;

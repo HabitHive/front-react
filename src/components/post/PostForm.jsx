@@ -5,14 +5,17 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { setHours, setMinutes } from "date-fns";
 
-import { useState } from "react";
-
 import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
 import SaveButton from "../common/SaveButton";
 
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { __getSchedule } from "../../redux/modules/post";
+
 let now = new Date();
 const PostForm = () => {
+  const dispatch = useDispatch();
   const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
   const [endTime, setEndTime] = useState(null);
   // if (startTime) {
@@ -21,6 +24,7 @@ const PostForm = () => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [schedule, setSchedule] = useState([]);
 
   // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택됨
   const dateRange = (update) => {
@@ -30,6 +34,20 @@ const PostForm = () => {
     setStartDate(update[0]);
     setEndDate(new Date(lastDate));
   };
+  // console.log(startDate.getDate());
+  // console.log(startDate.getMonth() + 1);
+  // console.log(startTime.getHours());
+  // console.log(startTime.getMinutes());
+  // console.log(endTime.getHours());
+  // console.log(endTime.getMinutes());
+  const starttime = [startTime.getHours() + ":" + startTime.getMinutes()];
+  // const endtime = [endtime.getHours() + ":" + endtime.getMinutes()];
+  console.log(starttime);
+
+  // const savePost = () => {
+  //   setSchedule([]);
+  //   dispatch(__getSchedule);
+  // };
 
   return (
     <div>
@@ -124,7 +142,10 @@ const PostForm = () => {
         </div>
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton btnName={"저장"} />
+        <SaveButton
+          btnName={"저장"}
+          //  onClick={savePost()}
+        />
       </ButtonContainer>
     </div>
   );
