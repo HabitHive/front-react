@@ -19,10 +19,11 @@ const ToggleTags = ({tags}) => {
 export default ToggleTags
 
 const StTagHelpTxt = styled.p`
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
   margin: auto;
-  color: #a5a5a5;
+  letter-spacing: -0.3px;
+  color: #343434;
 `
 
 const StDoneTag =  styled.div`

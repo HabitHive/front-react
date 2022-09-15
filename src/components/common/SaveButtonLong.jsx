@@ -10,7 +10,7 @@ const SaveButtonLong = (props) => {
 }
 export default SaveButtonLong
 
-const StSubmitBtn = styled.button`
+export const StSubmitBtn = styled.button`
   cursor: pointer;
   width: 320px;
   height: 48px;

@@ -3,7 +3,7 @@ import { VscChromeClose } from "react-icons/vsc"
 import { BsStars } from "react-icons/bs"
 
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __addTag } from "../../redux/modules/tagbuy";
 
 import TagLists from "./TagLists";
@@ -11,7 +11,16 @@ import TagLists from "./TagLists";
 const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   const dispatch = useDispatch();
 
-  const [bought, setBought] = useState();
+  // 구매한 습관 
+  const [bought, setBought] = useState(
+    {
+      period: 0,
+      tagId: 0
+    }
+  );
+
+  // 유저의 보유 포인트
+  const userPoint = useSelector((state)=>state.tagBuy.userPoint)
 
   //Drawer 닫기
   const drawerHandler = () => {
@@ -45,20 +54,28 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
               })
             }}
           >
-            <StDrawerLable style={{width:"100%"}}>
+            <StDrawerLable style={{width:"100%"}} 
+              className={bought.period===1? "active" : null}
+            >
               EVENT!! 1일
               <input type="radio" value={1} name="period"/>
             </StDrawerLable>
             <div>
-              <StDrawerLable>
+              <StDrawerLable style={{width:"95px"}} 
+                className={bought.period===5? "active" : null}
+              >
                 5일
                 <input type="radio" value={5} name="period"/>
               </StDrawerLable>
-              <StDrawerLable>
+              <StDrawerLable style={{width:"95px"}} 
+                className={bought.period===15? "active" : null}
+              >
                 15일
                 <input type="radio" value={15} name="period"/>
               </StDrawerLable>
-              <StDrawerLable>
+              <StDrawerLable style={{width:"95px"}} 
+                className={bought.period===30? "active" : null}
+              >
                 30일
                 <input type="radio" value={30} name="period"/>
               </StDrawerLable>
@@ -66,7 +83,7 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
           </StDrawerPeriodSelect> 
           <StDrawerCost>
             <p>소비포인트</p>
-            <h5><span>1500</span>point</h5>
+            <h5><span>{bought.period*10}</span>point</h5>
           </StDrawerCost>
         </StDrawerBody>
 
@@ -76,12 +93,12 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
             <StDrawerMyPt>
               보유
               <StDrawerMyPtBox>
-                <BsStars style={{margin:"5px"}}/> 2100 <span>point</span>  
+                <BsStars style={{margin:"5px"}}/> {userPoint} <span>point</span>  
               </StDrawerMyPtBox>
             </StDrawerMyPt>
           </StDrawerPt>
             <StDrawerCalc>
-              사용 후 포인트 600 point
+              사용 후 포인트 {userPoint-bought.period*10} point
             </StDrawerCalc>
         </StDrawerFooter>
         <StDrawerBtnWrap>
@@ -105,7 +122,7 @@ export default TagBuyDrawer
 const StDrawerBg = styled.div`
   position: absolute;
   top: 0;
-  width: 488px;
+  width: 360px;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 1;
@@ -122,8 +139,8 @@ const CarouselUp = keyframes`
 
 const StDrawer = styled.div`
   width: inherit;
-  height: 500px;
-  background-color: aliceblue;
+  height: 442px;
+  background-color: white;
   position: fixed;
   bottom: 0;
   border-radius: 16px 16px 0 0;
@@ -139,14 +156,15 @@ const StDrawerHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
+  color: #343434
 `
 
 const StDrawerBody = styled.div`
   & span {
       color: #674DED;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
     }
 `
@@ -162,18 +180,28 @@ const StDrawerPeriodSelect = styled.div`
 `
 
 const StDrawerLable = styled.label`
-  background-color: #777777;
-  color: white;
+  background-color: #F6F7FB;
   width: 31%;
+  height: 24px;
   margin: 3px 0;
-  height: 30px;
   border-radius: 6px;
+  
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  color: #999999;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+
   cursor: pointer;
   & input {
     visibility: hidden;
+  }
+  &.active {
+    color: white;
+    background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
   }
 `
 
@@ -190,6 +218,10 @@ const StDrawerCost = styled.div`
     font-weight: 700;
     color: #343434;
   }
+  & p {
+    font-weight: 500;
+    font-size: 14px;
+  }
 `
 
 const StDrawerFooter = styled.div`  
@@ -200,15 +232,15 @@ const StDrawerPt = styled.div`
   justify-content: space-between;
   align-items: center;
   & p {
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     color: #343434;
   }
   `
 
 const StDrawerMyPt = styled.div`
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   color: #674DED;
   display: flex;
   align-items: flex-end;
@@ -217,7 +249,7 @@ const StDrawerMyPt = styled.div`
 const StDrawerMyPtBox = styled.div`
   width: 150px;
   height: 40px;
-  background-color: #674DED;
+  background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
   color: white;
   font-size: 20px;
   border-radius: 5px;
@@ -236,8 +268,8 @@ const StDrawerCalc = styled.div`
   color: #999999;
   text-align: right;
   margin: 10px 0;
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 500;
 `
 
 const StDrawerBtnWrap = styled.div`

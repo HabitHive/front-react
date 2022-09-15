@@ -5,7 +5,8 @@ import axios from "../../axios/axios";
 //point 추가 필요
 const initialState = {
   randomTagList: [],
-  tagList: []
+  tagAllList: [],
+  userPoint: 0
 }
 
 // 비동기 작업을 처리하는 action을 만든다
@@ -15,7 +16,6 @@ export const __getTagBuyList = createAsyncThunk(
   async (payload, api) => {
     const data = await axios.get(`/tag/list`) //백서버 연결
     // const data = await axios.get(`/list`) //로컬서버 연결
-    console.log(data.data.result)
     return data.data.result
   }
 )
@@ -39,7 +39,11 @@ export const tagBuySlice = createSlice({
     builder
     .addCase(__getTagBuyList.fulfilled, (state, action) => {
       state.randomTagList = action.payload.randomTagList
-      state.tagList = action.payload.tagList
+      state.tagAllList = action.payload.tagAllList
+      state.userPoint = action.payload.userPoint
+    })
+    .addCase(__addTag.fulfilled, (state, action) => {
+    
     })
   }
 });

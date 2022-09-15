@@ -58,7 +58,7 @@ const StUserImg = styled.div`
   margin: 12px auto 15px auto;
   background-image: url(${userIMG});
   background-position: center;
-  background-size: 120%;
+  background-size: contain;
 `
 
 const StPetImg = styled.div`
