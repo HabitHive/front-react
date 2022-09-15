@@ -24,8 +24,8 @@ const Navbar = () => {
           <span><AiOutlineSmile/></span>
           <p>My</p>         
         </StNavli>
-        <StNavli onClick={()=>{navigate('/mypage')}}>
-          <span><BsPersonFill/></span>
+        <StNavli onClick={()=>{navigate('/pet')}}>
+          <span><AiOutlineSmile/></span>
           <p>Pet</p>         
         </StNavli>
       </StNavUl>

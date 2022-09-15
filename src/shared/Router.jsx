@@ -11,6 +11,7 @@ import MonthlyPage from "../pages/MonthlyPage";
 import PostingPage from "../pages/PostingPage";
 import EditingPage from "../pages/EditingPage";
 import MyPage from "../pages/MyPage";
+import PetPage from "../pages/PetPage";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -44,6 +45,7 @@ const Router = () => {
             <Route path="/buy" element={<TagBuyPage/>}/>
             <Route path="/post" element={<PostingPage/>}/>
             <Route path="/mypage" element={<MyPage/>}/>
+            <Route path="/pet" element={<PetPage/>}/>
             <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
     </BrowserRouter>
