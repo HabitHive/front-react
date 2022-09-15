@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 import { useNavigate } from "react-router";
 
+import { IoIosArrowBack } from "react-icons/io";
+
 const Header = (props) => {
   const navigate = useNavigate();
 
@@ -12,7 +14,7 @@ const Header = (props) => {
           navigate(-1);
         }}
       >
-        ◀
+        <IoIosArrowBack/>
       </StHeaderBtn>
       <StHeaderTxt>{props.text}</StHeaderTxt>
     </StHeader>
@@ -21,16 +23,23 @@ const Header = (props) => {
 export default Header;
 
 const StHeader = styled.div`
-  height: 60px;
+  height: 52px;
   display: flex;
-  border: solid 1px;
+  align-items: center;
+  margin-top: 32px;
 `;
 
 const StHeaderBtn = styled.button`
-  margin: 10px;
+  all: unset;
   cursor: pointer;
+  font-size: 24px;
+  margin: 7px 0 0 20px;
 `;
 
 const StHeaderTxt = styled.p`
-  margin: auto 0 auto 35%;
+  margin: auto;
+  padding-right: 44px;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.3px;
 `;

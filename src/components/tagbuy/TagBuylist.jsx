@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTagBuyList } from "../../redux/modules/tagbuy";
 
+import buyBG from "../../assets/buyImg/buyBG.png"
+import { HiFire } from "react-icons/hi"
+
 import TagLists from "./TagLists";
 import TagBuyDrawer from "./TagBuyDrawer";
 
@@ -28,7 +31,7 @@ const TagBuylist = () => {
       <StTagBuyWrap>
         
         <StTitle>
-          습관 구매
+          습관 구매 <HiFire/>
         </StTitle>
 
         <StTaglist>
@@ -55,6 +58,7 @@ export default TagBuylist
 
 const StTagBuyWrap = styled.div`
   padding: 20px;
+  background-image: url(${buyBG});
 `
 
 const StTitle = styled.div`

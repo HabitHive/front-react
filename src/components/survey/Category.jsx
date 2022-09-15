@@ -7,28 +7,22 @@ import CategoryBtn from "./CategoryBtn";
 
 import { useRef } from "react"
 import { useNavigate } from "react-router";
-import axios from "../../axios/axios"
+import { useDispatch } from "react-redux"
+import { __userCategory } from "../../redux/modules/user";
 
 const Category = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const userCategory = useRef([]);
 
   const categorySubmitHandler = () => {
     const category = userCategory.current
-    axios.post(`/survey`, category)
-    // axios.put(`/user/interest`, category) 서버 열리면 변경하기
-      .then((res) => {
-        navigate("/onboarding");
-      })
-      .catch((err)=>{
-        console.log(err);
-        Swal.fire({
-          icon: "error",
-          title: "에러메시지 나중에 넣기",
-          confirmButtonText: "확인"
-        });
-      })
+    console.log(category)
+    dispatch(__userCategory(category))
+    .then(
+      navigate('/')
+    )
   }
 
   return (
@@ -62,6 +56,9 @@ export default Category
 
 const StCategoryTxt = styled.p`
   margin-bottom: 20px;
+  font-weight: 400;
+  font-size: 16px;
+  color: #999999;
 `
 
 const StCategoryWrap = styled.div`
