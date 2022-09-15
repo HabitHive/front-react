@@ -10,7 +10,7 @@ import React, {
   useMemo,
 } from "react";
 
-// 당일부터 해당 월의 마지막 날까지 출력하기 위한 반복함수
+// 당일부터 해당 월의 마지막 날까지 출력
 const GetAllDate = (today, lastDay) => {
   const dayList = [];
   for (let i = today; i <= lastDay; i++) {
@@ -40,22 +40,26 @@ const WeekCalendar = (props) => {
   let now = new Date();
   const todayWeekDay = now.toString().slice(0, 3); //오늘의 요일 영어로 // Tue
   const today = now.getDate(); //오늘날짜
+  const thisMonth = now.getMonth() + 1;
+  console.log(thisMonth);
   const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
   //이번달 마지막날짜 //30or31 없으면(오늘이마지막날짜면) []
   const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
 
   const [daylist, setDaylist] = useState([]); //이번달 남은날짜
   const [weeklist, setWeeklist] = useState([]);
+  const [pickDay, setPickDay] = useState();
 
+  //daylist바뀌기 전에는 리렌더링돼도 getList실행 x
   const getList = useCallback(() => {
-    setDaylist(daylist.concat(today));
-  }, [today, daylist]);
+    setDaylist(daylist);
+  }, [daylist]);
 
-  const dayList = GetAllDate(today, lastDay); //오늘부터 마지막 날짜까지 모두 담긴 배열
+  const dayList = GetAllDate(today, lastDay);
   const thisWeekList = GetAllWeek(todayWeekDay);
   //전체 배열을 한번만 저장해서 실행함.
   // const alldate = useMemo(() => GetAllDate(today, lastday), [daylist]);
-  // const allweek = useMemo(() => GetAllWeek(todayweek), [weeklist]);
+  // const allweek = useMemo(() => GetAllWeek(todayweek), [thisWeekList]);
 
   // console.log(alldate);
 
@@ -79,7 +83,11 @@ const WeekCalendar = (props) => {
     // return () => console.log("Clean up");
   }, []);
 
-  const Week = useRef(null);
+  const week = useRef(null);
+  console.log(week);
+  const day = useRef(null);
+
+  const clickDate = (week, day) => {};
 
   return (
     <STWeekCalender>
@@ -91,12 +99,49 @@ const WeekCalendar = (props) => {
               <FaChevronLeft />
             </button>
             <div>
-              {CalendarObject.map((calendarItem, index) => (
-                <div className="daylistSelector" key={index}>
-                  <div className="week" ref={Week}>
+              {/* {CalendarObject.map((calendarItem, index) => (
+                <div
+                  className="daylistSelector active"
+                  key={index}
+                  onClick={() => pickDate()}
+                >
+                  <div className="week" ref={week}>
                     {calendarItem.week}
                   </div>
-                  <div className="day">{calendarItem.day}</div>
+                  <div className="day" ref={day}>
+                    {calendarItem.day}
+                  </div>
+                </div>
+              ))} */}
+              {CalendarObject.map((calendarItem, index) => (
+                <div
+                  className="daylistSelector"
+                  key={index}
+                  onClick={() => clickDate()}
+                  onChange={(e) => {
+                    setPickDay({});
+                  }}
+                >
+                  <STLabel>
+                    <input
+                      type="radio"
+                      value={calendarItem.week}
+                      name="period"
+                      className="week"
+                      ref={week}
+                    />
+                    {calendarItem.week}
+                  </STLabel>
+                  <STLabel>
+                    <input
+                      type="radio"
+                      value={calendarItem.day}
+                      name="period"
+                      className="day"
+                      ref={day}
+                    />
+                    {calendarItem.day}
+                  </STLabel>
                 </div>
               ))}
             </div>
@@ -160,7 +205,7 @@ const StCalendar = styled.div`
     }
     /* 오늘자 기준 날짜 배열 Daylist */
     & .daylistSelector {
-      overflow: auto;
+      /* overflow: auto; */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -174,17 +219,7 @@ const StCalendar = styled.div`
       height: 60px;
       border-radius: 8px;
 
-      &:hover {
-        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-        color: white;
-        & .week {
-          color: white;
-        }
-        & .day {
-          color: white;
-        }
-      }
-
+      /* //today표현
       &:nth-child(1) {
         border: 0.04rem solid #6334ff;
       }
@@ -202,8 +237,65 @@ const StCalendar = styled.div`
         line-height: 17px;
         text-align: center;
         color: #999999;
-      }
+      } */
+
+      /* //마우스 올렸을 때
+      &:hover {
+        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+        color: white;
+        & .week {
+          color: white;
+        }
+        & .day {
+          color: white;
+        }
+      } */
+      //클릭했을 때
     }
+    /* & .active {
+      background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+      color: #fff;
+      & .week {
+        color: white;
+      }
+      & .day {
+        color: white;
+      }
+    } */
+  }
+`;
+const STLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  float: left;
+  margin-right: 8px;
+  cursor: pointer;
+
+  width: 40px;
+  height: 60px;
+  border-radius: 8px;
+
+  & input {
+    visibility: hidden;
+  }
+
+  & .week {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 10px;
+    color: #999999;
+    margin-bottom: 6px;
+  }
+  & .day {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #999999;
   }
 `;
 
