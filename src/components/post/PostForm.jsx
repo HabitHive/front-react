@@ -41,8 +41,20 @@ const PostForm = () => {
   // console.log(endTime.getHours());
   // console.log(endTime.getMinutes());
   const starttime = [startTime.getHours() + ":" + startTime.getMinutes()];
-  // const endtime = [endtime.getHours() + ":" + endtime.getMinutes()];
   console.log(starttime);
+  const endtime = [endTime.getHours() + ":" + endTime.getMinutes()];
+  console.log(endtime);
+  const startyear = [startDate.getFullYear()];
+  const startmoth = [
+    startDate.getMonth() + 1 > 9
+      ? now.getMonth() + 1
+      : "0" + (now.getMonth() + 1),
+  ];
+  const startdate = [
+    startDate.getDate() > 9 ? now.getDate() : "0" + now.getDate(),
+  ];
+  const startday = [startyear + "-" + startmoth + "-" + startdate];
+  console.log(startday);
 
   // const savePost = () => {
   //   setSchedule([]);
