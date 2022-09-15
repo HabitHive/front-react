@@ -13,9 +13,8 @@ const initialState = {
 export const __getTagBuyList = createAsyncThunk(
   "getTagBuyList",
   async (payload, api) => {
-    console.log("요청 보냄")
-    await axios.get(`/tag/list`) //백서버 연결
-    return 
+    const data = await axios.get(`/tag/list`) //백서버 연결
+    return data.data.result
   }
 )
 
@@ -23,7 +22,6 @@ export const __getTagBuyList = createAsyncThunk(
 export const __addTag = createAsyncThunk(
   "addTag",
   async (payload, api) => {
-    console.log(payload)
     const res = await axios.post(`/tag/buy`, payload) //백서버 연결
     console.log(res)
     return 

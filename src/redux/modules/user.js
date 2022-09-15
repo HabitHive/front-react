@@ -31,7 +31,7 @@ export const __kakaoLogin = createAsyncThunk(
 export const __userCategory = createAsyncThunk(
   "userCategory",
   async (payload, api) => {
-    await axios.put(`/user/interrest`, payload)
+    await axios.put(`/user/interest`, payload)
     .then(res=>{
       return 
     })
