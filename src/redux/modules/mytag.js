@@ -5,7 +5,7 @@ import axios from "../../axios/axios";
 export const __getMyTags = createAsyncThunk(
   "getMyTags",
   async (payload, api) => {
-    const res = await axios.get(`/tag/daily/list`, {today:payload})
+    const res = await axios.get(`/tag/daily/list`)
     return res.data.result
   }
 )
