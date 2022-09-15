@@ -67,7 +67,7 @@ const SignupForm = () => {
         이메일 주소
       </StSignupLabel>
       <StSignupInput
-        placeholder="이메일을 입력해 주세요"
+        placeholder="이메일을 입력해주세요"
         type="email"
         {...register("email", {
           required: true,
@@ -80,12 +80,12 @@ const SignupForm = () => {
         {errors.email && errors.email.type === "pattern" && (
           <p> <FiAlertCircle/> 올바른 이메일 형식이 아닙니다</p>
         )}
-
+      <div/>
       <StSignupLabel>
         비밀번호
       </StSignupLabel>
       <StSignupInput
-        placeholder="영문, 숫자, 특수문자($@!%*#?&) 포함 8자리 이상"
+        placeholder="영문, 숫자, $@!%*#?& 포함 8자리 이상"
         type="password"
         {...register("password", {
           required: true,
@@ -102,14 +102,14 @@ const SignupForm = () => {
       )}
       {errors.password && errors.password.type === "pattern" && (
         <p>
-          <FiAlertCircle/> 영문, 숫자, $@!%*#?& 를 포함해야 합니다
+          <FiAlertCircle/> 영문 + 숫자 + $@!%*#?& 조합이어야 합니다
         </p>
       )}
       {errors.password && errors.password.type === "maxLength" && (
         <p> <FiAlertCircle/> 최대 16자입니다</p>
       )}
       <StSignupInput
-        placeholder="비밀번호를 다시 한 번 입력해 주세요"
+        placeholder="비밀번호를 다시 한 번 입력해주세요"
         type="password"
         {...register("pwConfirm", {
           required: true,
@@ -122,13 +122,12 @@ const SignupForm = () => {
       {errors.pwConfirm && errors.pwConfirm.type === "validate" && (
         <p> <FiAlertCircle/> 비밀번호가 일치하지 않습니다</p>
       )}
-
-
+      <div/>
       <StSignupLabel>
         닉네임
       </StSignupLabel>
       <StSignupInput
-        placeholder="닉네임을 입력해 주세요. (최대 10자)"
+        placeholder="닉네임을 입력해주세요 (최대 10자)"
         {...register("nickname", {
           required: true,
           maxLength: 10,
@@ -145,40 +144,48 @@ const SignupForm = () => {
         <p> <FiAlertCircle/> 특수문자 및 자모음은 사용할 수 없습니다 </p>
       )}
 
-      <SaveButtonLong btnName={"가입하기"}/>
+      <SaveButtonLong btnName={"회원가입"} top={172}/>
     </StSignupForm>
   )
 }
 export default SignupForm
 
 const StSignupForm = styled.form`
-  height: 80vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 50px;
-  padding: 20px;
+  top: 32px;
+  padding: 0 20px;
   & p {
-    color: red;
-    font-size: 13px;
+    color: #F53232;
+    font-weight: 400;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
     position: relative;
-    top: -20px;
+    top: -5px;
+    margin-bottom: 5px;
+  }
+  & > div {
+    height: 20px;
   }
 `
 
 const StSignupLabel = styled.label`
-  font-size: 20px;
-  height: 30px;
-  margin: 10px 0;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
 `
 
 const StSignupInput = styled.input`
   width: 100%;
   min-height: 55px;
-  margin: 0 auto 30px auto;
-  padding-left: 10px;
+  margin: 0 auto 12px auto;
+  padding-left: 12px;
   outline: none;
   border: none;
+  border-radius: 8px;
+  background-color: #EBEBEB;
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,

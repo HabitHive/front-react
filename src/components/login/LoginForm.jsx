@@ -91,8 +91,9 @@ const LoginForm = () => {
 export default LoginForm
 
 const StLoginBG = styled.div`
+  position: relative;
   width: 360px;
-  height: 800px;
+  height: 100vh;
   background-image: url(${loginBG});
   background-size: 110%;
   background-position: bottom;

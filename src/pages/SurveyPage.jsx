@@ -1,18 +1,13 @@
 import styled from "styled-components";
 import Category from "../components/survey/Category";
 
-import { useSelector } from "react-redux";
-
-
 const SurveyPage = () => {
-  const user = useSelector(state=>state.user)
-  console.log(user)
 
   return (
     <StSurveyWrap>
       <StSurveyTitle>
-        {user.nickname} 님의 관심사는 무엇인가요? 
-        <span>딱 맞는 습관을 추천해 드립니다.</span>
+        관심사를 선택해 주세요!
+        <span>적절한 습관을 추천받을 수 있어요</span>
       </StSurveyTitle>
       <Category/>
     </StSurveyWrap>
@@ -29,11 +24,13 @@ const StSurveyTitle = styled.h1`
   padding: 50px 0;
   display: flex;
   flex-direction: column;
-  font-size: 25px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #343434;
   & span {
     margin: 5px 0;
-    font-size: 17px;
-    font-weight: 400;
-    color: gray;
+    font-size: 16px;
+    font-weight: 600;
+    color: #999999;
   }
 `

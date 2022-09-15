@@ -1,6 +1,8 @@
 import styled from "styled-components"
 import Swal from "sweetalert2";
-import { AiOutlinePlus, AiTwotoneHeart } from "react-icons/ai"
+
+import { AiOutlinePlus } from "react-icons/ai"
+import { BsFillSuitHeartFill } from "react-icons/bs"
 
 import { useState } from "react";
 
@@ -39,10 +41,12 @@ const CategoryBtn = ({categoryBtn, userCategory}) => {
         categoryHandler(categoryBtn.categoryId)
       }}
     >
-      { btnActive === false ?
-        <AiOutlinePlus/> : <AiTwotoneHeart/>
-      }
-      {categoryBtn.value}
+      <p>
+        { 
+          btnActive === false ? <AiOutlinePlus/> : <BsFillSuitHeartFill/>
+        }
+        <span>{categoryBtn.value}</span>
+      </p>
     </StCategory>
   )
 }
@@ -51,14 +55,25 @@ export default CategoryBtn
 const StCategory =  styled.button`
   width: auto;
   height: 40px;
-  margin: 5px;
-  padding: 0 15px;
-  font-size: 20px;
+  margin: 0 8px 20px auto;
+  padding: 0 16px;
+  
+  font-size: 16px;
+  font-weight: 500;
+  color: #999999;
+
+  background-color: #F0F0F0;
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  & p {
+    float: right;
+    & span {
+      margin-left: 4px;
+    }
+  }
   &.active{
-    background-color: #ff4a4a;
+    background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
     color: white;
   }
 `
