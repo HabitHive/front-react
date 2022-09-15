@@ -28,10 +28,11 @@ export const myTagSlice = createSlice({
   },
   extraReducers: (builder) => {
     // builder
-    // .addCase(__getProfile.fulfilled, (state, action) => {
-    //   state.email = action.payload.email
-    //   state.nickname = action.payload.nickname
-    //   state.point = action.payload.point
+    // .addCase(__getMyTags.fulfilled, (state, action) => {
+    //   state.userTagId = action.payload.userTagId
+    //   state.new = action.payload.new
+    //   state.tagName = action.payload.tagName
+        // state.period = action.payload.period
     // })
     builder
     .addCase(__getMyTags.fulfilled, (state, action) => {
