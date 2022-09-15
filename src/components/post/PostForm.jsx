@@ -53,11 +53,10 @@ const PostForm = () => {
   // const repeatDay = checkInput.current;
   // console.log(repeatDay);
 
-  // const savePost = () => {
-  //   setSchedule([startDate, startTime, endTime, inputCheck]);
-  //   dispatch(__getSchedule);
-  // };
-  // console.log(schedule);
+  const savePost = () => {
+    // setSchedule([startDate, startTime, endTime, inputCheck]);
+    dispatch(__getSchedule([startDate, startTime, endTime, inputCheck]));
+  };
 
   //체크값 상태관리
   const [inputCheck, setInputCheck] = useState([]);
@@ -138,10 +137,7 @@ const PostForm = () => {
         </div>
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton
-          btnName={"저장"}
-          // onClick={savePost()}
-        />
+        <SaveButton btnName={"저장"} onClick={() => savePost()} />
       </ButtonContainer>
     </div>
   );
