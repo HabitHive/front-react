@@ -51,7 +51,7 @@ const UserTags = () => {
         <StTagTitle>
           진행 중인 습관
         </StTagTitle>
-        { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 습관이 없습니다 </StTagHelpTxt> :
+        { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
           stillTags?.map((stillTag, tagName)=>{
             return (
             <StTagShadowBox justify={"space-between"} key={tagName}>
@@ -94,18 +94,23 @@ const UserTags = () => {
 export default UserTags
 
 const StTagsWrap = styled.div`
-  padding: 20px;
+  padding: 0 20px;
 `
 
 const StTagTitle = styled.h3`
   margin: 10px 0;
+  font-weight: 600;
+  font-size: 16px;
+  color: #343434;
 `
 
 const StTagHelpTxt = styled.p`
-  font-size: 13px;
-  text-align: center;
   margin: 20px 0;
-  color: #a5a5a5;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: -0.3px;
+  color: #343434;
 `
 
 const StTagShadowBox = styled.div`
@@ -117,6 +122,7 @@ const StTagShadowBox = styled.div`
   padding: 10px;
   display: flex;
   justify-content: ${props=>props.justify};
+  border-radius: 18px;
 `
 
 const StStillTag =  styled.div`
@@ -143,16 +149,22 @@ const StStillTagdDay =  styled.div`
 `
 
 const StDoneTagBtn =  styled.button`
+  cursor: pointer;
+
   margin: 0 10px 10px 0;
   padding: 5px 10px;
   border-radius: 20px;
   background: none;
-  color: #8d8d8d;
-  border: 1px solid #8d8d8d;
-  cursor: pointer;
+  color: #B0B0B0;
+  border: 1px solid #B0B0B0;
+
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: -0.3px;
   &.active{
     border: none;
-    background-color: grey; 
+    background-color: #674DED; 
     color: white;
+
   }
 `

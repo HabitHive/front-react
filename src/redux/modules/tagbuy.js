@@ -5,7 +5,8 @@ import axios from "../../axios/axios";
 //point 추가 필요
 const initialState = {
   randomTagList: [],
-  tagList: []
+  tagAllList: [],
+  userPoint: 0
 }
 
 // 비동기 작업을 처리하는 action을 만든다
@@ -39,7 +40,8 @@ export const tagBuySlice = createSlice({
     builder
     .addCase(__getTagBuyList.fulfilled, (state, action) => {
       state.randomTagList = action.payload.randomTagList
-      state.tagList = action.payload.tagList
+      state.tagAllList = action.payload.tagAllList
+      state.userPoint = action.payload.userPoint
     })
   }
 });

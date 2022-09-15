@@ -36,13 +36,16 @@ const TagLists = ({lists, setSelectedTag, setDrawer, disabled}) => {
 export default TagLists
 
 const StTag = styled.div`
+  cursor: pointer;
+
   background-color: #CFEEFF;
   border-radius: 12px 12px 12px 0;
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 19px;
+  margin: 8px 0;
+
+  padding: 12px;
+  font-size: 18px;
   font-weight: 700;
-  cursor: pointer;
+  color: #343434;
 `
 
 const StTagCategories = styled.div`
@@ -50,13 +53,13 @@ const StTagCategories = styled.div`
 `
 
 const StCategory = styled.div`
+  margin: 6px 4px 0 0;
   background-color: #674DED;
-  padding: 3px;
+  padding: 2px 6px;
   border-radius: 4px;
   align-items: center;
   width: fit-content;
   font-size: 12px;
-  font-weight: 200;
+  font-weight: 500;
   color: white;
-  margin: 5px 5px 0 0;
 `
