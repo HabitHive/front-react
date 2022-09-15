@@ -4,7 +4,7 @@ import { useNavigate } from "react-router"
 
 import { HiOutlineTag } from "react-icons/hi"
 import { AiOutlineDollarCircle, AiOutlineSmile } from "react-icons/ai"
-import { BsPersonFill } from "react-icons/bs"
+import { BsPerson } from "react-icons/bs"
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Navbar = () => {
           <p>Shop</p>         
         </StNavli>
         <StNavli onClick={()=>{navigate('/mypage')}}>
-          <span><AiOutlineSmile/></span>
+          <span><BsPerson/></span>
           <p>My</p>         
         </StNavli>
         <StNavli onClick={()=>{navigate('/pet')}}>
@@ -39,10 +39,10 @@ const StNavContainer = styled.nav`
   max-width: 360px;
   position: fixed;
   bottom: 0;
-  background-color: white;
-`
+  `
 
 const StNavUl = styled.ul`
+  background-color: white;
   padding: 0 56px;
   height: 60px;
   list-style: none;

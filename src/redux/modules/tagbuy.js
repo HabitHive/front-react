@@ -16,7 +16,6 @@ export const __getTagBuyList = createAsyncThunk(
   async (payload, api) => {
     const data = await axios.get(`/tag/list`) //백서버 연결
     // const data = await axios.get(`/list`) //로컬서버 연결
-    console.log(data.data.result)
     return data.data.result
   }
 )
@@ -42,6 +41,9 @@ export const tagBuySlice = createSlice({
       state.randomTagList = action.payload.randomTagList
       state.tagAllList = action.payload.tagAllList
       state.userPoint = action.payload.userPoint
+    })
+    .addCase(__addTag.fulfilled, (state, action) => {
+    
     })
   }
 });
