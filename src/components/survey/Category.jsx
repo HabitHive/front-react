@@ -18,7 +18,6 @@ const Category = () => {
 
   const categorySubmitHandler = () => {
     const category = userCategory.current
-    console.log(category)
     dispatch(__userCategory(category))
     .then(
       navigate('/')

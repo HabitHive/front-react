@@ -14,7 +14,6 @@ export const __getUserTags = createAsyncThunk(
   "getUserTags",
   async (payload, api) => {
     const res = await axios.put(`/user/mypage/tag`, {today:payload}) // 백서버 연결할 때 사용
-    console.log(res)
     return res.data.result
   }
 )
