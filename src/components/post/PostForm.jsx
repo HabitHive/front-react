@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import Header from "../common/Header";
+import calendarImg from "../../assets/images/calendar.png";
+import timeImg from "../../assets/images/timeIcon.png";
+import SaveButton from "../common/SaveButton";
+import RepeatDay from "./RepeatDay";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { setHours, setMinutes } from "date-fns";
 
-import calendarImg from "../../assets/images/calendar.png";
-import timeImg from "../../assets/images/timeIcon.png";
-import SaveButton from "../common/SaveButton";
-
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { __getSchedule } from "../../redux/modules/post";
 
@@ -26,6 +26,9 @@ const PostForm = () => {
   const [endDate, setEndDate] = useState(null);
   const [schedule, setSchedule] = useState([]);
 
+  const weekday = ["일", "월", "화", "수", "목", "금", "토"];
+  const checkInput = useRef([]);
+
   // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택됨
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
@@ -34,32 +37,29 @@ const PostForm = () => {
     setStartDate(update[0]);
     setEndDate(new Date(lastDate));
   };
-  // console.log(startDate.getDate());
-  // console.log(startDate.getMonth() + 1);
-  // console.log(startTime.getHours());
-  // console.log(startTime.getMinutes());
-  // console.log(endTime.getHours());
-  // console.log(endTime.getMinutes());
-  const starttime = [startTime.getHours() + ":" + startTime.getMinutes()];
-  console.log(starttime);
-  const endtime = [endTime.getHours() + ":" + endTime.getMinutes()];
-  console.log(endtime);
-  const startyear = [startDate.getFullYear()];
-  const startmoth = [
-    startDate.getMonth() + 1 > 9
-      ? now.getMonth() + 1
-      : "0" + (now.getMonth() + 1),
-  ];
-  const startdate = [
-    startDate.getDate() > 9 ? now.getDate() : "0" + now.getDate(),
-  ];
-  const startday = [startyear + "-" + startmoth + "-" + startdate];
-  console.log(startday);
 
-  // const savePost = () => {
-  //   setSchedule([]);
-  //   dispatch(__getSchedule);
-  // };
+  // const starttime = [startTime.getHours() + ":" + startTime.getMinutes()];
+  // const endtime = [endTime.getHours() + ":" + endTime.getMinutes()];
+  // const startyear = [startDate.getFullYear()];
+  // const startmoth = [
+  //   startDate.getMonth() + 1 > 9
+  //     ? now.getMonth() + 1
+  //     : "0" + (now.getMonth() + 1),
+  // ];
+  // const startdate = [
+  //   startDate.getDate() > 9 ? now.getDate() : "0" + now.getDate(),
+  // ];
+  // const startday = [startyear + "-" + startmoth + "-" + startdate];
+  // const repeatDay = checkInput.current;
+  // console.log(repeatDay);
+
+  const savePost = () => {
+    // setSchedule([startDate, startTime, endTime, inputCheck]);
+    dispatch(__getSchedule([startDate, startTime, endTime, inputCheck]));
+  };
+
+  //체크값 상태관리
+  const [inputCheck, setInputCheck] = useState([]);
 
   return (
     <div>
@@ -121,43 +121,23 @@ const PostForm = () => {
 
         <div className="repeatDay">
           <span className="repeatDayText">반복요일</span>
-          <div className="repeatDayArea">
-            <input id="sun" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="sun" id="sunLabel">
-              {"일"}
-            </label>
-            <input id="mon" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="mon" id="sunLabel">
-              {"월"}
-            </label>
-            <input id="tue" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="tue" id="sunLabel">
-              {"화"}
-            </label>
-            <input id="wed" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="wed" id="sunLabel">
-              {"수"}
-            </label>
-            <input id="thu" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="thu" id="sunLabel">
-              {"목"}
-            </label>
-            <input id="fri" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="fri" id="sunLabel">
-              {"금"}
-            </label>
-            <input id="sat" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="sat" id="sunLabel">
-              {"토"}
-            </label>
-          </div>
+          {weekday.map((repeatDayInput, repeatId) => {
+            // console.log(repeatDayInput);
+            return (
+              <RepeatDay
+                key={repeatId}
+                repeatDayInput={repeatDayInput}
+                checkInput={checkInput}
+                repeatId={repeatId}
+                inputCheck={inputCheck}
+                setInputCheck={setInputCheck}
+              />
+            );
+          })}
         </div>
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton
-          btnName={"저장"}
-          //  onClick={savePost()}
-        />
+        <SaveButton btnName={"저장"} onClick={() => savePost()} />
       </ButtonContainer>
     </div>
   );
