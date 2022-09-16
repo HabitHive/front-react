@@ -1,16 +1,17 @@
 import styled from "styled-components"
-import Swal from "sweetalert2"
+import { BsStars } from "react-icons/bs";
+import { InfoAlert } from "../common/Alert"
+import { StSubmitBtn } from "../common/SaveButtonLong";
+
+import { useSelector } from "react-redux";
 
 import petBG from "../../assets/mypetImg/petBG.png"
 import LV1 from "../../assets/mypetImg/LV1.gif"
 import petData from "./petData"
 
-import { BsStars } from "react-icons/bs";
-
-import { StSubmitBtn } from "../common/SaveButtonLong";
-
 const Pet = () => {
 
+  const point = useSelector((state)=>state.profile.point)
 
   return (
     <StPetBG>
@@ -54,13 +55,11 @@ const Pet = () => {
         </StPetExpBox>
       </StPetInfo>
       <StMyPt>
-        <p>My Point <span>｜<BsStars/> 2100 </span>point</p>
+        <p>My Point <span>｜<BsStars/> {point} </span>point</p>
       </StMyPt>
       <StPetBtn onClick={()=>{
-        Swal.fire({
-          text: '준비 중입니다...',
-          width: 300,
-          confirmButtonText: "확인",
+        InfoAlert({
+          text: "준비중입니다!"
         })
       }}>
         <BsStars/> <span>100 point</span> 펫 밥주기
