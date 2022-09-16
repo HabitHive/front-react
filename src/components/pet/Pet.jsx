@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { BsStars } from "react-icons/bs";
-import { InfoAlert } from "../common/Alert"
+import { ConfirmAlert, ErrorAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/SaveButtonLong";
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { __getPetData } from "../../redux/modules/pet";
+import { __getPetData, __setPetXP } from "../../redux/modules/pet";
 
 import petBG from "../../assets/mypetImg/petBG.png"
 import LV1 from "../../assets/mypetImg/LV1.gif"
@@ -14,20 +14,32 @@ import petData from "../pet/petData"
 const Pet = () => {
   const dispatch = useDispatch();
 
-  const point = useSelector((state)=>state.profile.point)
+  const user = useSelector((state)=>state.profile)
   const petInfo = useSelector((state)=>state.pet)
-
-  console.log(petInfo)
 
   useEffect(()=>{
     dispatch(__getPetData())
   },[])
 
+  const feedPet = () => {
+    dispatch(__setPetXP())
+    .then((res)=>{
+      ConfirmAlert({
+        text: "밥주기 성공!"
+      })
+    })
+    .catch((err)=>{
+      ErrorAlert({
+        text: "다시 시도해 주세요"
+      })
+    })
+  }
+
   return (
     <StPetBG>
 
       <StPetTitle>
-        마이 펫
+        <span>{user.nickname}</span> &nbsp; 님의 펫
       </StPetTitle>
 
       <StPetInfo>
@@ -65,14 +77,15 @@ const Pet = () => {
         </StPetExpBox>
       </StPetInfo>
       <StMyPt>
-        <p>My Point <span>｜<BsStars/> {point} </span>point</p>
+        <p>My Point |<span><BsStars/> {user.point} </span>point</p>
       </StMyPt>
       <StPetBtn onClick={()=>{
-        InfoAlert({
-          text: "준비중입니다!"
-        })
+        feedPet()
+        // InfoAlert({
+        //   text: "준비중입니다!"
+        // })
       }}>
-        <BsStars/> <span>100 point</span> 펫 밥주기
+        <BsStars/> <span>50 point</span> 펫 밥주기
       </StPetBtn>
     </StPetBG>
   )
@@ -98,6 +111,9 @@ const StPetTitle = styled.h1`
   letter-spacing: -0.3px;
   display: flex;
   align-items: center;
+  & > span {
+    color: #6334FF;
+  }
 `
 
 const StPetInfo = styled.div`
