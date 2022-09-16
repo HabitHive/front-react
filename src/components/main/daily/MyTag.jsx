@@ -3,12 +3,20 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getMyTags } from "../../../redux/modules/mytag";
+import { useNavigate } from "react-router-dom";
+import { setDate } from "date-fns";
 
 const MyTag = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const categories = useSelector((state) => state.myTags);
+
+  //리덕스에서 가져온 category들 정보
+  const categories = useSelector(
+    (state) =>
+      // console.log(state.myTag.myTags[0].userTagId);
+      state.myTag.myTags
+  );
 
   const now = new Date();
   const thisYear = now.getFullYear();
@@ -27,10 +35,17 @@ const MyTag = () => {
         <div className="myTitle">My habit</div>
         <hr className="hr"></hr>
         <div className="tagCategories">
-          {categories?.map((category, i) => {
+          {categories?.map((category) => {
             return (
-              <div className="category" key={i}>
-                {category}
+              <div
+                className="category"
+                key={category.userTagId}
+                onClick={() => {
+                  // setDate()
+                  navigate("/post", { state: category });
+                }}
+              >
+                {category.tagName}
               </div>
             );
           })}
@@ -79,6 +94,7 @@ const STMyTag = styled.div`
   & .tagCategories {
     display: flex;
     flex-wrap: wrap;
+    cursor: pointer;
     & .category {
       background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
       padding: 2px 6px;

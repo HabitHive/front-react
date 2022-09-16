@@ -9,9 +9,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { setHours, setMinutes } from "date-fns";
 
-import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router";
 import { __getSchedule } from "../../redux/modules/post";
+import { __getMyTag } from "../../redux/modules/mytag";
+
 let now = new Date();
 const PostForm = () => {
   const dispatch = useDispatch();
@@ -26,12 +29,20 @@ const PostForm = () => {
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
+  //체크값 상태관리
+  const [inputCheck, setInputCheck] = useState([]);
+
+  //보유습관에서 선택한 tag값 가져오기
+  const { state } = useLocation();
+
+  useEffect(() => {
+    dispatch(__getMyTag());
+  }, []);
 
   // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택됨
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
-    const lastDate = firstDate.setDate(firstDate.getDate() + 29);
-    // console.log(new Date(lastDate));
+    const lastDate = firstDate.setDate(firstDate.getDate() + state.period);
     setStartDate(update[0]);
     setEndDate(new Date(lastDate));
   };
@@ -56,14 +67,14 @@ const PostForm = () => {
     dispatch(__getSchedule([startDate, startTime, endTime, inputCheck]));
   };
 
-  //체크값 상태관리
-  const [inputCheck, setInputCheck] = useState([]);
-
+  // console.log(category.tagName);
   return (
     <div>
       <Header text={"데일리 설정"} />
       <BodyContainer>
-        <div className="tagTitle"> 운동하기 ( 30일 )</div>
+        <div className="tagTitle">
+          {state.tagName} ( {state.period}일 )
+        </div>
         <div className="startDate">
           <span className="startDateText">날짜 설정</span>
           <DatePicker
@@ -147,7 +158,7 @@ const BodyContainer = styled.div`
   //선택한 습관
   & .tagTitle {
     /* 보라그라데이션 */
-    background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
+    background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 0px;
     /* 안쪽 글씨 */
@@ -156,7 +167,7 @@ const BodyContainer = styled.div`
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     /* 습관박스 css */
     display: flex;
     justify-content: center;
@@ -271,7 +282,7 @@ const BodyContainer = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #EBEBEB; //미클릭시 배경 초기색
+        background-color: #ebebeb; //미클릭시 배경 초기색
         /* color: #fff; */
         color: black;
         border: none;
@@ -300,8 +311,8 @@ const BodyContainer = styled.div`
         &:checked + #sunLabel {
           background: linear-gradient(
             197.06deg,
-            #907CF9 -6.2%,
-            #6334FF 101.13%
+            #907cf9 -6.2%,
+            #6334ff 101.13%
           );
         }
       }

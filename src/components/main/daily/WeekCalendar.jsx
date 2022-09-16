@@ -9,6 +9,8 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
+import { useDispatch } from "react-redux";
+import { __getMyTags } from "../../../redux/modules/mytag";
 
 // 당일부터 해당 월의 마지막 날까지 출력
 const GetAllDate = (today, lastDay) => {
@@ -36,20 +38,20 @@ const GetAllWeek = (todayWeekDay) => {
   return thisWeekList;
 };
 
-const WeekCalendar = (props) => {
+const WeekCalendar = (todayDate, value) => {
+  const dispatch = useDispatch();
   let now = new Date();
   const todayWeekDay = now.toString().slice(0, 3); //오늘의 요일 영어로 // Tue
   const today = now.getDate(); //오늘날짜
-  const thisMonth = now.getMonth() + 1;
-  console.log(thisMonth);
+  const thisMonth =
+    now.getMonth() + 1 > 9 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1);
   const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
   //이번달 마지막날짜 //30or31 없으면(오늘이마지막날짜면) []
   const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
 
   const [daylist, setDaylist] = useState([]); //이번달 남은날짜
   const [weeklist, setWeeklist] = useState([]);
-  const [pickDay, setPickDay] = useState();
-
+  const [pickDay, setPickDay] = useState({ pickDate: 0 });
   //daylist바뀌기 전에는 리렌더링돼도 getList실행 x
   const getList = useCallback(() => {
     setDaylist(daylist);
@@ -74,20 +76,35 @@ const WeekCalendar = (props) => {
     // { week: thisWeekList[i], day: dayList[i] },
     // { week: thisWeekList[6], day: dayList[6] },
   ];
-  console.log(CalendarObject);
-  // console.log(CalendarObject[0]); //{week: 'Wed', day: 31}
-  // console.log(CalendarObject[0].week); //Wed
-  // console.log(CalendarObject[0].day); //31
+  // console.log(CalendarObject);
 
   useEffect(() => {
     // return () => console.log("Clean up");
   }, []);
 
   const week = useRef(null);
-  console.log(week);
+  // console.log(week); //고쳐야함
   const day = useRef(null);
 
-  const clickDate = (week, day) => {};
+  //날짜 클릭시 해당날짜 데이터 보내기
+  const clickDate =
+    ((day) => {
+      dispatch(__getMyTags(day));
+    },
+    []);
+
+  //input radio value 값 가져오기
+  const pickDayHandleChange = (e) => {
+    setPickDay({
+      pickDate: e.target.value,
+      pickMonth:
+        now.getMonth() + 1 > 9
+          ? now.getMonth() + 1
+          : "0" + (now.getMonth() + 1),
+      pickyear: now.getFullYear(),
+    });
+  };
+  console.log(pickDay);
 
   return (
     <STWeekCalender>
@@ -115,19 +132,22 @@ const WeekCalendar = (props) => {
               ))} */}
               {CalendarObject.map((calendarItem, index) => (
                 <div
-                  className="daylistSelector"
+                  className={
+                    { value } === calendarItem.day
+                      ? "active"
+                      : "daylistSelector"
+                  }
                   key={index}
                   onClick={() => clickDate()}
-                  onChange={(e) => {
-                    setPickDay({});
-                  }}
                 >
                   <STLabel>
                     <input
                       type="radio"
-                      value={calendarItem.week}
-                      name="period"
                       className="week"
+                      name="asdf"
+                      value={calendarItem.week}
+                      // checked={setPickDay[name] === calendarItem.week}
+                      // onChange={pickDayHandleChange}
                       ref={week}
                     />
                     {calendarItem.week}
@@ -135,9 +155,11 @@ const WeekCalendar = (props) => {
                   <STLabel>
                     <input
                       type="radio"
-                      value={calendarItem.day}
-                      name="period"
                       className="day"
+                      name={value}
+                      value={calendarItem.day}
+                      checked={setPickDay[value] === calendarItem.day}
+                      onChange={pickDayHandleChange}
                       ref={day}
                     />
                     {calendarItem.day}
@@ -252,7 +274,20 @@ const StCalendar = styled.div`
       } */
       //클릭했을 때
     }
-    /* & .active {
+    & .active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      float: left;
+      margin-right: 8px;
+      cursor: pointer;
+
+      width: 40px;
+      height: 60px;
+      border-radius: 8px;
+
       background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
       color: #fff;
       & .week {
@@ -261,7 +296,7 @@ const StCalendar = styled.div`
       & .day {
         color: white;
       }
-    } */
+    }
   }
 `;
 const STLabel = styled.label`
