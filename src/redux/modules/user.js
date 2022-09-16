@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "../../axios/axios";
+import setToken from "../../axios/setToken";
 
 const initialState = {
   isLog: false,
@@ -12,6 +13,7 @@ export const __signup = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/user/signup`, payload) // 백서버 연결할 때 사용
+      setToken(res.data.token)
       return res.data
     } catch (err) {
       api.rejectWithValue(err)
@@ -24,6 +26,7 @@ export const __basicLogin = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
+      setToken(res.data.token)
       return res.data
     } catch (err) {
       console.log(err)

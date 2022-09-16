@@ -11,6 +11,7 @@ import SaveButtonLong from "../common/SaveButtonLong";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
 import loginBG from "../../assets/loginImg/loginBG.png"
 import { BsFillChatFill } from "react-icons/bs"
+import setToken from "../../axios/setToken";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -32,9 +33,10 @@ const LoginForm = () => {
   
 
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
-  const onSubmit = async (data) => {
-    await dispatch(__basicLogin(data))
+  const onSubmit = (data) => {
+    dispatch(__basicLogin(data))
     .then((res) => {
+      setToken(res.payload.token)
       ConfirmToast({text: "환영합니다"})
       navigate("/")
     })
