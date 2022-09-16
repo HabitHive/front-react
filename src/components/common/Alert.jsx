@@ -39,4 +39,17 @@ export const ErrorAlert = ({text, title}) => {
   )
 }
 
+// 에러메시지
+export const InfoAlert = ({text}) => {
+  return (
+    Swal.fire({
+      width: 300,
+      heightAuto: false,
+      icon: "info",
+      text: `${text}`,
+      confirmButtonText: "확인",
+    })
+  )
+}
+
 

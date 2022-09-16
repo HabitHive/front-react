@@ -28,10 +28,6 @@ const categories = [
     value: "자기개발",
   },
   {
-    categoryId: "hobby", 
-    value: "취미생활",
-  },
-  {
     categoryId: "test", 
     value: "시험",
   },
