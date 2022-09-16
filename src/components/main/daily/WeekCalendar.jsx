@@ -38,6 +38,36 @@ const GetAllWeek = (todayWeekDay) => {
   return thisWeekList;
 };
 
+// const GetAllMonth = (monthNameLong) => {
+//   const monthList = [
+//     "January",
+//     "February",
+//     "March",
+//     "April",
+//     "May",
+//     "June",
+//     "July",
+//     "August",
+//     "september",
+//     "October",
+//     "November",
+//     "December",
+//   ];
+//   const thisMonth = [];
+//   const startMonth = monthList.indexOf(monthNameLong);
+//   console.log(startMonth);
+//   for (let i = startMonth; i < 12; i++) {
+//     thisMonth.push(i);
+//   }
+//   const arr1 = [monthList.slice(thisMonth[0])];
+//   for (let i = 0; i < startMonth; i++) {
+//     thisMonth.push(i);
+//   }
+//   const arr2 = [monthList.slice(0, startMonth)];
+//   const thisMonthList = [].concat(...arr1, ...arr2);
+//   return thisMonthList;
+// };
+
 const WeekCalendar = (todayDate, value) => {
   const dispatch = useDispatch();
   let now = new Date();
@@ -48,7 +78,6 @@ const WeekCalendar = (todayDate, value) => {
   const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
   //이번달 마지막날짜 //30or31 없으면(오늘이마지막날짜면) []
   const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
-
   const [daylist, setDaylist] = useState([]); //이번달 남은날짜
   const [weeklist, setWeeklist] = useState([]);
   const [pickDay, setPickDay] = useState({ pickDate: 0 });

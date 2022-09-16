@@ -4,27 +4,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const DailyTag = () => {
-  // const [user, setUser] = useState({});
-  const [state, setState] = useSelector((state) => state.myTag.result);
-  // console.log(state);
+  const state = useSelector((state) => state.getMyDaily);
 
   const [data, setData] = useState([]);
-
-  // const getUserTagDate = async () => {
-  //   await axios
-  //     // .get("http://43.200.163.13")
-  //     .get("http://localhost:5000/tags")
-  //     .then((response) => {
-  //       console.log(response.data[0].result[0].category);
-  //       setData(response.data[0].result);
-  //     })
-  //     .catch((error) => {
-  //       console.log("무언가 오류가 났습니다");
-  //       // if (tagList === 0) {
-  //       //   return <div>{"오늘은 목표가 없습니다"}</div>
-  //       // }
-  //     });
-  // };
 
   // useEffect(() => {
   //   getUserTagDate();
@@ -36,26 +18,29 @@ const DailyTag = () => {
         {data.length === 0 ? (
           <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
-          data.map((list, i) => (
-            <div className="tagList" key={list.scheduleId}>
-              <div className="check">
-                <input type="checkbox"></input>
-              </div>
-              <div className="tagListbox">
-                <div className="tagCycle">{list.weekCycle}</div>
-                <div className="tagTitle">{list.tagName}</div>
-                <div className="tagCategories">
-                  {list.category?.map((category, i) => {
-                    return (
-                      <div className="category" key={i}>
-                        {category}
-                      </div>
-                    );
-                  })}
+          data.map((list, i) => {
+            console.log(list);
+            return (
+              <div className="tagList" key={list.scheduleId}>
+                <div className="check">
+                  <input type="checkbox"></input>
+                </div>
+                <div className="tagListbox">
+                  <div className="tagCycle">{list.weekCycle}</div>
+                  <div className="tagTitle">{list.tagName}</div>
+                  <div className="tagCategories">
+                    {list.category?.map((category, i) => {
+                      return (
+                        <div className="category" key={i}>
+                          {category}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
       </STTodayTagList>
     </>

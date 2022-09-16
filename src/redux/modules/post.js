@@ -20,7 +20,7 @@ export const __getSchedule = createAsyncThunk(
     const endTime = payload[2].getHours() + ":" + payload[2].getMinutes();
     const weekCycle = payload[3].join(",")
     const userTagId = payload[4].userTagId
-
+    
     const res = await axios.post(`/tag/schedule/add/${userTagId}`,{startDate,startTime,endTime,weekCycle})
     return res.data.result
   }
