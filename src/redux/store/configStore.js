@@ -5,7 +5,9 @@ import profileSlice from '../modules/mypage'
 import myTagSlice from "../modules/mytag"
 import getMonthSlice from "../modules/month"
 import myScheduleSlice from "../modules/post"
+import petSlice from '../modules/pet'
 import  myDailySlice from '../modules/dailytag'
+
 
 const store = configureStore({
   reducer: {
@@ -15,7 +17,9 @@ const store = configureStore({
     myTag: myTagSlice,
     getMonth: getMonthSlice,
     Schedule:myScheduleSlice,
+    pet: petSlice
     getMyDaily:myDailySlice,
+
   }
 }) 
 

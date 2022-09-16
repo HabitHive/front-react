@@ -13,27 +13,13 @@ import EditingPage from "../pages/EditingPage";
 import MyPage from "../pages/MyPage";
 import PetPage from "../pages/PetPage";
 
-import { useSelector, useDispatch } from "react-redux";
-import { setLogin } from "../redux/modules/user";
-import setToken from "../axios/setToken";
-import { useLayoutEffect } from "react";
+import { useSelector } from "react-redux";
 
 import LoginAlert from "../components/common/LoginAlert";
 
-
 const Router = () => {
-  const dispatch = useDispatch();
-  
-  const token = localStorage.getItem("token")
-  const isLog = useSelector(state=>state.user.isLog)
 
-  // 마운트가 완료되기 전에 먼저 실행된다
-  useLayoutEffect(()=>{
-    if (token) {
-      setToken(token)
-      dispatch(setLogin(token))
-    }
-  })
+  const isLog = useSelector(state=>state.user.isLog)
 
   return (
     <BrowserRouter>
@@ -47,7 +33,7 @@ const Router = () => {
             <Route path="/post" element={isLog ?<PostingPage/>: <LoginAlert/>}/>
             <Route path="/mypage" element={isLog ?<MyPage/>: <LoginAlert/>}/>
             <Route path="/pet" element={isLog ?<PetPage/>: <LoginAlert/>}/>
-            <Route path="/*" element={isLog ?<NotFoundPage/>: <LoginAlert/>}/>
+            <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>
     </BrowserRouter>
   );
