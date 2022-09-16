@@ -3,7 +3,7 @@ import styled from "styled-components"
 const TagWeekday = ({weekData}) => {
   // const [checkedWeek, setCheckedWeek] = useState([]);
   const checkedWeek = [];
-  const weekday = ["월", "화", "수", "목", "금", "토", "일"]
+  const weekday = ["일", "월", "화", "수", "목", "금", "토"]
 
   weekData.map((checked, i)=>{
     if (checked === true)
