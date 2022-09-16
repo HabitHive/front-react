@@ -33,7 +33,6 @@ export const ErrorAlert = ({text, title}) => {
       width: 300,
       heightAuto: false,
       icon: "error",
-      title: `${title}`,
       text: `${text}`,
       confirmButtonText: "확인",
     })

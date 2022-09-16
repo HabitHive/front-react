@@ -105,7 +105,7 @@ export const userSlice = createSlice({
 
     })
     .addCase(__userCategory.rejected, (state, action) => {
-      console.log(action.payload)
+
     })
     // 토큰 만료 전 재발급
     .addCase(__getNewToken.pending, (state, action) => {
