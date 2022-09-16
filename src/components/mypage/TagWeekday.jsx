@@ -12,18 +12,31 @@ const TagWeekday = ({weekData}) => {
 
   return(
     <>
-      {checkedWeek.map((checked, i)=>{
-        return(
-          <StStillTagWeek key={i}>
-            {checked}
-          </StStillTagWeek>
-        )
-      })
+      {
+        checkedWeek.length === 0 ? 
+        <StHelpTXT> 아직 등록하지 않은 습관입니다 </StHelpTXT> :
+        <>
+          {
+            checkedWeek.map((checked, i)=>{
+              return(
+                <StStillTagWeek key={i}>
+                  {checked}
+                </StStillTagWeek>
+              )
+            })
+          }
+        </>
       }
     </>
   )
 }
 export default TagWeekday
+
+const StHelpTXT = styled.p`
+  color: #684ded63;
+  font-size: 13px;
+  font-weight: 500;  
+`
 
 const StStillTagWeek =  styled.div`
   width: 18px;

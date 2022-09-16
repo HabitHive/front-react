@@ -15,7 +15,6 @@ export const __getTagBuyList = createAsyncThunk(
   "getTagBuyList",
   async (payload, api) => {
     const data = await axios.get(`/tag/list`) //백서버 연결
-    // const data = await axios.get(`/list`) //로컬서버 연결
     return data.data.result
   }
 )
@@ -24,9 +23,13 @@ export const __getTagBuyList = createAsyncThunk(
 export const __addTag = createAsyncThunk(
   "addTag",
   async (payload, api) => {
-    const res = await axios.post(`/tag/buy`, payload) //백서버 연결
-    return res
-  }
+  try {
+    const res = await axios.post(`/tag/buy`, payload) // 백서버 연결
+    return res.data
+  } catch (err) {
+    console.log(err)
+    api.rejectWithValue(err)
+  }}
 )
 
 // userSlice라는 이름으로 유저 Slice 생성
@@ -43,7 +46,10 @@ export const tagBuySlice = createSlice({
       state.userPoint = action.payload.userPoint
     })
     .addCase(__addTag.fulfilled, (state, action) => {
-    
+
+    })
+    .addCase(__addTag.rejected, (state, action) => {
+
     })
   }
 });
