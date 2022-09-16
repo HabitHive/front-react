@@ -3,15 +3,25 @@ import { BsStars } from "react-icons/bs";
 import { InfoAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/SaveButtonLong";
 
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { __getPetData } from "../../redux/modules/pet";
 
 import petBG from "../../assets/mypetImg/petBG.png"
 import LV1 from "../../assets/mypetImg/LV1.gif"
-import petData from "./petData"
+import petData from "../pet/petData"
 
 const Pet = () => {
+  const dispatch = useDispatch();
 
   const point = useSelector((state)=>state.profile.point)
+  const petInfo = useSelector((state)=>state.pet)
+
+  console.log(petInfo)
+
+  useEffect(()=>{
+    dispatch(__getPetData())
+  },[])
 
   return (
     <StPetBG>
@@ -26,12 +36,12 @@ const Pet = () => {
         <StPetExpBox>
           <StPetExpNum>
             <p>EXP.</p>
-            <p>0/100xp</p>
+            <p>{petInfo.exp}/100xp</p>
           </StPetExpNum>
 
           <StPetExpBar>
             <StPetExpLV>
-              Lv. 01
+              Lv. 0{petInfo.level}
             </StPetExpLV>
             <StPetProgress>
             </StPetProgress>
@@ -220,4 +230,3 @@ const StPetBtn = styled(StSubmitBtn)`
   left: 68px
 `
 
-//https://teamsparta.notion.site/4-0841d140d6c04eab85433b090178a4f1
