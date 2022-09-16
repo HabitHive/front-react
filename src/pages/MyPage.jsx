@@ -23,5 +23,5 @@ const MyPage = () => {
 export default MyPage;
 
 const StMyLayout = styled(Layout)`
-  height: calc(100vh + 100px );
+  height: 200vh
 `

@@ -58,7 +58,7 @@ const Pet = () => {
       </StMyPt>
       <StPetBtn onClick={()=>{
         Swal.fire({
-          title: '아직...',
+          text: '준비 중입니다...',
           width: 300,
           confirmButtonText: "확인",
         })

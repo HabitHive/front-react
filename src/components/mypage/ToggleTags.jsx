@@ -8,7 +8,7 @@ const ToggleTags = ({tags}) => {
         tags.map((tag, i)=>{
           return(
             <StDoneTag key={i}>
-              {tag}
+              <p>{tag}</p>
             </StDoneTag>
           )
         })
@@ -28,10 +28,17 @@ const StTagHelpTxt = styled.p`
 
 const StDoneTag =  styled.div`
   width: max-content;
-  height: 30px;
-  background-color: grey; 
+  height: 22px;
   color: white;
-  margin-left: 5px;
-  padding: 5px 8px;
-  border-radius: 5px;
+  margin-right: 5px;
+  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
+  border: 1px solid #674DED;
+  border-radius: 6px;
+  & p {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: -0.3px;
+    color: #FFFFFF;
+    margin: 0 12px;
+  }
 `

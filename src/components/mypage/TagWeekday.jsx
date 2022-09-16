@@ -1,7 +1,5 @@
 import styled from "styled-components"
 
-import { useRef, useState } from "react"
-
 const TagWeekday = ({weekData}) => {
   // const [checkedWeek, setCheckedWeek] = useState([]);
   const checkedWeek = [];
@@ -28,12 +26,19 @@ const TagWeekday = ({weekData}) => {
 export default TagWeekday
 
 const StStillTagWeek =  styled.div`
-  background-color: #b9b9b9;
-  color: white;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  background-color: #674DED;;
   border-radius: 100%;
-  font-size: 12px;
+  margin-right: 6px;
+  float: left;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
   text-align: center;
-  margin: 0 2px;
 `

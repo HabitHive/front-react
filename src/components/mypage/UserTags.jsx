@@ -54,15 +54,15 @@ const UserTags = () => {
         { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
           stillTags?.map((stillTag, tagName)=>{
             return (
-            <StTagShadowBox justify={"space-between"} key={tagName}>
+            <StTagShadowBox key={tagName}>
               <StStillTag>
                 <StStillTagName>
-                  {stillTag.tagName}
+                  <p>{stillTag.tagName}</p>
                 </StStillTagName>
                 <TagWeekday weekData={stillTag.week}/>
               </StStillTag>
               <StStillTagdDay>
-                D-{stillTag.dDay}
+                <p>D-{stillTag.dDay}</p>
               </StStillTagdDay>
             </StTagShadowBox>
             )
@@ -82,12 +82,12 @@ const UserTags = () => {
         >
           완주 못한 습관
         </StDoneTagBtn>
-        <StTagShadowBox height={"150px"}>
+        <StDoneTagBox>
         {successBtnToggle ?
           <ToggleTags tags={successTags}/> :
           <ToggleTags tags={failTags}/>
         }
-        </StTagShadowBox>
+        </StDoneTagBox>
       </StTagsWrap> 
   )
 }
@@ -114,38 +114,55 @@ const StTagHelpTxt = styled.p`
 `
 
 const StTagShadowBox = styled.div`
-  background-color: white;
+  background-color: #CFEEFF;
   width: 100%;
-  margin: 10px auto;
-  min-height: ${props=>props.height};
-  box-shadow: 3px 3px 8px lightgrey;
-  padding: 10px;
+  height: 68px;
+  margin: 6px auto;
+  padding: 12px;
   display: flex;
-  justify-content: ${props=>props.justify};
-  border-radius: 18px;
+  justify-content: space-between;
+
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
+  border-radius: 12px 12px 12px 0px;
 `
 
 const StStillTag =  styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
 `
 
 const StStillTagName =  styled.div`
-  background-color: grey; 
-  color: white;
-  padding: 5px 8px;
-  margin-right: 10px;
+  width: max-content;
+  font-weight: 700;
+  font-size: 18px;
+  color: #343434;
+  & p {
+    position: relative;
+    top: -4px;
+  }
 `
 
 const StStillTagdDay =  styled.div`
-  width: 50px;
-  font-size: 15px;
-  text-align: center;
-  background-color: grey; 
-  color: white;
-  padding: 5px 8px;
-  border-radius: 5px;
+  width: 37px;
+  height: 21px;
+  background-color: #674DED;
+  border-radius: 4px;
+  & p {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+  }
+`
+
+const StDoneTagBox = styled.div`
+  background-color: white;
+  width: 100%;
+  margin: 10px auto;
+  min-height: 150px;
+  box-shadow: 3px 3px 8px lightgrey;
+  padding: 16px 12px;
+  display: flex;
+  justify-content: ${props=>props.justify};
+  border-radius: 18px;
 `
 
 const StDoneTagBtn =  styled.button`
