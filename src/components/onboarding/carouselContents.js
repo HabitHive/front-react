@@ -1,6 +1,8 @@
 // image 파일
 import carousel1 from "../../assets/onboardingImg/carousel1.png"
 import carousel2 from "../../assets/onboardingImg/carousel2.png"
+import carousel3 from "../../assets/onboardingImg/carousel3.png"
+import carousel4 from "../../assets/onboardingImg/carousel4.png"
 
 const carouselContents = [
   {
@@ -16,12 +18,12 @@ const carouselContents = [
   {
     title: "습관을 완료하여 포인트 획득",
     txt: "일정표에 추가한 목표를 달성하면 포인트를 드려요.　　기간 내 매일 완료 시 추가 포인트도 얻을 수 있습니다.",
-    img: carousel1
+    img: carousel3
   },
   {
     title: "내 관심사에 맞는 습관을 추천",
     txt: "습관을 구매하고 남은 포인트로 펫을 키워보세요! 또 다른 재미와 목표가 될 거예요.",
-    img: carousel2
+    img: carousel4
   }
 ]
 export default carouselContents
