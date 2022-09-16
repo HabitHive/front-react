@@ -17,9 +17,8 @@ const store = configureStore({
     myTag: myTagSlice,
     getMonth: getMonthSlice,
     Schedule:myScheduleSlice,
-    pet: petSlice
-    getMyDaily:myDailySlice,
-
+    pet: petSlice,
+    getMyDaily: myDailySlice,
   }
 }) 
 

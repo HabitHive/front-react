@@ -13,8 +13,19 @@ export const __getPetData = createAsyncThunk(
   "getPetData",
   async (payload, api) => {
     const res = await axios.get(`/pet`) //백서버 연결
-    console.log(res)
     return res.data.result
+  }
+)
+
+export const __setPetXP = createAsyncThunk(
+  "setPetXP",
+  async (payload, api) => {
+    try {
+      const res = await axios.post(`/pet`) // 백서버 연결할 때 사용
+      return res.data
+    } catch (err) {
+      api.rejectWithValue(err)
+    }
   }
 )
 
@@ -28,6 +39,13 @@ export const petSlice = createSlice({
     builder
     .addCase(__getPetData.fulfilled, (state, action) => {
 
+    })
+    .addCase(__setPetXP.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.exp = action.payload.exp
+    })
+    .addCase(__setPetXP.rejected, (state, action) => {
+      console.log(action.payload)
     })
   }
 });
