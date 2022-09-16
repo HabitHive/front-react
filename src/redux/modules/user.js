@@ -1,9 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
-
 import axios from "../../axios/axios";
-import { useNavigate } from "react-router";
 
 const initialState = {
   isLog: false,
@@ -13,19 +10,24 @@ const initialState = {
 export const __signup = createAsyncThunk(
   "signup",
   async (payload, api) => {
-    const res = await axios.post(`/user/signup`, payload) // 백서버 연결할 때 사용
-    console.log(res)
-    .then((res) => api.fulfillWithValue(res.data) )
-    .catch((res) => api.rejectWithValue(res))
+    try {
+      const res = await axios.post(`/user/signup`, payload) // 백서버 연결할 때 사용
+      return res.data
+    } catch (err) {
+      api.rejectWithValue(err)
+    }
   }
 )
 
 export const __basicLogin = createAsyncThunk(
   "basicLogin",
   async (payload, api) => {
-    const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
-    .then((res) => res.data )
-    .catch((res) => api.rejectWithValue(res))
+    try {
+      const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
+      return res.data
+    } catch (err) {
+      api.rejectWithValue(err)
+    }
   }
 )
 
@@ -78,16 +80,10 @@ export const userSlice = createSlice({
       localStorage.setItem('token', action.payload.token)
       state.isLog = true
       state.token = action.payload.token
-      ConfirmToast({title: "회원가입 완료"})
-      useNavigate("/onboarding");
     })
     .addCase(__signup.rejected, (state, action) => {
-      console.log(action)
+      console.log(action.payload)
       state.isLog = false
-      ErrorAlert({
-        title: "회원가입 실패",
-        text: "잠시 후 다시 시도해 주세요"
-      })
     })
     // 일반 로그인
     .addCase(__basicLogin.fulfilled, (state, action) => {
@@ -96,12 +92,7 @@ export const userSlice = createSlice({
       state.token = action.payload.token
     })
     .addCase(__basicLogin.rejected, (state, action) => {
-      console.log(action.payload)
       state.isLog = false
-      ErrorAlert({
-        title: "로그인 실패",
-        text: "잠시 후 다시 시도해 주세요"
-      })
     })
     // 카카오 소셜 로그인
     .addCase(__kakaoLogin.fulfilled, (state, action) => {

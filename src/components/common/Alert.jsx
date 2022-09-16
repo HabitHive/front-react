@@ -14,12 +14,12 @@ export const ConfirmAlert = ({text, title}) => {
 }
 
 // 토스트메시지
-export const ConfirmToast = ({title}) => {
+export const ConfirmToast = ({text}) => {
   return (
     Swal.fire({
-      width: 150,
+      width: 300,
       icon: "success",
-      title: `${title}`,
+      text: `${text}`,
       showConfirmButton: false,
       timer: 1500
     })
@@ -31,6 +31,7 @@ export const ErrorAlert = ({text, title}) => {
   return (
     Swal.fire({
       width: 300,
+      heightAuto: false,
       icon: "error",
       title: `${title}`,
       text: `${text}`,

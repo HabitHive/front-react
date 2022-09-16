@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
 
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -31,8 +32,19 @@ const LoginForm = () => {
   
 
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
-  const onSubmit = (data) => {
-    dispatch(__basicLogin(data))
+  const onSubmit = async (data) => {
+    await dispatch(__basicLogin(data))
+    .then((res) => {
+      ConfirmToast({text: "환영합니다"})
+      navigate("/")
+    })
+    .catch((err) => {
+      console.log(err)
+      ErrorAlert({
+        title: "로그인 실패",
+        text: "잠시 후 다시 시도해 주세요"
+      })
+    })
   };
 
 

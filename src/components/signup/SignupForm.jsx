@@ -34,9 +34,20 @@ const SignupForm = () => {
   //password 중복체크용
   const watchPW = watch('password')
   
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     delete data.pwConfirm
-    dispatch(__signup(data))
+    await dispatch(__signup(data))
+    .then((res) => {
+      ConfirmToast({text: "가입을 축하합니다"})
+      navigate("/onboarding")
+    })
+    .catch((err) => {
+      console.log(err)
+      ErrorAlert({
+        title: "회원가입 실패",
+        text: "잠시 후 다시 시도해 주세요"
+      })
+    })
   };
 
   return (
