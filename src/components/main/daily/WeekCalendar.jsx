@@ -104,7 +104,7 @@ const WeekCalendar = (todayDate, value) => {
       pickyear: now.getFullYear(),
     });
   };
-  console.log(pickDay);
+  // console.log(pickDay);
 
   return (
     <STWeekCalender>

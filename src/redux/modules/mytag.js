@@ -13,9 +13,7 @@ export const __getMyTags = createAsyncThunk(
 export const __getMyTag = createAsyncThunk(
   "getMyTag",
   async (payload, api) => {
-    // console.log(payload)
     const res = await axios.get(`/tag/daily/list`)
-    // console.log(res.data.result)
     return res.data.result
   }
 )
@@ -37,13 +35,6 @@ export const myTagSlice = createSlice({
   reducers: { 
   },
   extraReducers: (builder) => {
-    // builder
-    // .addCase(__getMyTags.fulfilled, (state, action) => {
-    //   state.userTagId = action.payload.userTagId
-    //   state.new = action.payload.new
-    //   state.tagName = action.payload.tagName
-        // state.period = action.payload.period
-    // })
     builder
     .addCase(__getMyTags.fulfilled, (state, action) => {
       state.myTags = action.payload
