@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const DailyTag = () => {
   // const [user, setUser] = useState({});
+  const [state, setState] = useSelector((state) => state.myTag.result);
+  // console.log(state);
+
   const [data, setData] = useState([]);
 
   // const getUserTagDate = async () => {

@@ -2,16 +2,23 @@ import styled from "styled-components";
 
 import WeekCalendar from "../components/main/daily/WeekCalendar";
 import HedaerImg from "../assets/images/mainDailyHeader.png";
-import { HiCalendar } from "react-icons/hi";
-
-import { useNavigate } from "react-router";
 import Navbar from "../components/common/Navbar";
-
+import { HiCalendar } from "react-icons/hi";
 import DailyTag from "../components/main/daily/DailyTag";
 import MyTag from "../components/main/daily/MyTag";
 
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { __getMyDaily } from "../redux/modules/dailytag";
+
 const MainDailyPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(__getMyDaily());
+  }, []);
 
   return (
     <STContainer>
