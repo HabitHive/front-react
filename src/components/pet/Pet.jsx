@@ -1,14 +1,16 @@
 import styled from "styled-components"
 import { BsStars } from "react-icons/bs";
-import { ConfirmAlert, ErrorAlert } from "../common/Alert"
+import { ErrorAlert, rabbitAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/SaveButtonLong";
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { __getPetData, __setPetXP } from "../../redux/modules/pet";
+import { __getProfile } from "../../redux/modules/mypage"
+import pet, { __getPetData, __setPetXP } from "../../redux/modules/pet";
 
 import petBG from "../../assets/mypetImg/petBG.png"
 import LV1 from "../../assets/mypetImg/LV1.gif"
+import LV2 from "../../assets/mypetImg/LV2.gif"
 import petData from "../pet/petData"
 
 const Pet = () => {
@@ -16,17 +18,27 @@ const Pet = () => {
 
   const user = useSelector((state)=>state.profile)
   const petInfo = useSelector((state)=>state.pet)
-
-  useEffect(()=>{
-    dispatch(__getPetData())
-  },[])
-
+  
+  // 경험치 바 
+  const xp = 2**(petInfo.level-1) * 100
+  const progressWidth = ((petInfo.exp/xp)*100)
+  
   const feedPet = () => {
+    if(progressWidth === 100 && petInfo.level >= 3 ) {
+      rabbitAlert({
+        text: "다음 레벨을 준비 중입니다!"
+      })
+    }
     dispatch(__setPetXP())
     .then((res)=>{
-      ConfirmAlert({
-        text: "밥주기 성공!"
+      rabbitAlert({
+        text: "🐰 맛있어요 더 주세요!"
       })
+      if (petInfo.levelUp === true) {
+        rabbitAlert({
+          text: "🐰 레벨업!"
+        })
+      }
     })
     .catch((err)=>{
       ErrorAlert({
@@ -34,6 +46,16 @@ const Pet = () => {
       })
     })
   }
+
+  useEffect(()=>{
+    dispatch(__getPetData())
+    dispatch(__getProfile())
+  },[])
+
+  useEffect(()=>{
+    dispatch(__getPetData())
+    dispatch(__getProfile())
+  },[petInfo])
 
   return (
     <StPetBG>
@@ -43,12 +65,12 @@ const Pet = () => {
       </StPetTitle>
 
       <StPetInfo>
-        <StPetImg/>
+        <StPetImg level={petInfo.level}/>
 
         <StPetExpBox>
           <StPetExpNum>
             <p>EXP.</p>
-            <p>{petInfo.exp}/100xp</p>
+            <p>{petInfo.exp}/{xp}xp</p>
           </StPetExpNum>
 
           <StPetExpBar>
@@ -56,6 +78,7 @@ const Pet = () => {
               Lv. 0{petInfo.level}
             </StPetExpLV>
             <StPetProgress>
+              <StPetProgressActive width={progressWidth}/>
             </StPetProgress>
           </StPetExpBar>
           <StPetData>
@@ -79,12 +102,7 @@ const Pet = () => {
       <StMyPt>
         <p>My Point |<span><BsStars/> {user.point} </span>point</p>
       </StMyPt>
-      <StPetBtn onClick={()=>{
-        feedPet()
-        // InfoAlert({
-        //   text: "준비중입니다!"
-        // })
-      }}>
+      <StPetBtn onClick={feedPet}>
         <BsStars/> <span>50 point</span> 펫 밥주기
       </StPetBtn>
     </StPetBG>
@@ -130,7 +148,7 @@ const StPetImg = styled.div`
   border: 8px solid #AB9BFF;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.14), inset -2px -2px 4px rgba(0, 0, 0, 0.12);
 
-  background-image: url(${LV1});
+  background-image: url(${ props=>props.level === 1 ? LV1 : LV2 });
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -180,7 +198,18 @@ const StPetProgress = styled.div`
 
   background: #EBEBEB;
   border-radius: 7px;
+  /* transition: 1s; */
 `
+
+const StPetProgressActive = styled.div`
+  width: ${props=>props.width}%;
+  height: 14px;
+
+  background: linear-gradient(84.08deg, #907CF9 8.47%, #6334FF 88.8%);
+  border-radius: 7px;
+
+`
+
 
 const StPetData = styled.div`
   display: flex;

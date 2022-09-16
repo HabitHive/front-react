@@ -6,7 +6,6 @@ export const ConfirmAlert = ({text, title}) => {
     Swal.fire({
       width: 300,
       icon: "success",
-      title: `${title}`,
       text: `${text}`,
       confirmButtonText: "확인",
     })
@@ -46,6 +45,17 @@ export const InfoAlert = ({text}) => {
       width: 300,
       heightAuto: false,
       icon: "info",
+      text: `${text}`,
+      confirmButtonText: "확인",
+    })
+  )
+}
+
+// 토끼밥
+export const rabbitAlert = ({text}) => {
+  return (
+    Swal.fire({
+      width: 300,
       text: `${text}`,
       confirmButtonText: "확인",
     })
