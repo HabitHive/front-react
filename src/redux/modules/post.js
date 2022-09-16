@@ -5,7 +5,6 @@ import axios from "../../axios/axios";
 export const __getSchedule = createAsyncThunk(
   "getSchedule",
   async (payload, api) => {
-    console.log(payload);
     const startyear = [payload[0].getFullYear()];
     const startmoth = [
     payload[0].getMonth() + 1 > 9
@@ -15,14 +14,14 @@ export const __getSchedule = createAsyncThunk(
     const startdate = [
     payload[0].getDate() > 9 ? new Date().getDate() : "0" + new Date().getDate(),
     ];
-    const startday = [startyear + "-" + startmoth + "-" + startdate];
+    const startDate = startyear + "-" + startmoth + "-" + startdate;
 
-    const starttime = [payload[1].getHours() + ":" + payload[1].getMinutes()];
-    const endtime = [payload[2].getHours() + ":" + payload[2].getMinutes()];
-    const schedule = payload[3].join(",")
-    console.log(...startday,...starttime,...endtime,schedule)
+    const startTime = payload[1].getHours() + ":" + payload[1].getMinutes();
+    const endTime = payload[2].getHours() + ":" + payload[2].getMinutes();
+    const weekCycle = payload[3].join(",")
+    const userTagId = payload[4].userTagId
 
-    const res = await axios.post(`/tag/schedule/add/:usertagId`,{...startday,...starttime,...endtime,schedule})
+    const res = await axios.post(`/tag/schedule/add/${userTagId}`,{startDate,startTime,endTime,weekCycle})
     return res.data.result
   }
 )
@@ -44,13 +43,6 @@ export const myScheduleSlice = createSlice({
   reducers: { 
   },
   extraReducers: (builder) => {
-    // builder
-    // .addCase(__getSchedule.fulfilled, (state, action) => {
-    //   state.startTime = action.payload.startTime
-    //   state.endTime = action.payload.endTime
-    //   state.weekCycle = action.payload.weekCycle
-    // state.startDate = action.payload.startDate
-    // })
     builder
     .addCase(__getSchedule.fulfilled, (state, action) => {
       state.schedule = action.payload
