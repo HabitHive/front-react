@@ -31,7 +31,9 @@ const MainDailyPage = () => {
           />
         </div>
         <div className="topContainer">
-          <p className="headerTitle">My daily</p>
+          <p className="headerTitle">나의 일별 목표</p>
+        </div>
+        <div className="headerIconContainer">
           <HiCalendar
             className="headerIcon"
             onClick={() => {
@@ -63,7 +65,7 @@ const StHeaderContainer = styled.div`
   background: linear-gradient(138.07deg, #e8d1fc -1.75%, #a6b8f6 85.02%);
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.12);
   opacity: 0.8;
-  width: 100%;
+  width: 360px;
   height: 214px;
   position: relative;
   & .headerImgContainer {
@@ -73,39 +75,31 @@ const StHeaderContainer = styled.div`
     & .headerImg {
       width: 100%;
       /* height: 303px; */
-      height: 214px;
+      height: 227px;
       object-fit: cover;
     }
   }
 
   & .topContainer {
     display: flex;
-    justify-content: space-between;
-
-    /* top: 10%; */
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
+    justify-content: center;
     & .headerTitle {
       position: absolute;
-      top: 10%;
+      top: 47px;
     }
+  }
+  & .headerIconContainer {
     & .headerIcon {
-      /* justify-content: center;
-      align-content: center;
-      align-items: center; */
-
-      cursor: pointer;
       position: absolute;
-      top: 10%;
-      /* left: 90%; */
-      right: 1%;
-      transform: translate(-50%, -50%);
+      top: 47px;
+      right: 20px;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
     }
   }
 `;
 const StBodyContainer = styled.div`
-  /* background-color: pink; */
-  /* flex: 1; */
   position: relative;
 `;
 

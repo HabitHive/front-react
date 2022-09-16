@@ -5,7 +5,18 @@ import axios from "../../axios/axios";
 export const __getMyDaily = createAsyncThunk(
   "getMyDaily",
   async (payload, api) => {
-    const res = await axios.get(`/tag/daily?todayDate=2022-09-16`)
+    const now = new Date()
+    const today = now.getDate()
+
+    const startyear = now.getFullYear();
+    const startmoth = [
+    now.getMonth() + 1 > 9
+      ? new Date().getMonth() + 1
+      : "0" + (new Date().getMonth() + 1),
+    ];
+    const startDate = startyear + "-" + startmoth + "-" + today;
+
+    const res = await axios.get(`/tag/daily?todayDate=${startDate}`)
     return res.data.result
   }
 )
