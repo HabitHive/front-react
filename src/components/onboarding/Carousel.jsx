@@ -80,7 +80,7 @@ export default Carousel
 const StCarouselLayout = styled.div`
   position: relative;
   width: 360px;
-  height: 100vh;
+  height: calc(100vh - 112px - 48px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -125,9 +125,7 @@ const StCarouselTxt = styled.p`
 `
 
 const StCarouselBottom = styled.div`
-  position: relative;
-  bottom: 144px;
-  width: 360px;
+
 `
 
 const StCarouselDotwrap = styled.div`

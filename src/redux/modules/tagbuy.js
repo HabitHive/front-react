@@ -24,10 +24,9 @@ export const __addTag = createAsyncThunk(
   "addTag",
   async (payload, api) => {
   try {
-    const res = await axios.post(`/tag/buy`, payload) // 백서버 연결
+    const res = await axios.post(`/tag/bxxzsuy`, payload) // 백서버 연결
     return res.data
   } catch (err) {
-    console.log(err)
     api.rejectWithValue(err)
   }}
 )

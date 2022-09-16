@@ -14,10 +14,12 @@ import MyPage from "../pages/MyPage";
 import PetPage from "../pages/PetPage";
 
 import { useSelector, useDispatch } from "react-redux";
-
 import { setLogin } from "../redux/modules/user";
 import setToken from "../axios/setToken";
 import { useLayoutEffect } from "react";
+
+import LoginAlert from "../components/common/LoginAlert";
+
 
 const Router = () => {
   const dispatch = useDispatch();
@@ -38,15 +40,14 @@ const Router = () => {
         <Routes>
             <Route path="/" element={isLog ? <MainDailyPage/> : <LogInPage/>}/>
             <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
-            <Route path="/onboarding" element={<OnboardingPage/>}/>
-            <Route path="/survey" element={<SurveyPage/>}/>
-            {/* <Route path="/main" element={<MainDailyPage/>}/> */}
-            <Route path="/monthly" element={<MonthlyPage/>}/>
-            <Route path="/buy" element={<TagBuyPage/>}/>
-            <Route path="/post" element={<PostingPage/>}/>
-            <Route path="/mypage" element={<MyPage/>}/>
-            <Route path="/pet" element={<PetPage/>}/>
-            <Route path="/*" element={<NotFoundPage/>}/>
+            <Route path="/onboarding" element={isLog ? <OnboardingPage/> : <LoginAlert/>}/>
+            <Route path="/survey" element={isLog ?<SurveyPage/>: <LoginAlert/>}/>
+            <Route path="/monthly" element={isLog ?<MonthlyPage/>: <LoginAlert/>}/>
+            <Route path="/buy" element={isLog ?<TagBuyPage/>: <LoginAlert/>}/>
+            <Route path="/post" element={isLog ?<PostingPage/>: <LoginAlert/>}/>
+            <Route path="/mypage" element={isLog ?<MyPage/>: <LoginAlert/>}/>
+            <Route path="/pet" element={isLog ?<PetPage/>: <LoginAlert/>}/>
+            <Route path="/*" element={isLog ?<NotFoundPage/>: <LoginAlert/>}/>
         </Routes>
     </BrowserRouter>
   );

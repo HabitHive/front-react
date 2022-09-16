@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Swal from "sweetalert2"
 
 import petBG from "../../assets/mypetImg/petBG.png"
-import LV1 from "../../assets/mypetImg/LV1.png"
+import LV1 from "../../assets/mypetImg/LV1.gif"
 import petData from "./petData"
 
 import { BsStars } from "react-icons/bs";
@@ -108,7 +108,7 @@ const StPetImg = styled.div`
   background-image: url(${LV1});
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 35%;
+  background-size: 100%;
 `
 
 const StPetExpBox = styled.div`
