@@ -58,16 +58,15 @@ const MyTag = () => {
 export default MyTag;
 
 const STMyTag = styled.div`
-  /* width: 320px; */
   display: flex;
   flex-direction: column;
-  /* position: absolute; */
+  width: 320px;
+  height: 180px;
   position: fixed;
   z-index: 2;
-  bottom: 76px;
-  width: 320px;
+  margin-left: 20px;
+  bottom: 84px;
   max-width: 420px;
-  height: 180px;
   padding: 12px 16px;
 
   background: rgba(174, 159, 255, 0.4);
@@ -86,8 +85,7 @@ const STMyTag = styled.div`
 
   & .hr {
     border: 1px solid #5039c8;
-    /* width: 288px; */
-    width: 95%;
+    width: 288px;
     margin-bottom: 12px;
   }
   //카테고리들

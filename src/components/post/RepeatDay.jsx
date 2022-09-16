@@ -16,7 +16,7 @@ const RepeatDay = ({
       setInputCheck(inputCheck.filter((el) => el !== item));
     }
   };
-  // console.log(inputCheck);
+
   return (
     <STRepeatDay>
       <div className="repeatDayArea">
@@ -24,11 +24,11 @@ const RepeatDay = ({
           id={repeatDayInput}
           className="sunCheck"
           type="checkbox"
-          //onChange이벤트가 발생하면 check여부와 value(data)값을 전달하여 배열에 data를 넣어준다.
+          //check여부와 value(data)값을 전달하여 배열에 data 넣어줌
           onChange={(e) => {
             inputCheckHandler(e.target.checked, repeatId);
           }}
-          //체크표시 & 해제를 시키는 로직. 배열에 data가 있으면 true, 없으면 false
+          //체크표시 & 해제
           checked={inputCheck.includes(repeatId) ? true : false}
         />
         <label
@@ -48,54 +48,37 @@ const RepeatDay = ({
 export default RepeatDay;
 
 const STRepeatDay = styled.div`
-  width: 100%;
-  padding: 0 20px;
-  margin-top: 24px;
-  & .repeatDayText {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
+  margin: 0 16px 0 0;
+  &:last-child {
+    margin: 0;
   }
-  & .repeatDayArea {
-    /* background-color: #eeeeee; */
-    margin-top: 8px;
+  & label {
     display: flex;
-    & label {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #ebebeb; //미클릭시 배경 초기색
-      /* color: #fff; */
-      color: black;
-      border: none;
-      border-radius: 50%;
-      box-sizing: border-box;
-      cursor: pointer;
-      /* width: 80%;
-        height: 80%; */
-      width: 50px;
-      height: 50px;
-      padding: 9px;
-      margin: 0 16px 0 0;
-      &:last-child {
-        margin: 0;
-      }
-    }
+    justify-content: center;
+    align-items: center;
+    background-color: #ebebeb;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    padding: 9px;
+  }
 
-    & .sunCheck {
-      display: none;
-      position: absolute;
-      width: 0;
-      height: 0;
-      padding: 0;
-      overflow: hidden;
-      border: 0;
-      //요일 클릭시에 색 변경
-      &:checked + label {
-        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-        color: #fff;
-      }
+  & .sunCheck {
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    //요일 클릭시에 색 변경
+    &:checked + label {
+      background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+      color: #fff;
     }
   }
 `;
