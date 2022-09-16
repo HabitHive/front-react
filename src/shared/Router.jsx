@@ -13,13 +13,23 @@ import EditingPage from "../pages/EditingPage";
 import MyPage from "../pages/MyPage";
 import PetPage from "../pages/PetPage";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setLogin } from "../redux/modules/user"
+import setToken from "../axios/setToken";
 
 import LoginAlert from "../components/common/LoginAlert";
 
 const Router = () => {
+  const dispatch = useDispatch();
 
+  const token = localStorage.getItem("token")
   const isLog = useSelector(state=>state.user.isLog)
+
+  if (token) {
+    console.log(token)
+    setToken(token)
+    dispatch(setLogin(token))
+  }
 
   return (
     <BrowserRouter>

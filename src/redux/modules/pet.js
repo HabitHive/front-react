@@ -4,16 +4,22 @@ import axios from "../../axios/axios";
 
 //point 추가 필요
 const initialState = {
+  level: 1,
   exp: 0,
-  level: 1
+  levelUp: false
 }
 
 // 비동기 작업을 처리하는 action을 만든다
 export const __getPetData = createAsyncThunk(
   "getPetData",
   async (payload, api) => {
-    const res = await axios.get(`/pet`) //백서버 연결
-    return res.data.result
+    try {
+      const res = await axios.get(`/pet`) // 백서버 연결할 때 사용
+      return res.data.result
+    } catch (err) {
+      console.log(err)
+      api.rejectWithValue(err)
+    }
   }
 )
 
@@ -22,7 +28,7 @@ export const __setPetXP = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/pet`) // 백서버 연결할 때 사용
-      return res.data
+      return res.data.result
     } catch (err) {
       api.rejectWithValue(err)
     }
@@ -38,11 +44,14 @@ export const petSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(__getPetData.fulfilled, (state, action) => {
-
+      state.level = action.payload.level
+      state.exp = action.payload.exp
     })
     .addCase(__setPetXP.fulfilled, (state, action) => {
       console.log(action.payload)
+      state.level = action.payload.level
       state.exp = action.payload.exp
+      state.levelUp = action.payload.levelUp
     })
     .addCase(__setPetXP.rejected, (state, action) => {
       console.log(action.payload)
