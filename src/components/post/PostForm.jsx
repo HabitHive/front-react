@@ -4,20 +4,22 @@ import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
 import SaveButton from "../common/SaveButton";
 import RepeatDay from "./RepeatDay";
+import { ConfirmToast } from "../common/Alert";
 
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { setHours, setMinutes } from "date-fns";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { __getSchedule } from "../../redux/modules/post";
 import { __getMyTag } from "../../redux/modules/mytag";
 
 let now = new Date();
 const PostForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
   const [endTime, setEndTime] = useState(null);
   // if (startTime) {
@@ -39,7 +41,7 @@ const PostForm = () => {
     dispatch(__getMyTag());
   }, []);
 
-  // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택됨
+  // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
     const lastDate = firstDate.setDate(firstDate.getDate() + state.period);
@@ -47,27 +49,16 @@ const PostForm = () => {
     setEndDate(new Date(lastDate));
   };
 
-  // const starttime = [startTime.getHours() + ":" + startTime.getMinutes()];
-  // const endtime = [endTime.getHours() + ":" + endTime.getMinutes()];
-  // const startyear = [startDate.getFullYear()];
-  // const startmoth = [
-  //   startDate.getMonth() + 1 > 9
-  //     ? now.getMonth() + 1
-  //     : "0" + (now.getMonth() + 1),
-  // ];
-  // const startdate = [
-  //   startDate.getDate() > 9 ? now.getDate() : "0" + now.getDate(),
-  // ];
-  // const startday = [startyear + "-" + startmoth + "-" + startdate];
-  // const repeatDay = checkInput.current;
-  // console.log(repeatDay);
-
   const savePost = () => {
     // setSchedule([startDate, startTime, endTime, inputCheck]);
-    dispatch(__getSchedule([startDate, startTime, endTime, inputCheck]));
+    dispatch(
+      __getSchedule([startDate, startTime, endTime, inputCheck, state])
+    ).then((res) => {
+      ConfirmToast({ text: "등록이 완료되었습니다" });
+      navigate("/");
+    });
   };
 
-  // console.log(category.tagName);
   return (
     <div>
       <Header text={"데일리 설정"} />
@@ -84,7 +75,7 @@ const PostForm = () => {
             selectsRange={true}
             startDate={startDate}
             endDate={endDate}
-            dateFormat="yyyy.MM.dd" // 날짜 표현 형식
+            dateFormat="yyyy.MM.dd"
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
             onChange={dateRange}
             placeholderText="날짜 설정하기"
@@ -128,19 +119,20 @@ const PostForm = () => {
         </div>
         <div className="repeatDay">
           <span className="repeatDayText">반복요일</span>
-          {weekday.map((repeatDayInput, repeatId) => {
-            // console.log(repeatDayInput);
-            return (
-              <RepeatDay
-                key={repeatId}
-                repeatDayInput={repeatDayInput}
-                checkInput={checkInput}
-                repeatId={repeatId}
-                inputCheck={inputCheck}
-                setInputCheck={setInputCheck}
-              />
-            );
-          })}
+          <div className="repeatDayContainer">
+            {weekday.map((repeatDayInput, repeatId) => {
+              return (
+                <RepeatDay
+                  key={repeatId}
+                  repeatDayInput={repeatDayInput}
+                  checkInput={checkInput}
+                  repeatId={repeatId}
+                  inputCheck={inputCheck}
+                  setInputCheck={setInputCheck}
+                />
+              );
+            })}
+          </div>
         </div>
       </BodyContainer>
       <ButtonContainer>
@@ -150,18 +142,17 @@ const PostForm = () => {
   );
 };
 export default PostForm;
+
 const BodyContainer = styled.div`
-  /* justify-content: center; */
   display: flex;
   flex-direction: column;
   align-items: center;
   //선택한 습관
   & .tagTitle {
-    /* 보라그라데이션 */
     background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 0px;
-    /* 안쪽 글씨 */
+
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -180,7 +171,6 @@ const BodyContainer = styled.div`
     width: 100%;
     padding: 0 20px;
     margin-top: 24px;
-    //시작날짜텍스트
     & .startDateText {
       font-style: normal;
       font-weight: 600;
@@ -197,8 +187,6 @@ const BodyContainer = styled.div`
       height: 42px;
       box-sizing: border-box;
       padding-left: 25px;
-      /* margin: 10px; */
-      /* background: #E2E2E2; */
       border-radius: 8px;
       margin-top: 8px;
     }
@@ -213,14 +201,12 @@ const BodyContainer = styled.div`
       flex-direction: column;
       width: 50%;
       margin-right: 12px;
-      //시작시간텍스트
       & .startTimeText {
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 19px;
       }
-      //시작시간인풋박스
       & .startTimeInput {
         background-image: url(${timeImg});
         background-repeat: no-repeat;
@@ -229,8 +215,6 @@ const BodyContainer = styled.div`
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
-        /* margin: 12px 20px; */
-        /* background: #E2E2E2; */
         border-radius: 8px;
         margin-top: 8px;
       }
@@ -239,14 +223,12 @@ const BodyContainer = styled.div`
       display: flex;
       flex-direction: column;
       width: 50%;
-      //종료시간텍스트
       & .endTimeText {
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 19px;
       }
-      //종료시간인풋박스
       & .endTimeInput {
         background-image: url(${timeImg});
         background-repeat: no-repeat;
@@ -255,16 +237,12 @@ const BodyContainer = styled.div`
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
-        /* margin: 12px 20px; */
-        /* background: #E2E2E2; */
         border-radius: 8px;
         margin-top: 8px;
       }
     }
   }
   & .repeatDay {
-    /* background-color: #907CF9; */
-    /* margin: 20px 20px; */
     width: 100%;
     padding: 0 20px;
     margin-top: 24px;
@@ -274,48 +252,9 @@ const BodyContainer = styled.div`
       font-size: 16px;
       line-height: 19px;
     }
-    & .repeatDayArea {
-      /* background-color: #EEEEEE; */
-      margin-top: 8px;
+    & .repeatDayContainer {
       display: flex;
-      & #sunLabel {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #ebebeb; //미클릭시 배경 초기색
-        /* color: #fff; */
-        color: black;
-        border: none;
-        border-radius: 50%;
-        box-sizing: border-box;
-        cursor: pointer;
-        /* width: 80%;
-        height: 80%; */
-        width: 50px;
-        height: 50px;
-        padding: 9px;
-        margin: 0 16px 0 0;
-        &:last-child {
-          margin: 0;
-        }
-      }
-      & .sunCheck {
-        display: none;
-        position: absolute;
-        width: 0;
-        height: 0;
-        padding: 0;
-        overflow: hidden;
-        border: 0;
-        //요일 클릭시에 색 변경
-        &:checked + #sunLabel {
-          background: linear-gradient(
-            197.06deg,
-            #907cf9 -6.2%,
-            #6334ff 101.13%
-          );
-        }
-      }
+      margin-top: 24px;
     }
   }
 `;
