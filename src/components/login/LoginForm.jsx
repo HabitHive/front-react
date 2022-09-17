@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
+import { FiAlertCircle } from "react-icons/fi"
 
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -25,6 +26,7 @@ const LoginForm = () => {
   //유효성검사
   const {
     register,
+    formState: { errors },
     handleSubmit,
   } = useForm({ 
     mode: 'onChange',
@@ -83,6 +85,9 @@ const LoginForm = () => {
               required: true,
             })}
           />
+          {errors.email && errors.email.type === "required" && (
+            <p className="helpTXT"> <FiAlertCircle/> 이메일, 비밀번호를 입력해주세요 </p>
+          )}
           <SaveButtonLong btnName={"로그인"} top={27}/>
           <StLogintoSingup>
             아직 회원이 아니신가요?&nbsp;
@@ -136,6 +141,13 @@ const StLoginForm = styled.form`
   flex-direction: column;
   position: relative;
   top: 50px;
+  & .helpTXT {
+    color: #F53232;
+    font-weight: 400;
+    font-size: 12px;
+    position: absolute;
+    top: 150px;
+  }
 `
 
 const StLoginInput = styled.input`
