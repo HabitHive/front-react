@@ -64,6 +64,7 @@ const StTagBuyWrap = styled.div`
   background-repeat: no-repeat;
   position: relative;
   top: -17px;
+  margin-bottom: 40px;
 `
 
 const StTitle = styled.div`
