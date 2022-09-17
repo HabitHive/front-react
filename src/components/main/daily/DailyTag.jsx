@@ -15,10 +15,10 @@ const DailyTag = () => {
   return (
     <>
       <STTodayTagList>
-        {data.length === 0 ? (
+        {state?.myDaily?.length === 0 ? (
           <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
-          data.map((list, i) => {
+          state?.myDaily?.map((list) => {
             console.log(list);
             return (
               <div className="tagList" key={list.scheduleId}>
@@ -50,20 +50,19 @@ const DailyTag = () => {
 export default DailyTag;
 
 const STTodayTagList = styled.div`
-  /* background-color: coral; */
   width: 100%;
-  display: flex;
   margin-top: 24px;
+  overflow: hidden;
 
   & .empty {
-    /* background-color: blue; */
     flex-direction: column;
     color: #808080;
   }
   //체크박스랑 말풍선영역 묶인곳
   & .tagList {
-    margin: 0 20px 12px 20px;
     display: flex;
+    margin: 0 20px 12px 20px;
+
     & .check {
       flex-shrink: 0;
       width: 30px;
