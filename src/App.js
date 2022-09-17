@@ -9,7 +9,6 @@ const App = () => {
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token")
-  console.log(token)
   if (token) {
     setToken(token)
     dispatch(setLogin(token))

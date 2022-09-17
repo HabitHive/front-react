@@ -112,7 +112,8 @@ export default Pet
 
 const StPetBG = styled.div`
   width: 360px;
-  height: 800px;
+  height: 100vh;
+  background-color: #AE9FFF;
   background-image: url(${petBG});
   background-size: contain;
   background-repeat: no-repeat;

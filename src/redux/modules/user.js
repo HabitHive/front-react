@@ -29,7 +29,7 @@ export const __basicLogin = createAsyncThunk(
       setToken(res.data.token)
       return res.data
     } catch (err) {
-      console.log(err)
+      // console.log(err) 예외처리 할 때 확인
       api.rejectWithValue(err)
     }
   }
@@ -86,7 +86,7 @@ export const userSlice = createSlice({
       state.token = action.payload.token
     })
     .addCase(__signup.rejected, (state, action) => {
-      console.log(action.payload)
+      // console.log(action.payload) 예외처리 할 때 확인
       state.isLog = false
     })
     // 일반 로그인

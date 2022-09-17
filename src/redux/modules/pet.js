@@ -17,7 +17,7 @@ export const __getPetData = createAsyncThunk(
       const res = await axios.get(`/pet`) // 백서버 연결할 때 사용
       return res.data.result
     } catch (err) {
-      console.log(err)
+      // console.log(err) 예외처리 할 때 확인
       api.rejectWithValue(err)
     }
   }
@@ -48,13 +48,13 @@ export const petSlice = createSlice({
       state.exp = action.payload.exp
     })
     .addCase(__setPetXP.fulfilled, (state, action) => {
-      console.log(action.payload)
+      // console.log(action.payload) 예외처리 할 때 확인
       state.level = action.payload.level
       state.exp = action.payload.exp
       state.levelUp = action.payload.levelUp
     })
     .addCase(__setPetXP.rejected, (state, action) => {
-      console.log(action.payload)
+      // console.log(action.payload) 예외처리 할 때 확인
     })
   }
 });
