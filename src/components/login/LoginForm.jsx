@@ -41,7 +41,7 @@ const LoginForm = () => {
       navigate("/")
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err) 예외 처리 시 확인
       ErrorAlert({
         title: "로그인 실패",
         text: "잠시 후 다시 시도해 주세요"

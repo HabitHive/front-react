@@ -42,7 +42,7 @@ const SignupForm = () => {
       navigate("/onboarding")
     })
     .catch((err) => {
-      console.log(err)
+      // console.log(err) 예외처리 시 확인
       ErrorAlert({
         title: "회원가입 실패",
         text: "잠시 후 다시 시도해 주세요"
