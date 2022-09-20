@@ -5,21 +5,11 @@ import styled, { css } from "styled-components";
 
 const DailyTag = () => {
   const state = useSelector((state) => state.getMyDaily);
-
-  // const [check, setCheck] = useState(new Set());
   const [isChecked, setIsChecked] = useState(false);
 
   // useEffect(() => {
   //   getUserTagDate();
   // }, []);
-
-  // const clickInput = (id, isChecked) => {
-  //   console.log(isChecked);
-  //   if (isChecked) {
-  //     check.add(id);
-  //     setCheck(check);
-  //   }
-  // };
 
   const clickInput = () => {
     setIsChecked(!isChecked);
@@ -35,31 +25,29 @@ const DailyTag = () => {
 
   return (
     <>
-      <STTodayTagList>
+      <STTagList>
         {state?.myDaily?.length === 0 ? (
           <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
           state?.myDaily?.map((list) => {
-            // console.log(list);
             return (
-              <STTagList key={list.scheduleId}>
+              <STTodayTagList key={list.scheduleId}>
                 <div className="checkBox">
-                  <label
+                  <STLabel
                     // htmlFor="inputCheck"
                     // id="inputLabel"
                     onClick={clickInput}
                     isChecked={isChecked}
                     // onClick={clickInput}
-                  ></label>
-                  <input
+                  ></STLabel>
+                  <STInputCheckbox
                     type="checkbox"
                     // id="inputCheck"
                     isChecked={isChecked}
-
                     // checked={check[list.scheduleId]}
                     // onClick={clickInput(list.scheduleId)}
                     // onChange={(e) => clickInput(e)}
-                  ></input>
+                  ></STInputCheckbox>
                 </div>
                 <div className="tagListbox">
                   <div className="tagCycle">{list.weekCycle}</div>
@@ -74,102 +62,35 @@ const DailyTag = () => {
                     })}
                   </div>
                 </div>
-              </STTagList>
+              </STTodayTagList>
             );
           })
         )}
-      </STTodayTagList>
+      </STTagList>
     </>
   );
 };
 
 export default DailyTag;
 
-const STTodayTagList = styled.div`
+const STTagList = styled.div`
   width: 100%;
   margin-top: 24px;
   overflow: hidden;
   & .empty {
     flex-direction: column;
     color: #808080;
+    margin-left: 20px;
   }
 `;
 //체크박스랑 말풍선영역 묶인 곳
-const STTagList = styled.div`
+const STTodayTagList = styled.div`
   display: flex;
   margin: 0 20px 12px 20px;
   & .checkBox {
     flex-shrink: 0;
     width: 30px;
     position: relative;
-    & label {
-      /* background: #d3d3d3;
-      border: none;
-      border-radius: 50%;
-      box-sizing: border-box;
-      width: 22px;
-      height: 22px;
-      cursor: pointer; */
-
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      cursor: pointer;
-      width: 28px;
-      height: 28px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      ${({ isChecked }) => {
-        return isChecked
-          ? css`
-              background-color: #5039c8;
-              border-color: #5039c8;
-              &:after {
-                border: 2px solid #fff;
-                border-top: none;
-                border-right: none;
-                content: "";
-                height: 6px;
-                left: 7px;
-                position: absolute;
-                top: 8px;
-                transform: rotate(-45deg);
-                width: 12px;
-              }
-            `
-          : css`
-              background-color: #fff !important;
-              &:after {
-                opacity: 1;
-              }
-            `;
-      }}
-    }
-    & input {
-      /* display: none;
-      position: absolute;
-      width: 0;
-      height: 0;
-      padding: 0;
-      overflow: hidden;
-      border: 0;
-      //요일 클릭시에 색 변경
-      &:checked + label {
-        background: #5039c8;
-      } */
-      visibility: hidden;
-      ${({ isChecked }) =>
-        isChecked
-          ? css`
-              background-color: #5039c8;
-              border-color: #5039c8;
-              &:after: {
-                opacity: 1;
-              }
-            `
-          : null}
-    }
   }
   //말풍선 영역
   & .tagListbox {
@@ -210,4 +131,62 @@ const STTagList = styled.div`
       }
     }
   }
+`;
+
+const STLabel = styled.label`
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  ${({ isChecked }) => {
+    return isChecked
+      ? css`
+          background-color: #5039c8;
+          border-color: #5039c8;
+          &:after {
+            border: 2px solid #fff;
+            border-top: none;
+            border-right: none;
+            content: "";
+            height: 6px;
+            left: 7px;
+            position: absolute;
+            top: 8px;
+            transform: rotate(-45deg);
+            width: 12px;
+          }
+        `
+      : css`
+          background-color: #fff !important;
+          &:after {
+            opacity: 1;
+          }
+        `;
+  }}
+`;
+
+const STInputCheckbox = styled.input`
+  display: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  visibility: hidden;
+  ${({ isChecked }) =>
+    isChecked
+      ? css`
+          background-color: #5039c8;
+          border-color: #5039c8;
+          &:after: {
+            opacity: 1;
+          }
+        `
+      : null}
 `;
