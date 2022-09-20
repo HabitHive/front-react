@@ -1,20 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import TodayTagList from "./TodayTagList";
 
 const DailyTag = () => {
   const state = useSelector((state) => state.getMyDaily);
-  const [isChecked, setIsChecked] = useState(false);
+  const [beChecked, setBeChecked] = useState([]);
 
   // useEffect(() => {
   //   getUserTagDate();
   // }, []);
-
-  const clickInput = () => {
-    setIsChecked(!isChecked);
-    console.log(!isChecked);
-  };
 
   // const checkHandler = ({ target }) => {
   //   console.log(target);
@@ -26,43 +22,22 @@ const DailyTag = () => {
   return (
     <>
       <STTagList>
-        {state?.myDaily?.length === 0 ? (
+        {state.myDaily.length === 0 ? (
           <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
-          state?.myDaily?.map((list) => {
+          state.myDaily.map((list) => {
+            console.log(list);
             return (
-              <STTodayTagList key={list.scheduleId}>
-                <div className="checkBox">
-                  <STLabel
-                    // htmlFor="inputCheck"
-                    // id="inputLabel"
-                    onClick={clickInput}
-                    isChecked={isChecked}
-                    // onClick={clickInput}
-                  ></STLabel>
-                  <STInputCheckbox
-                    type="checkbox"
-                    // id="inputCheck"
-                    isChecked={isChecked}
-                    // checked={check[list.scheduleId]}
-                    // onClick={clickInput(list.scheduleId)}
-                    // onChange={(e) => clickInput(e)}
-                  ></STInputCheckbox>
-                </div>
-                <div className="tagListbox">
-                  <div className="tagCycle">{list.weekCycle}</div>
-                  <div className="tagTitle">{list.tagName}</div>
-                  <div className="tagCategories">
-                    {list.category?.map((category, i) => {
-                      return (
-                        <div className="category" key={i}>
-                          {category}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </STTodayTagList>
+              <TodayTagList
+                key={list.scheduleId}
+                weekCycle={list.weekCycle}
+                tagName={list.tagName}
+                category={list.category}
+                beChecked={beChecked}
+                setBeChecked={setBeChecked}
+                done={list.done}
+                id={list.scheduleId}
+              />
             );
           })
         )}
@@ -82,111 +57,4 @@ const STTagList = styled.div`
     color: #808080;
     margin-left: 20px;
   }
-`;
-//체크박스랑 말풍선영역 묶인 곳
-const STTodayTagList = styled.div`
-  display: flex;
-  margin: 0 20px 12px 20px;
-  & .checkBox {
-    flex-shrink: 0;
-    width: 30px;
-    position: relative;
-  }
-  //말풍선 영역
-  & .tagListbox {
-    background: #cfeeff;
-    cursor: pointer;
-    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
-    border-radius: 12px 12px 12px 0px;
-    min-height: 82px;
-    padding: 12px 12px 7px 12px;
-    flex-grow: 1;
-    //타임사이클
-    & .tagCycle {
-      font-size: 12px;
-      line-height: 14px;
-      margin-bottom: 2px;
-    }
-    //습관이름
-    & .tagTitle {
-      font-size: 16px;
-      line-height: 19px;
-      margin-bottom: 4px;
-    }
-    //카테고리들
-    & .tagCategories {
-      display: flex;
-      flex-wrap: wrap;
-      & .category {
-        background-color: #674ded;
-        padding: 2px 6px;
-        border-radius: 4px;
-        align-items: center;
-        width: fit-content;
-        font-size: 12px;
-        line-height: 14px;
-        font-weight: 200;
-        color: white;
-        margin: 0 5px 5px 0;
-      }
-    }
-  }
-`;
-
-const STLabel = styled.label`
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 28px;
-  height: 28px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  ${({ isChecked }) => {
-    return isChecked
-      ? css`
-          background-color: #5039c8;
-          border-color: #5039c8;
-          &:after {
-            border: 2px solid #fff;
-            border-top: none;
-            border-right: none;
-            content: "";
-            height: 6px;
-            left: 7px;
-            position: absolute;
-            top: 8px;
-            transform: rotate(-45deg);
-            width: 12px;
-          }
-        `
-      : css`
-          background-color: #fff !important;
-          &:after {
-            opacity: 1;
-          }
-        `;
-  }}
-`;
-
-const STInputCheckbox = styled.input`
-  display: none;
-  position: absolute;
-  width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  visibility: hidden;
-  ${({ isChecked }) =>
-    isChecked
-      ? css`
-          background-color: #5039c8;
-          border-color: #5039c8;
-          &:after: {
-            opacity: 1;
-          }
-        `
-      : null}
 `;
