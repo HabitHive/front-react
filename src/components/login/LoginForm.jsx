@@ -7,12 +7,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __basicLogin, __kakaoLogin } from "../../redux/modules/user";
+import setSession from "../../axios/setSession";
 
 import SaveButtonLong from "../common/SaveButtonLong";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
 import loginBG from "../../assets/loginImg/loginBG.png"
 import { BsFillChatFill } from "react-icons/bs"
-import setToken from "../../axios/setToken";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     dispatch(__basicLogin(data))
     .then((res) => {
-      setToken(res.payload.token)
+      setSession(res.payload)
       ConfirmToast({text: "환영합니다"})
       navigate("/")
     })

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __signup } from "../../redux/modules/user";
+import setSession from "../../axios/setSession";
 
 import SaveButtonLong from "../common/SaveButtonLong";
 
@@ -38,6 +39,7 @@ const SignupForm = () => {
     delete data.pwConfirm
     await dispatch(__signup(data))
     .then((res) => {
+      setSession(res.payload)
       ConfirmToast({text: "가입을 축하합니다"})
       navigate("/onboarding")
     })

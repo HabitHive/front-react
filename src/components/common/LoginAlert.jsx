@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { InfoAlert } from "./Alert"
 import { useNavigate } from "react-router"
 
-const LoginAlert = () => {
+export const LoginAlert = () => {
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -16,4 +16,15 @@ const LoginAlert = () => {
     <></>
   )
 }
-export default LoginAlert
+
+export const LoggedinNav = () => {
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    navigate("/main")
+  })
+
+  return (
+    <></>
+  )
+}

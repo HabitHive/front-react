@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "../../axios/axios";
-import setToken from "../../axios/setToken";
+import { setCookie, removeCookie } from "../../util/cookies";
 
 const initialState = {
   isLog: false,
-  token: ""
+  session: ""
 }
 
 export const __signup = createAsyncThunk(
@@ -13,8 +13,8 @@ export const __signup = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/user/signup`, payload) // 백서버 연결할 때 사용
-      setToken(res.data.token)
-      return res.data
+      setCookie("session", res.data.session)
+      return res.data.session
     } catch (err) {
       api.rejectWithValue(err)
     }
@@ -26,11 +26,10 @@ export const __basicLogin = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
-      console.log(res)
-      setToken(res.data.token)
-      return res.data
+      return res.data.session
     } catch (err) {
       // console.log(err) 예외처리 할 때 확인
+      console.log(err)
       api.rejectWithValue(err)
     }
   }
@@ -39,15 +38,9 @@ export const __basicLogin = createAsyncThunk(
 export const __kakaoLogin = createAsyncThunk(
   "kakaoLogin",
   (payload, api) => {
+    console.log(payload)
+    setCookie("session", payload)
     return payload
-  }
-)
-
-export const __getNewToken = createAsyncThunk(
-  "getNewToken",
-  async (payload, api) => {
-    const res = await axios.get(`/token`) // 백서버 연결할 때 사용
-    return res.data
   }
 )
 
@@ -59,10 +52,12 @@ export const __userCategory = createAsyncThunk(
   }
 )
 
+// 다시 확인하기
 export const __logout = createAsyncThunk(
   "logout",
   async (payload, api) => {
-    const res = await axios.get(`/user/logout`) // 백서버 연결할 때 사용
+    const res = await axios.delete(`/user/logout`) // 백서버 연결할 때 사용
+    console.log(res)
     return
   }
 )
@@ -75,51 +70,48 @@ export const userSlice = createSlice({
     //로그인 상태 유지
     setLogin: (state, action) => {
       state.isLog = true
-      state.token = action.payload
+      state.session = action.payload
     },
   },
   extraReducers: (builder) => {
     builder
     // 회원가입
     .addCase(__signup.fulfilled, (state, action) => {
-      localStorage.setItem('token', action.payload.token)
       state.isLog = true
-      state.token = action.payload.token
+      state.session = action.payload
     })
     .addCase(__signup.rejected, (state, action) => {
-      // console.log(action.payload) 예외처리 할 때 확인
+      console.log(action.payload)
       state.isLog = false
     })
     // 일반 로그인
+    .addCase(__basicLogin.pending, (state, action) => {
+      state.isLog = false
+    })
     .addCase(__basicLogin.fulfilled, (state, action) => {
-      localStorage.setItem('token', action.payload.token)
+      setCookie("session", action.payload)
       state.isLog = true
-      state.token = action.payload.token
+      state.session = action.payload
     })
     .addCase(__basicLogin.rejected, (state, action) => {
+      console.log(action.payload)
       state.isLog = false
     })
     // 카카오 소셜 로그인
     .addCase(__kakaoLogin.fulfilled, (state, action) => {
-      localStorage.setItem('token', action.payload)
       state.isLog = true
-      state.token = action.payload
+      state.session = action.payload
     })
     // 가입 시 유저 관심사 선택
     .addCase(__userCategory.fulfilled, (state, action) => {
 
     })
     .addCase(__userCategory.rejected, (state, action) => {
+      console.log(action.payload)
 
     })
-    // 토큰 만료 전 재발급
-    .addCase(__getNewToken.pending, (state, action) => {
-      localStorage.removeItem('token')
-    })
-    .addCase(__getNewToken.fulfilled, (state, action) => {
-      localStorage.setItem('token', action.payload.token)
-      state.isLog = true
-      state.token = action.payload.token
+    .addCase(__logout.fulfilled, (state, action) => {
+
     })
   }
 });

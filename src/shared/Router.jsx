@@ -16,7 +16,7 @@ import PetPage from "../pages/PetPage";
 import { useSelector } from "react-redux";
 
 
-import LoginAlert from "../components/common/LoginAlert";
+import { LoginAlert, LoggedinNav } from "../components/common/LoginAlert";
 
 const Router = () => {
 
@@ -25,10 +25,11 @@ const Router = () => {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={isLog ? <MainDailyPage/> : <LogInPage/>}/>
-            <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
+            <Route path="/" element={isLog ? <LoggedinNav/> : <LogInPage/>}/>
+            <Route path="/signup" element={isLog ? <LoggedinNav/> : <SignUpPage/>}/>
             <Route path="/onboarding" element={isLog ? <OnboardingPage/> : <LoginAlert/>}/>
             <Route path="/survey" element={isLog ?<SurveyPage/>: <LoginAlert/>}/>
+            <Route path="/main" element={isLog ? <MainDailyPage/> :<LoginAlert/>}/>
             <Route path="/monthly" element={isLog ?<MonthlyPage/>: <LoginAlert/>}/>
             <Route path="/buy" element={isLog ?<TagBuyPage/>: <LoginAlert/>}/>
             <Route path="/post" element={isLog ?<PostingPage/>: <LoginAlert/>}/>
