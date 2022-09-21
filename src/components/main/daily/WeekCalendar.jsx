@@ -214,15 +214,12 @@ const STWeekCalender = styled.div`
   bottom: 15%;
 `;
 const StCalendar = styled.div`
-  /* padding-left: 40px; */
   justify-content: center;
   align-items: center;
   text-align: center;
-
   width: 100%;
   overflow: initial;
   & .Month {
-    /* position: absolute; */
     font-style: normal;
     font-weight: 700;
     font-size: 12px;
@@ -231,16 +228,14 @@ const StCalendar = styled.div`
     color: #5039c8;
   }
 
-  /* 캘린더 일전체 컨테이너 */
+  /* 주간캘린더 일전체 컨테이너 */
   & .Day {
     justify-content: center;
     align-content: center;
     text-align: center;
-
-    /* width: 100%; */
     height: 3.5rem;
     font-size: 14px;
-    /* left: 17%; */
+
     & .daylistContainer {
       display: flex;
       justify-content: space-between;
@@ -252,23 +247,26 @@ const StCalendar = styled.div`
         background: #ffffff;
         box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
         cursor: pointer;
+        &:nth-child(1) {
+          margin-right: 8px;
+        }
       }
     }
-    /* 오늘자 기준 날짜 배열 Daylist */
+    /* 하루짜리 날짜 배열 Daylist */
     & .daylistSelector {
-      /* overflow: auto; */
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       float: left;
-      margin-right: 8px;
-      cursor: pointer;
-
+      margin-right: 4px;
       width: 40px;
       height: 60px;
       border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
+      color: #999999;
 
       /* //today표현
       &:nth-child(1) {
@@ -290,9 +288,9 @@ const StCalendar = styled.div`
         color: #999999;
       } */
 
-      /* //마우스 올렸을 때
+      //마우스 올렸을 때
       &:hover {
-        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+        background: #5039c8;
         color: white;
         & .week {
           color: white;
@@ -300,30 +298,17 @@ const StCalendar = styled.div`
         & .day {
           color: white;
         }
-      } */
-      //클릭했을 때
-    }
-    & .active {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      float: left;
-      margin-right: 8px;
-      cursor: pointer;
-
-      width: 40px;
-      height: 60px;
-      border-radius: 8px;
-
-      background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-      color: #fff;
-      & .week {
-        color: white;
       }
-      & .day {
-        color: white;
+      //클릭했을 때
+      &:active {
+        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+        color: #fff;
+        & .week {
+          color: white;
+        }
+        & .day {
+          color: white;
+        }
       }
     }
   }
@@ -335,7 +320,6 @@ const STLabel = styled.label`
   align-items: center;
   text-align: center;
   float: left;
-  margin-right: 8px;
   cursor: pointer;
 
   width: 40px;
@@ -352,7 +336,6 @@ const STLabel = styled.label`
     text-align: center;
     font-size: 10px;
     color: #999999;
-    margin-bottom: 6px;
   }
   & .day {
     font-weight: 600;
