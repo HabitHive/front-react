@@ -2,16 +2,17 @@ import Router from "./shared/Router";
 
 import { useDispatch } from "react-redux";
 import { setLogin } from "./redux/modules/user"
-import setToken from "./axios/setToken";
-import { useLayoutEffect } from "react";
+import { getCookie } from "./util/cookies";
+import setSession from "./axios/setSession";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem("token")
-  if (token) {
-    setToken(token)
-    dispatch(setLogin(token))
+  const session = getCookie("session")
+
+  if (session) {
+    setSession(session)
+    dispatch(setLogin(session))
   }
 
   return (

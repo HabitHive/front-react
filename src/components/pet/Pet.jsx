@@ -31,9 +31,9 @@ const Pet = () => {
     }
     dispatch(__setPetXP())
     .then((res)=>{
-      rabbitAlert({
-        text: "🐰 맛있어요 더 주세요!"
-      })
+      // rabbitAlert({
+      //   text: "🐰 맛있어요 더 주세요!"
+      // })
       if (petInfo.levelUp === true) {
         rabbitAlert({
           text: "🐰 레벨업!"
@@ -199,7 +199,6 @@ const StPetProgress = styled.div`
 
   background: #EBEBEB;
   border-radius: 7px;
-  /* transition: 1s; */
 `
 
 const StPetProgressActive = styled.div`
@@ -208,7 +207,7 @@ const StPetProgressActive = styled.div`
 
   background: linear-gradient(84.08deg, #907CF9 8.47%, #6334FF 88.8%);
   border-radius: 7px;
-
+  transition: 1s;
 `
 
 

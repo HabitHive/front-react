@@ -6,15 +6,19 @@ import { useDispatch } from "react-redux";
 
 import { __logout } from "../../redux/modules/user";
 import Swal from "sweetalert2";
+import { removeCookie } from "../../util/cookies";
+import { InfoAlert } from "../common/Alert";
 
 const SubNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
-    localStorage.removeItem("token")
+    removeCookie("session")
     dispatch(__logout())
-    navigate("/") // 동기처리하기
+    .then(InfoAlert({
+      text: "로그아웃되었습니다"
+    }))
   }
  
   return (
