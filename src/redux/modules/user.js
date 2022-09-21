@@ -26,6 +26,7 @@ export const __basicLogin = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
+      console.log(res)
       setToken(res.data.token)
       return res.data
     } catch (err) {
