@@ -26,7 +26,6 @@ const DailyTag = () => {
           <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
           state.myDaily.map((list) => {
-            console.log(list);
             return (
               <TodayTagList
                 key={list.scheduleId}

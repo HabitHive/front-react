@@ -69,7 +69,7 @@ const STMyTag = styled.div`
   max-width: 420px;
   padding: 12px 16px;
 
-  background: rgba(174, 159, 255, 0.4);
+  background: #ffffff;
   border-radius: 16px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(16px);

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import WeekCalendar from "../components/main/daily/WeekCalendar";
-import HedaerImg from "../assets/images/mainDailyHeader.png";
+import HedaerImg from "../assets/main/mainDaily.png";
 import Navbar from "../components/common/Navbar";
 import { HiCalendar } from "react-icons/hi";
 import DailyTag from "../components/main/daily/DailyTag";
