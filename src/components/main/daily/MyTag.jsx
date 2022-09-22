@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,7 @@ import { __getMyTags } from "../../../redux/modules/mytag";
 import { useNavigate } from "react-router-dom";
 import { setDate } from "date-fns";
 
-const MyTag = () => {
+const MyTag = ({ setModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -30,28 +31,36 @@ const MyTag = () => {
   }, []);
 
   return (
-    <>
-      <STMyTag>
-        <div className="myTitle">My habit</div>
-        <hr className="hr"></hr>
-        <div className="tagCategories">
-          {categories?.map((category) => {
-            return (
-              <div
-                className="category"
-                key={category.userTagId}
-                onClick={() => {
-                  // setDate()
-                  navigate("/post", { state: category });
-                }}
-              >
-                {category.tagName}
-              </div>
-            );
-          })}
-        </div>
-      </STMyTag>
-    </>
+    <STMyTag>
+      <div className="titleIcon">
+        <div className="myTitle">나의 습관목록</div>
+        <MdKeyboardArrowDown
+          onClick={() => {
+            setModal(false);
+          }}
+          className="downIcon"
+          size="30"
+          color="#5039C8"
+        />
+      </div>
+      <hr className="hr"></hr>
+      <div className="tagCategories">
+        {categories?.map((category) => {
+          return (
+            <div
+              className="category"
+              key={category.userTagId}
+              onClick={() => {
+                // setDate()
+                navigate("/post", { state: category });
+              }}
+            >
+              {category.tagName}
+            </div>
+          );
+        })}
+      </div>
+    </STMyTag>
   );
 };
 
@@ -73,14 +82,21 @@ const STMyTag = styled.div`
   border-radius: 16px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(16px);
-
-  & .myTitle {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    color: #5039c8;
+  & .titleIcon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 12px;
+    & .myTitle {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #5039c8;
+    }
+    & .downIcon {
+      cursor: pointer;
+    }
   }
 
   & .hr {
