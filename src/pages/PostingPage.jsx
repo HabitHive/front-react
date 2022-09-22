@@ -1,5 +1,11 @@
+import PostForm from "../components/post/PostForm";
+
 const PostingPage = () => {
-  return <div></div>;
+  return (
+    <>
+      <PostForm></PostForm>
+    </>
+  );
 };
 
 export default PostingPage;

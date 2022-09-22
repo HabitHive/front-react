@@ -1,10 +1,8 @@
-import styled from "styled-components";
+import LoginForm from "../components/login/LoginForm";
 
 const LogInPage = () => {
   return (
-    <p>
-      로그인페이지입니다
-    </p>
+    <LoginForm/>
   )
 };
 
