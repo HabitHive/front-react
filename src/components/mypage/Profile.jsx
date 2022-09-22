@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { __getProfile } from "../../redux/modules/mypage";
 
+import profileBG from "../../assets/mypageImg/profileBG.png"
 import userIMG from "../../assets/mypageImg/userIMG.png"
 import userPet1 from "../../assets/mypageImg/userPet1.png"
 import { BsStars } from "react-icons/bs";
@@ -40,6 +41,9 @@ const Profile = () => {
 export default Profile
 
 const StProfileWrap = styled.div`
+  background-image: url(${profileBG});
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
