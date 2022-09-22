@@ -12,7 +12,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __getMyDaily } from "../redux/modules/dailytag";
-import WeekCalTest from "../components/common/WeekCalTest";
 
 const MainDailyPage = () => {
   const dispatch = useDispatch();
