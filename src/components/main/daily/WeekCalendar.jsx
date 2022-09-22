@@ -12,37 +12,6 @@ import React, {
 import { useDispatch } from "react-redux";
 import { __getMyTags } from "../../../redux/modules/mytag";
 
-// 1일부터 해당 월의 마지막 날까지 출력
-const GetAllDate = (firstDay, lastDay) => {
-  const dayList = [];
-  for (let i = firstDay; i <= lastDay; i++) {
-    dayList.push(i);
-  }
-  return dayList;
-};
-
-// 당일 요일부터 시작하는 7일짜리 배열
-const GetAllWeek = (todayWeekDay) => {
-  const weekList = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-  ];
-  const startWeek = weekList.indexOf(todayWeekDay);
-  const thisWeekList = [weekList.slice(startWeek, startWeek + 7)];
-  return thisWeekList;
-};
-
 const GetAllMonth = (monthNameLong) => {
   const monthList = [
     "January",
@@ -67,144 +36,97 @@ const GetAllMonth = (monthNameLong) => {
   return thisMonthList;
 };
 
-const WeekCalendar = (todayDate, value) => {
+const WeekCalendar = (value) => {
   const dispatch = useDispatch();
-  let now = new Date("2022-09-22");
-  console.log(now);
-  const todayWeekDay = now.toString().slice(0, 3); //오늘의 요일 영어로 // Tue
-  const today = now.getDate();
-  const yyyymmdd = now.toISOString().split("T")[0];
-  const firstDay = new Date(now.getFullYear(), now.getMonth() + 1).getDate();
-  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-  //이번달 마지막날짜 //30or31 없으면(오늘이마지막날짜면) []
-  const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
-
-  const year = now.getFullYear();
-  const month =
-    now.getMonth() + 1 > 9
-      ? new Date().getMonth() + 1
-      : "0" + (new Date().getMonth() + 1);
-  const weekDay = now.getDay();
-
-  const [daylist, setDaylist] = useState([]); //이번달 날짜들의 배열
-  const [pickDay, setPickDay] = useState({ pickDate: 0 });
-  //daylist바뀌기 전에는 리렌더링돼도 getList실행 x
-  const getList = useCallback(() => {
-    setDaylist(daylist);
-  }, [daylist]);
-
-  const dayList = GetAllDate(firstDay, lastDay);
-  const thisWeekList = GetAllWeek(todayWeekDay);
-  const thisMonthList = GetAllMonth(monthNameLong);
-
-  //전체 배열을 한번만 저장해서 실행함.
-  // const alldate = useMemo(() => GetAllDate(today, lastday), [daylist]);
-  // const allweek = useMemo(() => GetAllWeek(todayweek), [thisWeekList]);
-
-  const todayIndex = dayList.findIndex((x) => x === today);
-  // 날짜와 요일을 같이 표시( map돌리는 객체 )
-  const CalendarObject = [
-    { week: thisWeekList[0][0], day: dayList[todayIndex] },
-    { week: thisWeekList[0][1], day: dayList[todayIndex + 1] },
-    { week: thisWeekList[0][2], day: dayList[todayIndex + 2] },
-    { week: thisWeekList[0][3], day: dayList[todayIndex + 3] },
-    { week: thisWeekList[0][4], day: dayList[todayIndex + 4] },
-    { week: thisWeekList[0][5], day: dayList[todayIndex + 5] },
-    // { week: thisWeekList[i], day: dayList[i] },
-    // { week: thisWeekList[6], day: dayList[6] },
-  ];
 
   useEffect(() => {
     // return () => console.log("Clean up");
   }, []);
 
   const week = useRef(null);
-  // console.log(week); //고쳐야함
-  const day = useRef(null);
 
   //날짜 클릭시 해당날짜 데이터 보내기
-
-  const clickDate = (year, month, today) => {
-    console.log(year, month, today);
-    dispatch(__getMyTags());
+  const clickDate = (clickDate) => {
+    dispatch(__getMyTags(clickDate));
   };
 
-  //input radio value 값 가져오기
-  const pickDayHandleChange = (e) => {
-    setPickDay({
-      pickDate: e.target.value,
-      pickMonth:
-        now.getMonth() + 1 > 9
-          ? now.getMonth() + 1
-          : "0" + (now.getMonth() + 1),
-      pickyear: now.getFullYear(),
+  const [past, setPast] = useState(0);
+  const [future, setFuture] = useState(6);
+
+  let weekDate = [];
+  let now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = now.getMonth();
+  const dd = now.getDate();
+
+  for (let i = past; i < future; i++) {
+    let weekCal = new Date(now.setFullYear(yyyy, mm, dd + i));
+    weekDate.push({
+      month: weekCal.toLocaleString("en-US", { month: "long" }),
+      date: weekCal.getDate(),
+      day: weekCal.toString().slice(0, 3),
+      back: new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, 10),
     });
+  }
+
+  //weekbar 양옆 버튼 누를 때마다 6일짜리 돌아감
+  const changFuture = () => {
+    setPast(past + 6);
+    setFuture(future + 6);
   };
-  // console.log(pickDay);
+  const changPast = () => {
+    setPast(past - 6);
+    setFuture(future - 6);
+  };
 
   return (
     <STWeekCalender>
       <StCalendar>
-        <span className="Month">{monthNameLong}</span>
-        <DayContainer className="Day" onChange={getList}>
+        <span className="Month">{weekDate[0].month}</span>
+        <DayContainer className="Day">
           <div className="daylistContainer">
             <button>
-              <FaChevronLeft />
+              <FaChevronLeft onClick={changPast} />
             </button>
             <div>
-              {/* {CalendarObject.map((calendarItem, index) => (
-                <div
-                  className="daylistSelector active"
-                  key={index}
-                  onClick={() => pickDate()}
-                >
-                  <div className="week" ref={week}>
-                    {calendarItem.week}
+              {weekDate.map((weekday, i) => {
+                return (
+                  <div
+                    className={
+                      { value } === weekday.date ? "active" : "daylistSelector"
+                    }
+                    key={i}
+                    onChange={() => {
+                      clickDate(weekday.back);
+                    }}
+                  >
+                    <STLabel>
+                      <input
+                        type="radio"
+                        className="week"
+                        name="asdf"
+                        value={weekday.day}
+                        ref={week}
+                      />
+                      {weekday.day}
+                    </STLabel>
+                    <STLabel>
+                      <input
+                        type="radio"
+                        className="day"
+                        name={value}
+                        value={weekday.date}
+                      />
+                      {weekday.date}
+                    </STLabel>
                   </div>
-                  <div className="day" ref={day}>
-                    {calendarItem.day}
-                  </div>
-                </div>
-              ))} */}
-              {CalendarObject.map((calendarItem, index) => (
-                <div
-                  className={
-                    { value } === calendarItem.day
-                      ? "active"
-                      : "daylistSelector"
-                  }
-                  key={index}
-                >
-                  <STLabel>
-                    <input
-                      type="radio"
-                      className="week"
-                      name="asdf"
-                      value={calendarItem.week}
-                      // checked={setPickDay[name] === calendarItem.week}
-                      // onChange={pickDayHandleChange}
-                      ref={week}
-                    />
-                    {calendarItem.week}
-                  </STLabel>
-                  <STLabel>
-                    <input
-                      type="radio"
-                      className="day"
-                      name={value}
-                      value={calendarItem.day}
-                      checked={setPickDay[value] === calendarItem.day}
-                      onChange={pickDayHandleChange}
-                      ref={day}
-                      onClick={() => clickDate(year, month, today)}
-                    />
-                    {calendarItem.day}
-                  </STLabel>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <button>
-              <FaChevronRight />
+              <FaChevronRight onClick={changFuture} />
             </button>
           </div>
         </DayContainer>
