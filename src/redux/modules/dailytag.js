@@ -24,6 +24,7 @@ export const __getMyDaily = createAsyncThunk(
 export const __doneMyDaily = createAsyncThunk(
   "doneMyDaily",
   async (payload, api )=> {
+    console.log(payload)
     const res = await axios.post(`/tag/done`,{scheduleId:payload,date:"2022-09-22"})
     return payload
   }

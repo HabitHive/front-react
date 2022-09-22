@@ -12,10 +12,10 @@ import React, {
 import { useDispatch } from "react-redux";
 import { __getMyTags } from "../../../redux/modules/mytag";
 
-// 당일부터 해당 월의 마지막 날까지 출력
-const GetAllDate = (today, lastDay) => {
+// 1일부터 해당 월의 마지막 날까지 출력
+const GetAllDate = (firstDay, lastDay) => {
   const dayList = [];
-  for (let i = today; i <= lastDay; i++) {
+  for (let i = firstDay; i <= lastDay; i++) {
     dayList.push(i);
   }
   return dayList;
@@ -23,89 +23,96 @@ const GetAllDate = (today, lastDay) => {
 
 // 당일 요일부터 시작하는 7일짜리 배열
 const GetAllWeek = (todayWeekDay) => {
-  const weekList = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const thisWeek = [];
+  const weekList = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+  ];
   const startWeek = weekList.indexOf(todayWeekDay);
-  for (let i = startWeek; i < 7; i++) {
-    thisWeek.push(i);
-  }
-  const arr1 = [weekList.slice(thisWeek[0])];
-  for (let i = 0; i < startWeek; i++) {
-    thisWeek.push(i);
-  }
-  const arr2 = [weekList.slice(0, startWeek)];
-  const thisWeekList = [].concat(...arr1, ...arr2);
+  const thisWeekList = [weekList.slice(startWeek, startWeek + 7)];
   return thisWeekList;
 };
 
-// const GetAllMonth = (monthNameLong) => {
-//   const monthList = [
-//     "January",
-//     "February",
-//     "March",
-//     "April",
-//     "May",
-//     "June",
-//     "July",
-//     "August",
-//     "september",
-//     "October",
-//     "November",
-//     "December",
-//   ];
-//   const thisMonth = [];
-//   const startMonth = monthList.indexOf(monthNameLong);
-//   console.log(startMonth);
-//   for (let i = startMonth; i < 12; i++) {
-//     thisMonth.push(i);
-//   }
-//   const arr1 = [monthList.slice(thisMonth[0])];
-//   for (let i = 0; i < startMonth; i++) {
-//     thisMonth.push(i);
-//   }
-//   const arr2 = [monthList.slice(0, startMonth)];
-//   const thisMonthList = [].concat(...arr1, ...arr2);
-//   return thisMonthList;
-// };
+const GetAllMonth = (monthNameLong) => {
+  const monthList = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+    "January",
+    "February",
+    "March",
+    "April",
+  ];
+  const startMonth = monthList.indexOf(monthNameLong);
+  const thisMonthList = monthList.slice(startMonth, startMonth + 5);
+  return thisMonthList;
+};
 
 const WeekCalendar = (todayDate, value) => {
   const dispatch = useDispatch();
-  let now = new Date();
+  let now = new Date("2022-09-22");
+  console.log(now);
   const todayWeekDay = now.toString().slice(0, 3); //오늘의 요일 영어로 // Tue
-  const today = now.getDate(); //오늘날짜
-  const thisMonth =
-    now.getMonth() + 1 > 9 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1);
+  const today = now.getDate();
+  const yyyymmdd = now.toISOString().split("T")[0];
+  const firstDay = new Date(now.getFullYear(), now.getMonth() + 1).getDate();
   const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
   //이번달 마지막날짜 //30or31 없으면(오늘이마지막날짜면) []
   const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
-  const [daylist, setDaylist] = useState([]); //이번달 남은날짜
-  const [weeklist, setWeeklist] = useState([]);
+
+  const year = now.getFullYear();
+  const month =
+    now.getMonth() + 1 > 9
+      ? new Date().getMonth() + 1
+      : "0" + (new Date().getMonth() + 1);
+  const weekDay = now.getDay();
+
+  const [daylist, setDaylist] = useState([]); //이번달 날짜들의 배열
   const [pickDay, setPickDay] = useState({ pickDate: 0 });
   //daylist바뀌기 전에는 리렌더링돼도 getList실행 x
   const getList = useCallback(() => {
     setDaylist(daylist);
   }, [daylist]);
 
-  const dayList = GetAllDate(today, lastDay);
+  const dayList = GetAllDate(firstDay, lastDay);
   const thisWeekList = GetAllWeek(todayWeekDay);
+  const thisMonthList = GetAllMonth(monthNameLong);
+
   //전체 배열을 한번만 저장해서 실행함.
   // const alldate = useMemo(() => GetAllDate(today, lastday), [daylist]);
   // const allweek = useMemo(() => GetAllWeek(todayweek), [thisWeekList]);
 
-  // console.log(alldate);
-
+  const todayIndex = dayList.findIndex((x) => x === today);
   // 날짜와 요일을 같이 표시( map돌리는 객체 )
   const CalendarObject = [
-    { week: thisWeekList[0], day: dayList[0] },
-    { week: thisWeekList[1], day: dayList[1] },
-    { week: thisWeekList[2], day: dayList[2] },
-    { week: thisWeekList[3], day: dayList[3] },
-    { week: thisWeekList[4], day: dayList[4] },
-    { week: thisWeekList[5], day: dayList[5] },
+    { week: thisWeekList[0][0], day: dayList[todayIndex] },
+    { week: thisWeekList[0][1], day: dayList[todayIndex + 1] },
+    { week: thisWeekList[0][2], day: dayList[todayIndex + 2] },
+    { week: thisWeekList[0][3], day: dayList[todayIndex + 3] },
+    { week: thisWeekList[0][4], day: dayList[todayIndex + 4] },
+    { week: thisWeekList[0][5], day: dayList[todayIndex + 5] },
     // { week: thisWeekList[i], day: dayList[i] },
     // { week: thisWeekList[6], day: dayList[6] },
   ];
-  // console.log(CalendarObject);
 
   useEffect(() => {
     // return () => console.log("Clean up");
@@ -116,11 +123,10 @@ const WeekCalendar = (todayDate, value) => {
   const day = useRef(null);
 
   //날짜 클릭시 해당날짜 데이터 보내기
-  const clickDate =
-    ((day) => {
-      dispatch(__getMyTags(day));
-    },
-    []);
+  const clickDate = (year, month, today) => {
+    console.log(year, month, today);
+    dispatch(__getMyTags());
+  };
 
   //input radio value 값 가져오기
   const pickDayHandleChange = (e) => {
@@ -167,7 +173,6 @@ const WeekCalendar = (todayDate, value) => {
                       : "daylistSelector"
                   }
                   key={index}
-                  onClick={() => clickDate()}
                 >
                   <STLabel>
                     <input
@@ -190,6 +195,7 @@ const WeekCalendar = (todayDate, value) => {
                       checked={setPickDay[value] === calendarItem.day}
                       onChange={pickDayHandleChange}
                       ref={day}
+                      onClick={() => clickDate(year, month, today)}
                     />
                     {calendarItem.day}
                   </STLabel>
