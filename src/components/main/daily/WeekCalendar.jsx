@@ -116,11 +116,15 @@ const WeekCalendar = (todayDate, value) => {
   const day = useRef(null);
 
   //날짜 클릭시 해당날짜 데이터 보내기
-  const clickDate =
-    ((day) => {
-      dispatch(__getMyTags(day));
-    },
-    []);
+  // const clickDate =
+  //   ((day) => {
+  //     dispatch(__getMyTags(day));
+  //   },
+  //   []);
+
+  const clickDate = (day) => {
+    console.log(day)
+  }
 
   //input radio value 값 가져오기
   const pickDayHandleChange = (e) => {
@@ -167,7 +171,7 @@ const WeekCalendar = (todayDate, value) => {
                       : "daylistSelector"
                   }
                   key={index}
-                  onClick={() => clickDate()}
+                  onClick={() => clickDate(calendarItem.day)}
                 >
                   <STLabel>
                     <input

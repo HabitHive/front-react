@@ -11,10 +11,6 @@ export const LoginAlert = () => {
     })
     navigate("/")
   })
-
-  return (
-    <></>
-  )
 }
 
 export const LoggedinNav = () => {
@@ -23,8 +19,4 @@ export const LoggedinNav = () => {
   useEffect(()=>{
     navigate("/main")
   })
-
-  return (
-    <></>
-  )
 }
