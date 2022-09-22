@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { __getProfile } from "../../redux/modules/mypage";
 
-import profileBG from "../../assets/mypageImg/profileBG.png"
+import propfileBG from "../../assets/mypageImg/profileBG.png"
 import userIMG from "../../assets/mypageImg/userIMG.png"
 import userPet1 from "../../assets/mypageImg/userPet1.png"
 import { BsStars } from "react-icons/bs";
@@ -27,6 +27,7 @@ const Profile = () => {
   return(
   <>
     <StProfileWrap>
+      <span>마이메뉴</span>
       <StUserImg>
         <StPetImg/>
       </StUserImg>
@@ -41,12 +42,18 @@ const Profile = () => {
 export default Profile
 
 const StProfileWrap = styled.div`
-  background-image: url(${profileBG});
-  background-size: cover;
-  background-repeat: no-repeat;
+  height: 326px;
+  background-image: url(${propfileBG});
   display: flex;
   flex-direction: column;
   align-items: center;
+  & > span {
+    font-weight: 700;
+    font-size: 18px;
+    color: #343434;
+    letter-spacing: -0.3px;
+    margin: 47px auto 12px auto;
+  }
   & p {
     font-weight: 700;
     font-size: 20px;
@@ -56,8 +63,8 @@ const StProfileWrap = styled.div`
 
 const StUserImg = styled.div`
   background-color: lightgray;
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
   border-radius: 100%;
   margin: 12px auto 15px auto;
   background-image: url(${userIMG});
@@ -67,13 +74,14 @@ const StUserImg = styled.div`
 
 const StPetImg = styled.div`
   background-color: gray;
-  width: 80px;
-  height: 80px;
+  width: 44px;
+  height: 44px;
   border-radius: 100%;
   position: relative;
-  top: 100px;
-  left: 120px;
+  top: 76px;
+  left: 76px;
   background-image: url(${userPet1});
+  background-image: contain;
   background-position: center;
 `
 
