@@ -1,49 +1,47 @@
 import { useState } from "react";
 
 const WeekCalTest = () => {
-  const [a, setA] = useState(0);
-  const [b, setB] = useState(6);
+  const [past, setPast] = useState(0);
+  const [future, setFuture] = useState(6);
 
-  let weekArr = [];
-
+  let weekDate = [];
   let today = new Date();
   const yyyy = today.getFullYear();
   const mm = today.getMonth();
   const dd = today.getDate();
 
-  for (let i=a; i<b; i++) {
-    let weekCal = new Date(today.setFullYear(yyyy,mm,(dd+i))).toISOString().slice(0,10)
-    weekArr.push(weekCal)
+  for (let i = past; i < future; i++) {
+    let weekCal = new Date(today.setFullYear(yyyy, mm, dd + i));
+    weekDate.push({
+      month: weekCal.toLocaleString("en-US", { month: "long" }),
+      date: weekCal.getDate(),
+      day: weekCal.toString().slice(0, 3),
+      back: weekCal.toISOString().slice(0, 10),
+    });
   }
 
-  const changAB = () => {
-    setA(a+6)
-    setB(b+6)
-  }
+  const changFuture = () => {
+    setPast(past + 6);
+    setFuture(future + 6);
+  };
 
-  const changAB2 = () => {
-    setA(a-6)
-    setB(b-6)
-  }
+  const changPast = () => {
+    setPast(past - 6);
+    setFuture(future - 6);
+  };
 
-  return(
+  return (
     <>
-    <button
-      onClick={changAB2}
-    >뒤로</button>
-    <button
-      onClick={changAB}
-    >앞으로</button>
-    {
-      weekArr.map((week, j)=>{
-        return(
-          <p key={j}>
-            {week}
+      <button onClick={changPast}>뒤로</button>
+      <button onClick={changFuture}>앞으로</button>
+      {weekDate.map((weekday, i) => {
+        return (
+          <p key={i}>
+            {weekday.date} {weekday.day} {weekday.month}
           </p>
-        )
-      })
-    }
+        );
+      })}
     </>
-  )
- }
- export default WeekCalTest
+  );
+};
+export default WeekCalTest;
