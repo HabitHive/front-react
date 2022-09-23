@@ -22,10 +22,10 @@ const DailyTag = () => {
   return (
     <>
       <STTagList>
-        {state.myDaily.length === 0 ? (
+        {state.myDaily?.length === 0 ? (
           <div className="empty">오늘의 목표가 없습니다</div>
         ) : (
-          state.myDaily.map((list) => {
+          state.myDaily?.map((list) => {
             return (
               <TodayTagList
                 key={list.scheduleId}
