@@ -110,7 +110,7 @@ const StTagHelpTxt = styled.p`
   font-size: 14px;
   text-align: center;
   letter-spacing: -0.3px;
-  color: #343434;
+  color: #999999;
 `
 
 const StTagShadowBox = styled.div`

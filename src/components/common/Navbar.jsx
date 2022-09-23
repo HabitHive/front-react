@@ -5,26 +5,40 @@ import { useNavigate } from "react-router"
 import { HiOutlineTag } from "react-icons/hi"
 import { AiOutlineDollarCircle, AiOutlineSmile } from "react-icons/ai"
 import { BsPerson } from "react-icons/bs"
+import { useState } from "react"
 
 const Navbar = () => {
   const navigate = useNavigate();
-  
+
+  const [active, setActive] = useState("");
+
+  let pathname = window.location.pathname.slice(1)
+  console.log(pathname)
+
   return (
     <StNavContainer>
       <StNavUl>
-        <StNavli onClick={()=>{navigate('/')}}>
+        <StNavli onClick={()=>{navigate('/main')}} 
+          className = {pathname==="main" ? "active" : null}
+        >
           <span><HiOutlineTag/></span>
           <p>Daily</p>         
         </StNavli>
-        <StNavli onClick={()=>{navigate('/buy')}}>
+        <StNavli onClick={()=>{navigate('/buy')}}
+          className = {pathname==="buy" ? "active" : null}
+        >
           <span><AiOutlineDollarCircle/></span>
           <p>Shop</p>         
         </StNavli>
-        <StNavli onClick={()=>{navigate('/mypage')}}>
+        <StNavli onClick={()=>{navigate('/mypage')}} 
+          className = {pathname==="mypage" ? "active" : null}
+        >
           <span><BsPerson/></span>
           <p>My</p>         
         </StNavli>
-        <StNavli onClick={()=>{navigate('/pet')}}>
+        <StNavli onClick={()=>{navigate('/pet')}} 
+          className = {pathname==="pet" ? "active" : null}
+        >
           <span><AiOutlineSmile/></span>
           <p>Pet</p>         
         </StNavli>
@@ -51,6 +65,9 @@ const StNavUl = styled.ul`
   justify-content: space-between;
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.25);
+  & .active {
+    color: #674DED
+  }
 `
 
 const StNavli = styled.li`
@@ -68,6 +85,7 @@ const StNavli = styled.li`
     height: 20px;
   }
   & p {
+    font-weight: 700;
     font-size: 12px;
   }
 `
