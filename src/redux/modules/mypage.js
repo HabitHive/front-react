@@ -13,7 +13,7 @@ export const __getProfile = createAsyncThunk(
 export const __getUserTags = createAsyncThunk(
   "getUserTags",
   async (payload, api) => {
-    const res = await axios.put(`/user/mypage/tag`, {today:payload}) // 백서버 연결할 때 사용
+    const res = await axios.put(`/user/mypage/tag`) // 백서버 연결할 때 사용
     return res.data.result
   }
 )
