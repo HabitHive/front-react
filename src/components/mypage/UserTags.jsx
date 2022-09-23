@@ -1,7 +1,6 @@
 import styled from "styled-components"
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import { __getUserTags } from "../../redux/modules/mypage";
@@ -10,7 +9,6 @@ import ToggleTags from "./ToggleTags";
 
 const UserTags = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const tags = useSelector(state=>state.profile.userTags)
 
@@ -18,13 +16,6 @@ const UserTags = () => {
   const stillTags = tags.stillTags;
   const successTags = tags.successTags;
   const failTags = tags.failTags;
-
-  //request 에 오늘 날짜와 함께 요청
-  const now = new Date();
-  const nowYear = now.getFullYear();
-  const nowMonth = now.getMonth() + 1 > 9 ? now.getMonth()+1 : "0"+(now.getMonth()+1)
-  const nowDate = now.getDate() > 9 ? now.getDate() : "0"+now.getDate()
-  const today = `${nowYear}-${nowMonth}-${nowDate}`
 
   //도전했던 습관 버튼 토글
   const [successBtnToggle, setSuccessBtnToggle] = useState(true);
@@ -43,7 +34,7 @@ const UserTags = () => {
   }
 
   useEffect(()=>{
-    dispatch(__getUserTags(today))
+    dispatch(__getUserTags())
   },[])
 
   return(

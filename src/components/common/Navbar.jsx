@@ -12,32 +12,31 @@ const Navbar = () => {
 
   const [active, setActive] = useState("");
 
-  let pathname = window.location.pathname.slice(1)
-  console.log(pathname)
+  let pathname = window.location.pathname
 
   return (
     <StNavContainer>
       <StNavUl>
         <StNavli onClick={()=>{navigate('/main')}} 
-          className = {pathname==="main" ? "active" : null}
+          className = {pathname==="/main" ? "active" : null}
         >
           <span><HiOutlineTag/></span>
           <p>Daily</p>         
         </StNavli>
         <StNavli onClick={()=>{navigate('/buy')}}
-          className = {pathname==="buy" ? "active" : null}
+          className = {pathname==="/buy" ? "active" : null}
         >
           <span><AiOutlineDollarCircle/></span>
           <p>Shop</p>         
         </StNavli>
         <StNavli onClick={()=>{navigate('/mypage')}} 
-          className = {pathname==="mypage" ? "active" : null}
+          className = {pathname==="/mypage" ? "active" : null}
         >
           <span><BsPerson/></span>
           <p>My</p>         
         </StNavli>
         <StNavli onClick={()=>{navigate('/pet')}} 
-          className = {pathname==="pet" ? "active" : null}
+          className = {pathname==="/pet" ? "active" : null}
         >
           <span><AiOutlineSmile/></span>
           <p>Pet</p>         

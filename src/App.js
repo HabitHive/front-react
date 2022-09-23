@@ -1,18 +1,19 @@
 import Router from "./shared/Router";
 
 import { useDispatch } from "react-redux";
+import setToken from "./axios/setToken";
 import { setLogin } from "./redux/modules/user"
-import { getCookie } from "./util/cookies";
-import setSession from "./axios/setSession";
+
+
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const session = getCookie("session")
+  const accessToken = localStorage.getItem("accessToken")
 
-  if (session) {
-    setSession(session)
-    dispatch(setLogin(session))
+  if (accessToken) {
+    setToken(accessToken)
+    dispatch(setLogin(accessToken))
   }
 
   return (

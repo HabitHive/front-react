@@ -6,8 +6,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { __basicLogin, __kakaoLogin } from "../../redux/modules/user";
-import setSession from "../../axios/setSession";
+import { setLogin, __basicLogin, __kakaoLogin } from "../../redux/modules/user";
 
 import SaveButtonLong from "../common/SaveButtonLong";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
@@ -38,9 +37,8 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     dispatch(__basicLogin(data))
     .then((res) => {
-      setSession(res.payload)
       ConfirmToast({text: "환영합니다"})
-      navigate("/")
+      navigate("/main")
     })
     .catch((err) => {
       // console.log(err) 예외 처리 시 확인
@@ -62,7 +60,7 @@ const LoginForm = () => {
   useEffect(()=>{
     if (socialToken) {
       dispatch(__kakaoLogin(socialToken))
-      .then(navigate('/')) 
+      .then(navigate('/main')) 
     }
   },[socialToken])
   
