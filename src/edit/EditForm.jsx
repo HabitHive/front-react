@@ -11,9 +11,9 @@ import DatePicker from "react-datepicker";
 import { setHours, setMinutes } from "date-fns";
 
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { __getSchedule } from "../redux/modules/post";
+import { __getSchedule, __deleteSchedule } from "../redux/modules/schedule";
 import { __getMyTag } from "../redux/modules/mytag";
 import { __getUserTags } from "../redux/modules/mypage";
 
@@ -22,21 +22,17 @@ const EditForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //진행중인 태그정보만 가져오기
-  const tags = useSelector((state) => state.profile.userTags.stillTags);
-
   //nav props로 선택한 태그정보 가져오기
   const { state } = useLocation();
+  // console.log(state);
 
   const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
   const [endTime, setEndTime] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [dDay, setDDay] = useState(0);
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
-  console.log(checkInput);
   //체크값 상태관리
   const [inputCheck, setInputCheck] = useState([]);
 
@@ -51,13 +47,9 @@ const EditForm = () => {
   useEffect(() => {
     dispatch(__getMyTag());
     dispatch(__getUserTags());
-    for (let i = 0; i < tags.length; i++) {
-      if (state.tagName === tags[i].tagName) {
-        return setDDay(tags[i].dDay);
-      }
-    }
   }, []);
 
+  //스케쥴 수정
   const editPost = () => {
     dispatch(
       __getSchedule([startDate, startTime, endTime, inputCheck, state])
@@ -66,19 +58,35 @@ const EditForm = () => {
       navigate("/");
     });
   };
-  //1일짜리 습관일 때 디데이 0
-  if (state.period === undefined) state.period = 0;
+  //스케쥴 삭제
+  const deletePost = () => {
+    dispatch(__deleteSchedule(state.scheduleId)).then((res) => {
+      ConfirmToast({ text: "수정이 완료되었습니다" });
+      navigate("/");
+    });
+  };
+
+  // index로 무슨요일인지 찾기
+  const arr = [];
+  const a = state.weekCycle.split(",");
+  for (let i = 0; i < a.length; i++) {
+    arr.push(weekday[a[i]]);
+  }
 
   return (
     <>
       <STHeaderContainer>
         <Header text={"데일리 편집"} />
-        <HiOutlineTrash className="trash" size={24} />
+        <HiOutlineTrash
+          className="trash"
+          size={24}
+          onClick={() => deletePost()}
+        />
       </STHeaderContainer>
 
       <BodyContainer>
         <div className="tagTitle">
-          {state.tagName} ( D-{dDay} )
+          {state.tagName} ( D - {state.period} )
         </div>
         <div className="startDate">
           <span className="startDateText">날짜 설정</span>
@@ -143,6 +151,7 @@ const EditForm = () => {
                   repeatId={repeatId}
                   inputCheck={inputCheck}
                   setInputCheck={setInputCheck}
+                  weekCycle={state.weekCycle}
                 />
               );
             })}

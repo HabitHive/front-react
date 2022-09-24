@@ -1,6 +1,13 @@
+import { useState } from "react";
 import styled from "styled-components";
 
-const RepeatDay = ({ repeatDayInput, repeatId, inputCheck, setInputCheck }) => {
+const RepeatDay = ({
+  repeatDayInput,
+  repeatId,
+  inputCheck,
+  setInputCheck,
+  weekCycle,
+}) => {
   // onChange함수를 사용하여 이벤트 감지, 필요한 인풋체크값 받아오기
   const inputCheckHandler = (checked, item) => {
     if (checked) {
@@ -33,7 +40,7 @@ const RepeatDay = ({ repeatDayInput, repeatId, inputCheck, setInputCheck }) => {
 };
 
 export default RepeatDay;
-
+/* ${(props) => (props. ? linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%) :#ebebeb)} */
 const STRepeatDay = styled.div`
   margin: 0 16px 0 0;
   &:last-child {

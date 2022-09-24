@@ -26,6 +26,14 @@ export const __getSchedule = createAsyncThunk(
   }
 )
 
+export const __deleteSchedule = createAsyncThunk(
+  "deleSchedule",
+  async (payload) => {
+    const res = await axios.delete(`/tag/schedule/delete/${payload}`)
+    return res.data.result
+  }
+)
+
 const initialState = {
     result: [
     {
