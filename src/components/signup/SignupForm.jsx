@@ -23,7 +23,7 @@ const SignupForm = () => {
   //회원가입 유효성검사
   const {
     register,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     handleSubmit,
     watch
   } = useForm({ 
@@ -52,88 +52,98 @@ const SignupForm = () => {
 
   return (
     <StSignupForm onSubmit={handleSubmit(onSubmit)}>
-      <StSignupLabel>
-        이메일 주소
-      </StSignupLabel>
-      <StSignupInput
-        placeholder="이메일을 입력해주세요"
-        type="email"
-        {...register("email", {
-          required: true,
-          pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
-        })}
+      <div>
+        <StSignupLabel>
+          이메일 주소
+        </StSignupLabel>
+        <StSignupInput
+          placeholder="이메일을 입력해주세요"
+          type="email"
+          {...register("email", {
+            required: true,
+            pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+          })}
         />
-        {errors.email && errors.email.type === "required" && (
-          <p> <FiAlertCircle/> 이메일을 입력해주세요 </p>
+          {errors.email && errors.email.type === "required" && (
+            <p className="emailError"> <FiAlertCircle/> 이메일을 입력해주세요 </p>
+          )}
+          {errors.email && errors.email.type === "pattern" && (
+            <p className="emailError"> <FiAlertCircle/> 올바른 이메일 형식이 아닙니다</p>
+          )}
+          { !errors.email && dirtyFields.email && (
+            <p className="emailConfirm"> * 사용 가능한 이메일입니다 </p>
+          )}
+      </div>
+      <div>
+        <StSignupLabel>
+          비밀번호
+        </StSignupLabel>
+        <StSignupInput
+          placeholder="영문, 숫자, $@!%*#?& 포함 8자리 이상"
+          type="password"
+          {...register("password", {
+            required: true,
+            minLength: 8,
+            maxLength: 16,
+            pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+          })}
+        />
+        {errors.password && errors.password.type === "required" && (
+          <p className="pwError"> <FiAlertCircle/> 비밀번호를 입력해주세요</p>
         )}
-        {errors.email && errors.email.type === "pattern" && (
-          <p> <FiAlertCircle/> 올바른 이메일 형식이 아닙니다</p>
+        {errors.password && errors.password.type === "minLength" && (
+          <p className="pwError"> <FiAlertCircle/> 최소 8자입니다</p>
         )}
-      <div/>
-      <StSignupLabel>
-        비밀번호
-      </StSignupLabel>
-      <StSignupInput
-        placeholder="영문, 숫자, $@!%*#?& 포함 8자리 이상"
-        type="password"
-        {...register("password", {
-          required: true,
-          minLength: 8,
-          maxLength: 16,
-          pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-        })}
-      />
-      {errors.password && errors.password.type === "required" && (
-        <p> <FiAlertCircle/> 비밀번호를 입력해주세요</p>
-      )}
-      {errors.password && errors.password.type === "minLength" && (
-        <p> <FiAlertCircle/> 최소 8자입니다</p>
-      )}
-      {errors.password && errors.password.type === "pattern" && (
-        <p>
-          <FiAlertCircle/> 영문 + 숫자 + $@!%*#?& 조합이어야 합니다
-        </p>
-      )}
-      {errors.password && errors.password.type === "maxLength" && (
-        <p> <FiAlertCircle/> 최대 16자입니다</p>
-      )}
-      <StSignupInput
-        placeholder="비밀번호를 다시 한 번 입력해주세요"
-        type="password"
-        {...register("pwConfirm", {
-          required: true,
-          validate: (value) => value === watchPW
-        })}
-      />
-      {errors.pwConfirm && errors.pwConfirm.type === "required" && (
-        <p> <FiAlertCircle/> 비밀번호를 다시 입력해 주세요</p>
-      )}
-      {errors.pwConfirm && errors.pwConfirm.type === "validate" && (
-        <p> <FiAlertCircle/> 비밀번호가 일치하지 않습니다</p>
-      )}
-      <div/>
-      <StSignupLabel>
-        닉네임
-      </StSignupLabel>
-      <StSignupInput
-        placeholder="닉네임을 입력해주세요 (최대 10자)"
-        {...register("nickname", {
-          required: true,
-          maxLength: 10,
-          pattern: /(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]+$/,
-        })}
-      />
-      {errors.nickname && errors.nickname.type === "required" && (
-        <p> <FiAlertCircle/> 닉네임을 입력해주세요</p>
-      )}
-      {errors.nickname && errors.nickname.type === "maxLength" && (
-        <p> <FiAlertCircle/> 최대 10자까지 가능합니다</p>
-      )}
-      {errors.nickname && errors.nickname.type === "pattern" && (
-        <p> <FiAlertCircle/> 특수문자 및 자모음은 사용할 수 없습니다 </p>
-      )}
-
-      <SaveButtonLong btnName={"회원가입"} top={172}/>
+        {errors.password && errors.password.type === "pattern" && (
+          <p className="pwError"> <FiAlertCircle/> 영문 + 숫자 + $@!%*#?& 조합이어야 합니다 </p>
+        )}
+        {errors.password && errors.password.type === "maxLength" && (
+          <p className="pwError"> <FiAlertCircle/> 최대 16자입니다</p>
+        )}
+        <StSignupInput
+          placeholder="비밀번호를 다시 한 번 입력해주세요"
+          type="password"
+          {...register("pwConfirm", {
+            required: true,
+            validate: (value) => value === watchPW
+          })}
+        />
+        {errors.pwConfirm && errors.pwConfirm.type === "required" && (
+          <p className="pwCheckError"> <FiAlertCircle/> 비밀번호를 다시 입력해 주세요</p>
+        )}
+        {errors.pwConfirm && errors.pwConfirm.type === "validate" && (
+          <p className="pwCheckError"> <FiAlertCircle/> 비밀번호가 일치하지 않습니다</p>
+        )}
+        { !errors.pwConfirm && dirtyFields.pwConfirm && (
+          <p className="pwConfirm"> * 비밀번호가 일치합니다 </p>
+        )}
+      </div>
+      <div>
+        <StSignupLabel>
+          닉네임
+        </StSignupLabel>
+        <StSignupInput
+          placeholder="닉네임을 입력해주세요 (최대 10자)"
+          {...register("nickname", {
+            required: true,
+            maxLength: 10,
+            pattern: /(?=.*[A-Za-z0-9가-힣])[A-Za-z0-9가-힣]+$/,
+          })}
+        />
+        {errors.nickname && errors.nickname.type === "required" && (
+          <p className="nameError"> <FiAlertCircle/> 닉네임을 입력해주세요</p>
+        )}
+        {errors.nickname && errors.nickname.type === "maxLength" && (
+          <p className="nameError"> <FiAlertCircle/> 최대 10자까지 가능합니다</p>
+        )}
+        {errors.nickname && errors.nickname.type === "pattern" && (
+          <p className="nameError"> <FiAlertCircle/> 특수문자 및 자모음은 사용할 수 없습니다 </p>
+        )}
+        { !errors.nickname && dirtyFields.nickname && (
+          <p className="nameConfirm"> * 사용 가능한 닉네임입니다 </p>
+        )}
+      </div>
+      <SaveButtonLong btnName={"회원가입"} top={130}/>
     </StSignupForm>
   )
 }
@@ -146,17 +156,43 @@ const StSignupForm = styled.form`
   top: 32px;
   padding: 0 20px;
   & p {
+    margin-bottom: 5px;
     color: #F53232;
     font-weight: 400;
     font-size: 12px;
     display: flex;
     align-items: center;
-    position: relative;
-    top: -5px;
-    margin-bottom: 5px;
   }
-  & > div {
-    height: 20px;
+  & .emailError {
+    position: absolute;
+    top: 80px;
+  }
+  & .emailConfirm {
+    color: #999999;
+    position: absolute;
+    top: 80px;
+  }
+  & .pwError {
+    position: absolute;
+    top: 188px;
+  }
+  & .pwCheckError {
+    position: absolute;
+    top: 272px;
+  }
+  & .pwConfirm {
+    color: #999999;
+    position: absolute;
+    top: 272px;
+  }
+  & .nameError {
+    position: absolute;
+    top: 380px;
+  }
+  & .nameConfirm {
+    color: #999999;
+    position: absolute;
+    top: 380px;
   }
 `
 
@@ -169,7 +205,7 @@ const StSignupLabel = styled.label`
 const StSignupInput = styled.input`
   width: 100%;
   min-height: 55px;
-  margin: 0 auto 12px auto;
+  margin: 0 auto 30px auto;
   padding-left: 12px;
   outline: none;
   border: none;
