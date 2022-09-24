@@ -24,11 +24,12 @@ const Router = () => {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="/" element={isLog ? <LoggedinNav/> : <LogInPage/>}/>
-            <Route path="/signup" element={isLog ? <LoggedinNav/> : <SignUpPage/>}/>
+            {/* 테스트하고 라우팅 수정하기 */}
+            <Route path="/" element={isLog ? <MainDailyPage/> : <LogInPage/>}/>
+            <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
             <Route path="/onboarding" element={isLog ? <OnboardingPage/> : <LoginAlert/>}/>
             <Route path="/survey" element={isLog ?<SurveyPage/>: <LoginAlert/>}/>
-            <Route path="/main" element={isLog ? <MainDailyPage/> :<LoginAlert/>}/>
+            {/* <Route path="/main" element={isLog ? <MainDailyPage/> :<LoginAlert/>}/> */}
             <Route path="/monthly" element={isLog ?<MonthlyPage/>: <LoginAlert/>}/>
             <Route path="/buy" element={isLog ?<TagBuyPage/>: <LoginAlert/>}/>
             <Route path="/post" element={isLog ?<PostingPage/>: <LoginAlert/>}/>

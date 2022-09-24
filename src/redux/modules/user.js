@@ -3,6 +3,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios/axios";
 import setToken from "../../axios/setToken"
 
+import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
+
 const initialState = {
   isLog: false,
 }
@@ -25,19 +27,21 @@ export const __basicLogin = createAsyncThunk(
   async (payload, api) => {
     try {
       const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
-      console.log(res)
       return res.data.accessToken
     } catch (err) {
-      console.log(err)
-      return api.rejectWithValue(err)
+      return api.rejectWithValue(err.response.status)
     }
   }
 )
 
 export const __kakaoLogin = createAsyncThunk(
   "kakaoLogin",
-  (payload, api) => {
-    return payload
+  async (payload, api) => {
+    try {
+      return payload
+    } catch (err) {
+      return api.rejectWithValue(err)
+    }
   }
 )
 
@@ -79,6 +83,7 @@ export const userSlice = createSlice({
     .addCase(__signup.rejected, (state, action) => {
       state.isLog = false
     })
+
     // 일반 로그인
     .addCase(__basicLogin.fulfilled, (state, action) => {
       localStorage.setItem("accessToken", action.payload)
@@ -88,17 +93,25 @@ export const userSlice = createSlice({
     .addCase(__basicLogin.rejected, (state, action) => {
       state.isLog = false
     })
+
     // 카카오 소셜 로그인
     .addCase(__kakaoLogin.fulfilled, (state, action) => {
+      localStorage.setItem("accessToken", action.payload)
+      setToken(action.payload)
       state.isLog = true
     })
+    .addCase(__kakaoLogin.rejected, (state, action) => {
+      state.isLog = false
+    })
+
     // 가입 시 유저 관심사 선택
     .addCase(__userCategory.fulfilled, (state, action) => {
-
     })
     .addCase(__userCategory.rejected, (state, action) => {
       console.log(action.payload)
     })
+
+    // 로그아웃
     .addCase(__logout.fulfilled, (state, action) => {
 
     })
