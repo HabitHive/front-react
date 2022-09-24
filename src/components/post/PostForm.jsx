@@ -7,10 +7,11 @@ import RepeatDay from "./RepeatDay";
 import { ConfirmToast } from "../common/Alert";
 
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { setHours, setMinutes } from "date-fns";
 
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import { __getSchedule } from "../../redux/modules/post";
 import { __getMyTag } from "../../redux/modules/mytag";
@@ -27,7 +28,6 @@ const PostForm = () => {
   // }
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [schedule, setSchedule] = useState([]);
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
@@ -50,7 +50,6 @@ const PostForm = () => {
   };
 
   const savePost = () => {
-    // setSchedule([startDate, startTime, endTime, inputCheck]);
     dispatch(
       __getSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {

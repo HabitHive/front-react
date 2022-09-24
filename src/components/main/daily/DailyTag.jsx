@@ -32,14 +32,10 @@ const DailyTag = () => {
           myDaily.map((list) => {
             return (
               <TodayTagList
+                list={list}
                 key={list.scheduleId}
-                weekCycle={list.weekCycle}
-                tagName={list.tagName}
-                category={list.category}
                 beChecked={beChecked}
                 setBeChecked={setBeChecked}
-                done={list.done}
-                id={list.scheduleId}
               />
             );
           })
