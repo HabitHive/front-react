@@ -6,9 +6,9 @@ import TodayTagList from "./TodayTagList";
 
 const DailyTag = () => {
   const state = useSelector((state) => state.getMyDaily);
-
   //목록 분류
   const myDaily = state.myDaily;
+
   //채크박스 확인
   const [beChecked, setBeChecked] = useState([]);
 

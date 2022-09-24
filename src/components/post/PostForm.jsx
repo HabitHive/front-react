@@ -13,7 +13,7 @@ import { setHours, setMinutes } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { __getSchedule } from "../../redux/modules/post";
+import { __getSchedule } from "../../redux/modules/schedule";
 import { __getMyTag } from "../../redux/modules/mytag";
 
 let now = new Date();
