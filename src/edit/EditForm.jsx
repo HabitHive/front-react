@@ -1,31 +1,85 @@
 import styled from "styled-components";
-import Header from "../common/Header";
+import Header from "../components/common/Header";
+import calendarImg from "../assets/images/calendar.png";
+import timeImg from "../assets/images/timeIcon.png";
+import SaveButton from "../components/common/SaveButton";
+import RepeatDay from "../components/post/RepeatDay";
+import { ConfirmToast } from "../components/common/Alert";
+import { HiOutlineTrash } from "react-icons/hi";
 
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { addDays, subDays } from "date-fns";
+import { setHours, setMinutes } from "date-fns";
 
-import { useState } from "react";
-
-import calendarImg from "../../assets/images/calendar.png";
-import timeImg from "../../assets/images/timeIcon.png";
-import SaveButton from "../common/SaveButton";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
+import { __getSchedule } from "../redux/modules/post";
+import { __getMyTag } from "../redux/modules/mytag";
+import { __getUserTags } from "../redux/modules/mypage";
 
 let now = new Date();
 const EditForm = () => {
-  const [startDate, setStartDate] = useState(null); //시작/종료날짜 입력 전엔 placeholder보여주기위한 null
-  const [endDate, setEndDate] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [sDate, eDate] = dateRange;
-  // console.log(dateRange);
+  //진행중인 태그정보만 가져오기
+  const tags = useSelector((state) => state.profile.userTags.stillTags);
+
+  //nav props로 선택한 태그정보 가져오기
+  const { state } = useLocation();
+
+  const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
+  const [endTime, setEndTime] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [dDay, setDDay] = useState(0);
+
+  const weekday = ["일", "월", "화", "수", "목", "금", "토"];
+  const checkInput = useRef([]);
+  console.log(checkInput);
+  //체크값 상태관리
+  const [inputCheck, setInputCheck] = useState([]);
+
+  // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택
+  const dateRange = (update) => {
+    const firstDate = new Date(update[0]);
+    const lastDate = firstDate.setDate(firstDate.getDate() + state.period);
+    setStartDate(update[0]);
+    setEndDate(new Date(lastDate));
+  };
+
+  useEffect(() => {
+    dispatch(__getMyTag());
+    dispatch(__getUserTags());
+    for (let i = 0; i < tags.length; i++) {
+      if (state.tagName === tags[i].tagName) {
+        return setDDay(tags[i].dDay);
+      }
+    }
+  }, []);
+
+  const editPost = () => {
+    dispatch(
+      __getSchedule([startDate, startTime, endTime, inputCheck, state])
+    ).then((res) => {
+      ConfirmToast({ text: "수정이 완료되었습니다" });
+      navigate("/");
+    });
+  };
+  //1일짜리 습관일 때 디데이 0
+  if (state.period === undefined) state.period = 0;
 
   return (
-    <div>
-      <Header text={"데일리 설정"} />
-      <BodyContainer>
-        <div className="tagTitle"> 운동하기 ( 30일 )</div>
+    <>
+      <STHeaderContainer>
+        <Header text={"데일리 편집"} />
+        <HiOutlineTrash className="trash" size={24} />
+      </STHeaderContainer>
 
+      <BodyContainer>
+        <div className="tagTitle">
+          {state.tagName} ( D-{dDay} )
+        </div>
         <div className="startDate">
           <span className="startDateText">날짜 설정</span>
           <DatePicker
@@ -33,17 +87,12 @@ const EditForm = () => {
             calendarImg={calendarImg}
             selected={startDate}
             selectsRange={true}
-            startDate={sDate}
-            endDate={eDate}
-            dateFormat="yyyy.MM.dd" // 날짜 표현 형식
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="yyyy.MM.dd"
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
-            onChange={(update) => {
-              setDateRange(update);
-            }}
-            // excludeDateIntervals={[
-            //   {start:startDate, end:addDays(startDate,30)},
-            // ]}
-            placeholderText="날짜 설정하기"
+            onChange={dateRange}
+            placeholderText={state.date}
           />
         </div>
         <div className="setTime">
@@ -51,88 +100,83 @@ const EditForm = () => {
             <span className="startTimeText">시작시간</span>
             <DatePicker
               className="startTimeInput"
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              selected={startTime}
+              onChange={(time) => setStartTime(time)}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={30}
+              timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
-              placeholderText="시작시간 설정하기"
+              placeholderText={state.timeCycle.split("~")[0]}
             />
           </div>
           <div className="endTime">
             <span className="endTimeText">종료시간</span>
             <DatePicker
               className="endTimeInput"
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
+              selected={endTime}
+              onChange={(time) => setEndTime(time)}
+              minTime={setHours(
+                setMinutes(new Date(), startTime?.getMinutes()),
+                startTime?.getHours()
+              )}
+              maxTime={setHours(setMinutes(new Date(), 50), 23)}
+              disabled={startTime === null}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={30}
+              timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
-              placeholderText="종료시간 설정하기"
+              placeholderText={state.timeCycle.split("~")[1]}
             />
           </div>
         </div>
-
         <div className="repeatDay">
           <span className="repeatDayText">반복요일</span>
-          <div className="repeatDayArea">
-            <input id="sun" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="sun" id="sunLabel">
-              {"일"}
-            </label>
-            <input id="mon" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="mon" id="sunLabel">
-              {"월"}
-            </label>
-            <input id="tue" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="tue" id="sunLabel">
-              {"화"}
-            </label>
-            <input id="wed" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="wed" id="sunLabel">
-              {"수"}
-            </label>
-            <input id="thu" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="thu" id="sunLabel">
-              {"목"}
-            </label>
-            <input id="fri" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="fri" id="sunLabel">
-              {"금"}
-            </label>
-            <input id="sat" className="sunCheck" type="checkbox"></input>
-            <label htmlFor="sat" id="sunLabel">
-              {"토"}
-            </label>
+          <div className="repeatDayContainer">
+            {weekday.map((repeatDayInput, repeatId) => {
+              return (
+                <RepeatDay
+                  key={repeatId}
+                  repeatDayInput={repeatDayInput}
+                  checkInput={checkInput}
+                  repeatId={repeatId}
+                  inputCheck={inputCheck}
+                  setInputCheck={setInputCheck}
+                />
+              );
+            })}
           </div>
         </div>
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton btnName={"저장"} />
+        <SaveButton btnName={"저장"} onClick={() => editPost()} />
       </ButtonContainer>
-    </div>
+    </>
   );
 };
-
 export default EditForm;
 
+const STHeaderContainer = styled.div`
+  position: relative;
+  .trash {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    cursor: pointer;
+  }
+`;
+
 const BodyContainer = styled.div`
-  /* justify-content: center; */
   display: flex;
   flex-direction: column;
   align-items: center;
-
   //선택한 습관
   & .tagTitle {
-    /* 보라그라데이션 */
     background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 0px;
-    /* 안쪽 글씨 */
+
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -151,7 +195,6 @@ const BodyContainer = styled.div`
     width: 100%;
     padding: 0 20px;
     margin-top: 24px;
-    //시작날짜텍스트
     & .startDateText {
       font-style: normal;
       font-weight: 600;
@@ -164,48 +207,38 @@ const BodyContainer = styled.div`
       background-image: url(${calendarImg});
       background-repeat: no-repeat;
       background-position: center left 3px;
-
       width: 100%;
       height: 42px;
       box-sizing: border-box;
       padding-left: 25px;
-      /* margin: 10px; */
-      /* background: #e2e2e2; */
       border-radius: 8px;
       margin-top: 8px;
     }
   }
-
   & .setTime {
     display: flex;
     width: 100%;
     padding: 0 20px;
     margin-top: 24px;
-
     & .startTime {
       display: flex;
       flex-direction: column;
       width: 50%;
       margin-right: 12px;
-      //시작시간텍스트
       & .startTimeText {
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 19px;
       }
-      //시작시간인풋박스
       & .startTimeInput {
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
-
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
-        /* margin: 12px 20px; */
-        /* background: #e2e2e2; */
         border-radius: 8px;
         margin-top: 8px;
       }
@@ -214,34 +247,26 @@ const BodyContainer = styled.div`
       display: flex;
       flex-direction: column;
       width: 50%;
-      //종료시간텍스트
       & .endTimeText {
         font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 19px;
       }
-      //종료시간인풋박스
       & .endTimeInput {
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
-
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
-        /* margin: 12px 20px; */
-        /* background: #e2e2e2; */
         border-radius: 8px;
         margin-top: 8px;
       }
     }
   }
-
   & .repeatDay {
-    /* background-color: #907cf9; */
-    /* margin: 20px 20px; */
     width: 100%;
     padding: 0 20px;
     margin-top: 24px;
@@ -251,52 +276,12 @@ const BodyContainer = styled.div`
       font-size: 16px;
       line-height: 19px;
     }
-    & .repeatDayArea {
-      /* background-color: #eeeeee; */
-      margin-top: 8px;
+    & .repeatDayContainer {
       display: flex;
-      & #sunLabel {
-        display: block;
-        text-align: center;
-        background-color: #ebebeb; //미클릭시 초기색
-        color: #fff;
-        color: black;
-        border: none;
-        border-radius: 50%;
-        box-sizing: border-box;
-        cursor: pointer;
-        width: 80%;
-        height: 80%;
-        /* width: 32px;
-        height: 32px; */
-        padding: 9px;
-        margin: 0 16px 0 0;
-        &:last-child {
-          margin: 0;
-        }
-      }
-
-      & .sunCheck {
-        display: none;
-        position: absolute;
-        width: 0;
-        height: 0;
-        padding: 0;
-        overflow: hidden;
-        border: 0;
-        //요일 클릭시에 색 변경
-        &:checked + #sunLabel {
-          background: linear-gradient(
-            197.06deg,
-            #907cf9 -6.2%,
-            #6334ff 101.13%
-          );
-        }
-      }
+      margin-top: 24px;
     }
   }
 `;
-
 const ButtonContainer = styled.div`
   position: absolute;
   bottom: 32px;

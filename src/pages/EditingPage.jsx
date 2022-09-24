@@ -1,4 +1,4 @@
-import EditForm from "../components/edit/EditForm";
+import EditForm from "../edit/EditForm";
 
 const EditingPage = () => {
   return (
