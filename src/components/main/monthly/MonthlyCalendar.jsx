@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import Calendar from "react-calendar";
 import "./Calendar.css";
 import moment from "moment";
@@ -9,16 +8,14 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const MonthlyCalendar = () => {
-  // const [date, setDate] = React.useState(new Date());
   const now = new Date();
   const dispatch = useDispatch();
-  const [value, setValue] = useState(now);
+  const [value, onChange] = useState(now);
+  console.log(value);
   const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
 
   const today = now.getDate();
-  console.log(pickDate);
   const piDate = useSelector((state) => state.getMonth);
-  console.log(piDate);
 
   // const getMonth = async () => {
   //   dispatch(__getMonth(pickDate));
@@ -35,17 +32,13 @@ const MonthlyCalendar = () => {
   return (
     <>
       <Calendar
-        onChange={(event) => {
-          // setValue(event);
-          // getMonth();
-        }}
-        onClickDay={(value, event) => {
-          setValue(event);
-        }}
-        // ondblclick ={(event) => {
-
-        // }}
+        onChange={onChange}
         value={value}
+        // onClickDay={(value) => {
+        //   setValue(value.toISOString().split("T")[0]);
+        // }}
+        // ondblclick ={(event) => {
+        // }}
         minDate={new Date(today)}
         showNeighboringMonth={false}
         calendarType="US" //일요일 시작

@@ -10,7 +10,7 @@ import React, {
   useMemo,
 } from "react";
 import { useDispatch } from "react-redux";
-import { __getMyTags } from "../../../redux/modules/mytag";
+import { __getMyDaily } from "../../../redux/modules/dailytag";
 
 const GetAllMonth = (monthNameLong) => {
   const monthList = [
@@ -47,7 +47,7 @@ const WeekCalendar = (value) => {
 
   //날짜 클릭시 해당날짜 데이터 보내기
   const clickDate = (clickDate) => {
-    dispatch(__getMyTags(clickDate));
+    dispatch(__getMyDaily(clickDate));
   };
 
   const [past, setPast] = useState(0);
