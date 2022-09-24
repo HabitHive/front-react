@@ -51,12 +51,14 @@ const EditForm = () => {
 
   //스케쥴 수정
   const editPost = () => {
-    dispatch(
-      __updateSchedule([startDate, startTime, endTime, inputCheck, state])
-    ).then((res) => {
-      ConfirmToast({ text: "수정이 완료되었습니다" });
-      navigate("/");
-    });
+    const startDay = startDate
+      .dispatch(
+        __updateSchedule([startDate, startTime, endTime, inputCheck, state])
+      )
+      .then((res) => {
+        ConfirmToast({ text: "수정이 완료되었습니다" });
+        navigate("/");
+      });
   };
   //스케쥴 삭제
   const deletePost = () => {
