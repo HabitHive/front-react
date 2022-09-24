@@ -13,7 +13,7 @@ import { setHours, setMinutes } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { __getSchedule } from "../../redux/modules/schedule";
+import { __addSchedule } from "../../redux/modules/schedule";
 import { __getMyTag } from "../../redux/modules/mytag";
 
 let now = new Date();
@@ -23,9 +23,6 @@ const PostForm = () => {
 
   const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
   const [endTime, setEndTime] = useState(null);
-  // if (startTime) {
-  //   console.log(startTime.getHours());
-  // }
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -51,7 +48,7 @@ const PostForm = () => {
 
   const savePost = () => {
     dispatch(
-      __getSchedule([startDate, startTime, endTime, inputCheck, state])
+      __addSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {
       ConfirmToast({ text: "등록이 완료되었습니다" });
       navigate("/");

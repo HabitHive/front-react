@@ -13,7 +13,7 @@ import { setHours, setMinutes } from "date-fns";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { __getSchedule, __deleteSchedule } from "../redux/modules/schedule";
+import { __updateSchedule, __deleteSchedule } from "../redux/modules/schedule";
 import { __getMyTag } from "../redux/modules/mytag";
 import { __getUserTags } from "../redux/modules/mypage";
 
@@ -52,7 +52,7 @@ const EditForm = () => {
   //스케쥴 수정
   const editPost = () => {
     dispatch(
-      __getSchedule([startDate, startTime, endTime, inputCheck, state])
+      __updateSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {
       ConfirmToast({ text: "수정이 완료되었습니다" });
       navigate("/");

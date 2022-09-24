@@ -12,17 +12,6 @@ const DailyTag = () => {
   //채크박스 확인
   const [beChecked, setBeChecked] = useState([]);
 
-  // useEffect(() => {
-  //   getUserTagDate();
-  // }, []);
-
-  // const checkHandler = ({ target }) => {
-  //   console.log(target);
-  //   setChecked(!checked);
-  //   clickInput(state.scheduleId, target.checked);
-  //   console.log(target.checked);
-  // };
-
   return (
     <>
       <STTagList>

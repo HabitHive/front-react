@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import axios from "../../axios/axios";
 
-export const __getSchedule = createAsyncThunk(
-  "getSchedule",
+export const __addSchedule = createAsyncThunk(
+  "addSchedule",
   async (payload, api) => {
     const startyear = [payload[0].getFullYear()];
     const startmoth = [
@@ -22,6 +22,22 @@ export const __getSchedule = createAsyncThunk(
     const userTagId = payload[4].userTagId
     
     const res = await axios.post(`/tag/schedule/add/${userTagId}`,{startDate,startTime,endTime,weekCycle})
+    return res.data.result
+  }
+)
+
+export const __updateSchedule = createAsyncThunk(
+  "__updateSchedule",
+  async (payload) => {
+    const startDate = new Date(payload[0].getTime() - payload[0].getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
+    const startTime = payload[1].getHours() + ":" + payload[1].getMinutes();
+    const endTime = payload[2].getHours() + ":" + payload[2].getMinutes();
+    const weekCycle = payload[3].join(",")
+    const scheduleId = payload[4].scheduleId
+
+    const res = await axios.patch(`/tag/schedule/update/${scheduleId}`,{startDate,startTime,endTime,weekCycle})
     return res.data.result
   }
 )
@@ -52,7 +68,7 @@ export const myScheduleSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    .addCase(__getSchedule.fulfilled, (state, action) => {
+    .addCase(__addSchedule.fulfilled, (state, action) => {
       state.schedule = action.payload
     })
   }
