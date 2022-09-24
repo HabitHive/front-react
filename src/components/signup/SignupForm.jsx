@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ConfirmToast, ErrorAlert } from "../common/Alert"
+import { ConfirmAlert, ErrorAlert } from "../common/Alert"
 import { FiAlertCircle } from "react-icons/fi"
 
 import { useForm } from "react-hook-form";
@@ -38,15 +38,22 @@ const SignupForm = () => {
     delete data.pwConfirm
     await dispatch(__signup(data))
     .then((res) => {
-      ConfirmToast({text: "가입을 축하합니다"})
-      navigate("/onboarding")
-    })
-    .catch((err) => {
-      // console.log(err) 예외처리 시 확인
-      ErrorAlert({
-        title: "회원가입 실패",
-        text: "잠시 후 다시 시도해 주세요"
-      })
+      console.log(res)
+      if (res.payload===403) {
+        ErrorAlert({
+          text: "이미 존재하는 이메일입니다"
+        })
+      } else if (res.payload >= 400) {
+        ErrorAlert({
+          text: "Error: 관리자에게 문의 바랍니다"
+        }) 
+      } else if (res.type==="signup/fulfilled") {
+        console.log(res)
+        ConfirmAlert({
+          text: "회원가입을 축하합니다!"
+        })
+        navigate("/onboarding")
+      }
     })
   };
 

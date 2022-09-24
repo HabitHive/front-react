@@ -13,11 +13,10 @@ export const __signup = createAsyncThunk(
   "signup",
   async (payload, api) => {
     try {
-      const res = await axios.post(`/user/signup`, payload) // 백서버 연결할 때 사용
+      const res = await axios.post(`/user/signup`, payload)
       return res.data.accessToken
     } catch (err) {
-      console.log(err)
-      return api.rejectWithValue(err)
+      return api.rejectWithValue(err.response.status)
     }
   }
 )
@@ -26,7 +25,7 @@ export const __basicLogin = createAsyncThunk(
   "basicLogin",
   async (payload, api) => {
     try {
-      const res = await axios.post(`/user/login`, payload) // 백서버 연결할 때 사용
+      const res = await axios.post(`/user/login`, payload) 
       return res.data.accessToken
     } catch (err) {
       return api.rejectWithValue(err.response.status)
@@ -77,6 +76,7 @@ export const userSlice = createSlice({
     builder
     // 회원가입
     .addCase(__signup.fulfilled, (state, action) => {
+      localStorage.setItem("accessToken", action.payload)
       setToken(action.payload)
       state.isLog = true
     })
