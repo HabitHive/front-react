@@ -3,7 +3,7 @@ import Header from "../components/common/Header";
 import calendarImg from "../assets/images/calendar.png";
 import timeImg from "../assets/images/timeIcon.png";
 import SaveButton from "../components/common/SaveButton";
-import RepeatDay from "../components/post/RepeatDay";
+import EditRepeat from "./EditRepeat";
 import { ConfirmToast } from "../components/common/Alert";
 import { HiOutlineTrash } from "react-icons/hi";
 
@@ -146,7 +146,7 @@ const EditForm = () => {
           <div className="repeatDayContainer">
             {weekday.map((repeatDayInput, repeatId) => {
               return (
-                <RepeatDay
+                <EditRepeat
                   key={repeatId}
                   repeatDayInput={repeatDayInput}
                   checkInput={checkInput}
