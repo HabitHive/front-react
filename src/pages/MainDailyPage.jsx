@@ -104,10 +104,7 @@ const STModal = styled.div`
   }
 `;
 
-const STContainer = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-`;
+const STContainer = styled.div``;
 
 const StHeaderContainer = styled.div`
   background: linear-gradient(138.07deg, #e8d1fc -1.75%, #a6b8f6 85.02%);
@@ -115,14 +112,13 @@ const StHeaderContainer = styled.div`
   opacity: 0.8;
   width: 360px;
   height: 214px;
-  position: relative;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
   & .headerImgContainer {
-    /* background: url("../assets/images/mainDailyHeader.png"); */
-    /* background-image: url(HedaerImg); */
     height: 214px;
     & .headerImg {
       width: 100%;
-      /* height: 303px; */
       height: 227px;
       object-fit: cover;
     }
