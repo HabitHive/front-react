@@ -44,7 +44,7 @@ const TodayTagList = ({ list }) => {
           <STInputCheckbox type="checkbox" isChecked={done}></STInputCheckbox>
         </div>
         <div
-          className="tagListbox"
+          className={done ? "doneTag" : "tagListbox"}
           onClick={() => {
             navigate("/edit", { state: list });
           }}
@@ -117,6 +117,48 @@ const STTodayTagList = styled.div`
       }
     }
   }
+  // 체크완료 시 CSS
+  & .doneTag {
+    background: #d9d9d9;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 12px 12px 12px 0px;
+    min-height: 82px;
+    padding: 12px 12px 7px 12px;
+    flex-grow: 1;
+
+    //타임사이클
+    & .tagCycle {
+      font-size: 12px;
+      line-height: 14px;
+      margin-bottom: 2px;
+      color: white;
+    }
+    //습관이름
+    & .tagTitle {
+      font-size: 16px;
+      line-height: 19px;
+      margin-bottom: 4px;
+      color: white;
+    }
+    //카테고리들
+    & .tagCategories {
+      display: flex;
+      flex-wrap: wrap;
+      & .category {
+        background-color: #999999;
+        padding: 2px 6px;
+        border-radius: 4px;
+        align-items: center;
+        width: fit-content;
+        font-size: 12px;
+        line-height: 14px;
+        font-weight: 200;
+        color: white;
+        margin: 0 5px 5px 0;
+      }
+    }
+  }
+
   &:last-child {
     margin-bottom: 90px;
   }
