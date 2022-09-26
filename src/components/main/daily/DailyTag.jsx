@@ -38,8 +38,6 @@ export default DailyTag;
 
 const STTagList = styled.div`
   width: 100%;
-  margin-top: 24px;
-  overflow: hidden;
   & .empty {
     flex-direction: column;
     color: #808080;

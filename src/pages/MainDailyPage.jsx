@@ -104,7 +104,11 @@ const STModal = styled.div`
   }
 `;
 
-const STContainer = styled.div``;
+const STContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 const StHeaderContainer = styled.div`
   background: linear-gradient(138.07deg, #e8d1fc -1.75%, #a6b8f6 85.02%);
@@ -112,14 +116,13 @@ const StHeaderContainer = styled.div`
   opacity: 0.8;
   width: 360px;
   height: 214px;
-  position: sticky;
-  top: 0px;
-  z-index: 2;
+  position: relative;
+  margin-bottom: 20px;
   & .headerImgContainer {
-    height: 214px;
+    height: 100%;
     & .headerImg {
       width: 100%;
-      height: 227px;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -145,9 +148,10 @@ const StHeaderContainer = styled.div`
 `;
 const StBodyContainer = styled.div`
   position: relative;
+  flex: 1;
+  overflow: auto;
 `;
 
 const StFooterContainer = styled.div`
   width: 100%;
-  height: 30px;
 `;
