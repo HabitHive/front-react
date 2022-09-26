@@ -1,7 +1,14 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
-const RepeatDay = ({ repeatDayInput, repeatId, inputCheck, setInputCheck }) => {
-  // onChange함수를 사용하여 이벤트 감지, 필요한 인풋체크값 받아오기
+const RepeatDay = ({
+  repeatDayInput,
+  repeatId,
+  inputCheck,
+  setInputCheck,
+  weekCycle,
+}) => {
+  // 요일 체크시 색상 변경
   const inputCheckHandler = (checked, item) => {
     if (checked) {
       setInputCheck([...inputCheck, item]);
@@ -9,6 +16,11 @@ const RepeatDay = ({ repeatDayInput, repeatId, inputCheck, setInputCheck }) => {
       setInputCheck(inputCheck.filter((el) => el !== item));
     }
   };
+
+  //체크했던 요일 정보 가져오기
+  useEffect(() => {
+    setInputCheck([...weekCycle.split(",").map((x) => parseInt(x))]);
+  }, []);
 
   return (
     <STRepeatDay>
@@ -33,7 +45,6 @@ const RepeatDay = ({ repeatDayInput, repeatId, inputCheck, setInputCheck }) => {
 };
 
 export default RepeatDay;
-
 const STRepeatDay = styled.div`
   margin: 0 16px 0 0;
   &:last-child {

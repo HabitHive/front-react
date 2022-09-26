@@ -18,8 +18,7 @@ import { useSelector } from "react-redux";
 import { LoginAlert, LoggedinNav } from "../components/common/LoginAlert";
 
 const Router = () => {
-
-  const isLog = useSelector(state=>state.user.isLog)
+  const isLog = useSelector((state) => state.user.isLog);
 
   return (
     <BrowserRouter>
@@ -33,6 +32,7 @@ const Router = () => {
             <Route path="/monthly" element={isLog ?<MonthlyPage/>: <LoginAlert/>}/>
             <Route path="/buy" element={isLog ?<TagBuyPage/>: <LoginAlert/>}/>
             <Route path="/post" element={isLog ?<PostingPage/>: <LoginAlert/>}/>
+            <Route path="/edit" element={isLog ?<EditingPage/>: <LoginAlert/>}/>
             <Route path="/mypage" element={isLog ?<MyPage/>: <LoginAlert/>}/>
             <Route path="/pet" element={isLog ?<PetPage/>: <LoginAlert/>}/>
             <Route path="/*" element={<NotFoundPage/>}/>

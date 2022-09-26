@@ -1,17 +1,29 @@
 import styled, { css } from "styled-components";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
 
-const TodayTagList = ({ weekCycle, tagName, category, done, id }) => {
-  const [isChecked, setIsChecked] = useState(false);
+const TodayTagList = ({ list }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // const [isChecked, setIsChecked] = useState(false);
+
+  //props분류
+  const id = list.scheduleId;
+  const category = list.category;
+  const done = list.done;
+  const timeCycle = list.timeCycle;
+  const tagName = list.tagName;
+  let now = new Date();
+  let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
 
   const clickInput = () => {
-    setIsChecked(!isChecked);
+    // setIsChecked(!done);
     if (done === false) {
-      dispatch(__doneMyDaily(id));
+      dispatch(__doneMyDaily({ id, date: today }));
     }
   };
 
@@ -22,8 +34,13 @@ const TodayTagList = ({ weekCycle, tagName, category, done, id }) => {
           <STLabel onClick={clickInput} isChecked={done}></STLabel>
           <STInputCheckbox type="checkbox" isChecked={done}></STInputCheckbox>
         </div>
-        <div className="tagListbox">
-          <div className="tagCycle">{weekCycle}</div>
+        <div
+          className="tagListbox"
+          onClick={() => {
+            navigate("/edit", { state: list });
+          }}
+        >
+          <div className="tagCycle">{timeCycle}</div>
           <div className="tagTitle">{tagName}</div>
           <div className="tagCategories">
             {category?.map((category, i) => {
@@ -89,6 +106,9 @@ const STTodayTagList = styled.div`
         margin: 0 5px 5px 0;
       }
     }
+  }
+  &:last-child {
+    margin-bottom: 90px;
   }
 `;
 

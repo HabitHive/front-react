@@ -1,58 +1,79 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-import { useNavigate } from "react-router"
+import { useNavigate } from "react-router";
 
-import { HiOutlineTag } from "react-icons/hi"
-import { AiOutlineDollarCircle, AiOutlineSmile } from "react-icons/ai"
-import { BsPerson } from "react-icons/bs"
-import { useState } from "react"
+import { HiOutlineTag } from "react-icons/hi";
+import { AiOutlineDollarCircle, AiOutlineSmile } from "react-icons/ai";
+import { BsPerson } from "react-icons/bs";
+import { useState } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
   const [active, setActive] = useState("");
 
-  let pathname = window.location.pathname
+  let pathname = window.location.pathname;
 
   return (
-    <StNavContainer>
+    <StNavContainer pathname={pathname}>
       <StNavUl>
-        <StNavli onClick={()=>{navigate('/')}} 
-          className = {pathname==="/" ? "active" : null}
+        <StNavli
+          onClick={() => {
+            navigate("/");
+          }}
+          className={pathname === "/" ? "active" : null}
         >
-          <span><HiOutlineTag/></span>
-          <p>Daily</p>         
+          <span>
+            <HiOutlineTag />
+          </span>
+          <p>Daily</p>
         </StNavli>
-        <StNavli onClick={()=>{navigate('/buy')}}
-          className = {pathname==="/buy" ? "active" : null}
+        <StNavli
+          onClick={() => {
+            navigate("/buy");
+          }}
+          className={pathname === "/buy" ? "active" : null}
         >
-          <span><AiOutlineDollarCircle/></span>
-          <p>Shop</p>         
+          <span>
+            <AiOutlineDollarCircle />
+          </span>
+          <p>Shop</p>
         </StNavli>
-        <StNavli onClick={()=>{navigate('/mypage')}} 
-          className = {pathname==="/mypage" ? "active" : null}
+        <StNavli
+          onClick={() => {
+            navigate("/mypage");
+          }}
+          className={pathname === "/mypage" ? "active" : null}
         >
-          <span><BsPerson/></span>
-          <p>My</p>         
+          <span>
+            <BsPerson />
+          </span>
+          <p>My</p>
         </StNavli>
-        <StNavli onClick={()=>{navigate('/pet')}} 
-          className = {pathname==="/pet" ? "active" : null}
+        <StNavli
+          onClick={() => {
+            navigate("/pet");
+          }}
+          className={pathname === "/pet" ? "active" : null}
         >
-          <span><AiOutlineSmile/></span>
-          <p>Pet</p>         
+          <span>
+            <AiOutlineSmile />
+          </span>
+          <p>Pet</p>
         </StNavli>
       </StNavUl>
     </StNavContainer>
-  )
-}
-export default Navbar
+  );
+};
+export default Navbar;
 
 const StNavContainer = styled.nav`
   width: 100%;
   max-width: 360px;
   position: fixed;
   bottom: 0;
-  `
+  position: ${(props) => (props.pathname === "/" ? "relative" : "fixed")};
+`;
 
 const StNavUl = styled.ul`
   background-color: white;
@@ -65,9 +86,9 @@ const StNavUl = styled.ul`
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.25);
   & .active {
-    color: #674DED
+    color: #674ded;
   }
-`
+`;
 
 const StNavli = styled.li`
   width: 50px;
@@ -87,4 +108,4 @@ const StNavli = styled.li`
     font-weight: 700;
     font-size: 12px;
   }
-`
+`;

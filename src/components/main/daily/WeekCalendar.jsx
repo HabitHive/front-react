@@ -2,39 +2,9 @@ import styled from "styled-components";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { __getMyTags } from "../../../redux/modules/mytag";
-
-const GetAllMonth = (monthNameLong) => {
-  const monthList = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-    "January",
-    "February",
-    "March",
-    "April",
-  ];
-  const startMonth = monthList.indexOf(monthNameLong);
-  const thisMonthList = monthList.slice(startMonth, startMonth + 5);
-  return thisMonthList;
-};
+import { __getMyDaily } from "../../../redux/modules/dailytag";
 
 const WeekCalendar = (value) => {
   const dispatch = useDispatch();
@@ -47,7 +17,7 @@ const WeekCalendar = (value) => {
 
   //날짜 클릭시 해당날짜 데이터 보내기
   const clickDate = (clickDate) => {
-    dispatch(__getMyTags(clickDate));
+    dispatch(__getMyDaily(clickDate));
   };
 
   const [past, setPast] = useState(0);
@@ -84,7 +54,7 @@ const WeekCalendar = (value) => {
   return (
     <STWeekCalender>
       <StCalendar>
-        <span className="Month">{weekDate[0].month}</span>
+        <div className="Month">{weekDate[0].month}</div>
         <DayContainer className="Day">
           <div className="daylistContainer">
             <button>
@@ -155,6 +125,7 @@ const StCalendar = styled.div`
     line-height: 14px;
     text-align: center;
     color: #5039c8;
+    margin-bottom: 12px;
   }
 
   /* 주간캘린더 일전체 컨테이너 */
@@ -168,8 +139,15 @@ const StCalendar = styled.div`
     & .daylistContainer {
       display: flex;
       justify-content: space-between;
+      position: relative;
       & button {
+        position: relative;
+        right: 20px;
+        top: 15px;
         border: none;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
         width: 22px;
         height: 22px;
         border-radius: 50%;
@@ -177,7 +155,8 @@ const StCalendar = styled.div`
         box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
         cursor: pointer;
         &:nth-child(1) {
-          margin-right: 8px;
+          left: 18px;
+          top: 15px;
         }
       }
     }
@@ -197,25 +176,10 @@ const StCalendar = styled.div`
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
       color: #999999;
 
-      /* //today표현
+      //today표현
       &:nth-child(1) {
-        border: 0.04rem solid #6334ff;
+        border: 0.2rem solid #6334ff;
       }
-      & .week {
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-size: 10px;
-        color: #999999;
-        margin-bottom: 6px;
-      }
-      & .day {
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 17px;
-        text-align: center;
-        color: #999999;
-      } */
 
       //마우스 올렸을 때
       &:hover {
@@ -256,7 +220,13 @@ const STLabel = styled.label`
   border-radius: 8px;
 
   & input {
-    visibility: hidden;
+    display: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
   }
 
   & .week {
