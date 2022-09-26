@@ -31,9 +31,6 @@ const Pet = () => {
     }
     dispatch(__setPetXP())
     .then((res)=>{
-      // rabbitAlert({
-      //   text: "🐰 맛있어요 더 주세요!"
-      // })
       if (petInfo.levelUp === true) {
         rabbitAlert({
           text: "🐰 레벨업!"
