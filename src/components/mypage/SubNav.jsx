@@ -4,9 +4,6 @@ import { HiDocumentDuplicate, HiLogout } from "react-icons/hi"
 import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux";
 
-import { __logout } from "../../redux/modules/user";
-import Swal from "sweetalert2";
-import { removeCookie } from "../../util/cookies";
 import { InfoAlert } from "../common/Alert";
 
 const SubNav = () => {
@@ -14,11 +11,10 @@ const SubNav = () => {
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
-    removeCookie("session")
-    dispatch(__logout())
-    .then(InfoAlert({
+    localStorage.removeItem("accessToken")
+    InfoAlert({
       text: "로그아웃되었습니다"
-    }))
+    })
   }
  
   return (

@@ -61,17 +61,15 @@ const LoginForm = () => {
     window.location.href = `${process.env.REACT_APP_ENDPOINT}/kakao`
   }
   // 카카오api에서 파라미터로 온 token을 socialToken으로 저장
-  let socialToken = new URL(window.location.href).searchParams.get("token");
+  let socialToken = new URL(window.location.href).searchParams.get("accessToken");
   // socialToken 값이 바뀔 때(로그인해서 값이 생기면) thunk에서 로그인 처리
   useEffect(()=>{
     if (socialToken) {
       dispatch(__kakaoLogin(socialToken))
       .then((res)=>{
-        if (res.type==="basicLogin/fulfilled") {  // 로그인 성공
-          ConfirmToast({
-            text: "환영합니다!"
-          })
-        }
+        ConfirmToast({
+          text: "환영합니다!"
+        })
       })
     }
   },[socialToken])
