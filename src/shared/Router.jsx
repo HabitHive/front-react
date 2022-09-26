@@ -25,8 +25,8 @@ const Router = () => {
     <BrowserRouter>
         <Routes>
             {/* 테스트하고 라우팅 수정하기 */}
-            <Route path="/" element={isLog ? <LogInPage/> : <LogInPage/>}/>
-            <Route path="/signup" element={isLog ? <SignUpPage/> : <SignUpPage/>}/>
+            <Route path="/" element={isLog ? <MainDailyPage/> : <LogInPage/>}/>
+            <Route path="/signup" element={isLog ? <MainDailyPage/> : <SignUpPage/>}/>
             <Route path="/onboarding" element={isLog ? <OnboardingPage/> : <LoginAlert/>}/>
             <Route path="/survey" element={isLog ?<SurveyPage/>: <LoginAlert/>}/>
             {/* <Route path="/main" element={isLog ? <MainDailyPage/> :<LoginAlert/>}/> */}

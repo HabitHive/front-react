@@ -3,10 +3,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios/axios";
 import setToken from "../../axios/setToken"
 
-import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
-
 const initialState = {
-  isLog: false,
+  isLog: false
 }
 
 export const __signup = createAsyncThunk(
@@ -44,11 +42,27 @@ export const __kakaoLogin = createAsyncThunk(
   }
 )
 
+export const __getNewToken = createAsyncThunk(
+  "getNewToken",
+  async (payload, api) => {
+    try {
+      const res = await axios.post(`/user/login`, payload) 
+      return res.data.accessToken
+    } catch (err) {
+      return api.rejectWithValue(err.response.status)
+    }
+  }
+)
+
 export const __userCategory = createAsyncThunk(
   "userCategory",
   async (payload, api) => {
-    const res = await axios.put(`/user/interest`, payload)
-    return res
+    try {
+      const res = await axios.put(`/user/interest`, payload)
+      return res.data
+    } catch (err) {
+      return api.rejectWithValue(err)
+    }
   }
 )
 
@@ -113,7 +127,6 @@ export const userSlice = createSlice({
 
     // 로그아웃
     .addCase(__logout.fulfilled, (state, action) => {
-
     })
   }
 });

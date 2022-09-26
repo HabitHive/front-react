@@ -17,8 +17,8 @@ const Navbar = () => {
   return (
     <StNavContainer>
       <StNavUl>
-        <StNavli onClick={()=>{navigate('/main')}} 
-          className = {pathname==="/main" ? "active" : null}
+        <StNavli onClick={()=>{navigate('/')}} 
+          className = {pathname==="/" ? "active" : null}
         >
           <span><HiOutlineTag/></span>
           <p>Daily</p>         

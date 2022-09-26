@@ -7,6 +7,7 @@ import { __getTagBuyList } from "../../redux/modules/tagbuy";
 import buyBG from "../../assets/buyImg/buyBG.png"
 import { HiFire, HiOutlineMenu } from "react-icons/hi"
 
+import RandomTagLists from "./RandomTagList";
 import TagLists from "./TagLists";
 import TagBuyDrawer from "./TagBuyDrawer";
 
@@ -39,7 +40,7 @@ const TagBuylist = () => {
             <p>BEST 습관 <HiFire className="icon"/> </p>
           </StSubTittle>
           <StBestTaglist>
-            <TagLists lists={randomTagList} setSelectedTag={setSelectedTag} setDrawer={setDrawer}/>
+            <RandomTagLists lists={randomTagList} setSelectedTag={setSelectedTag} setDrawer={setDrawer}/>
           </StBestTaglist>
         </StTaglist>
 

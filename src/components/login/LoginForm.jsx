@@ -32,7 +32,7 @@ const LoginForm = () => {
     handleSubmit,
   } = useForm({ 
     mode: 'onChange',
-    defaultValues: initValue,
+    defaultValues: initValue
   });
   
 
