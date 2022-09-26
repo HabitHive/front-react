@@ -38,7 +38,6 @@ const SignupForm = () => {
     delete data.pwConfirm
     await dispatch(__signup(data))
     .then((res) => {
-      console.log(res)
       if (res.payload===403) {
         ErrorAlert({
           text: "이미 존재하는 이메일입니다"
@@ -48,7 +47,6 @@ const SignupForm = () => {
           text: "Error: 관리자에게 문의 바랍니다"
         }) 
       } else if (res.type==="signup/fulfilled") {
-        console.log(res)
         ConfirmAlert({
           text: "회원가입을 축하합니다!"
         })

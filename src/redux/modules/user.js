@@ -122,7 +122,7 @@ export const userSlice = createSlice({
     .addCase(__userCategory.fulfilled, (state, action) => {
     })
     .addCase(__userCategory.rejected, (state, action) => {
-      console.log(action.payload)
+      console.log(action.payload) //에러일 때 콘솔
     })
 
     // 로그아웃

@@ -6,7 +6,6 @@ export const __getProfile = createAsyncThunk(
   "getProfile",
   async (payload, api) => {
     const res = await axios.get(`/user/mypage/info`) // 백서버 연결할 때 사용
-    console.log(res)
     return res.data.result
   }
 )

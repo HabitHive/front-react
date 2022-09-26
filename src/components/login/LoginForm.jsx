@@ -134,12 +134,12 @@ const StLoginBG = styled.div`
 const StLogo = styled.div`
   position: relative;
   top: 84px;
-  width: 220px;
-  height: 135px;
+  width: 284px;
+  height: 180px;
   background-image: url(${mainLogo});
   background-size: cover;
   background-repeat: no-repeat;
-  margin: 0 auto 50px;
+  margin: 0 auto 5px;
 `
 
 const StLoginWrap = styled.div`
