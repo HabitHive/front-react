@@ -1,14 +1,13 @@
 import styled, { css } from "styled-components";
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
 
 const TodayTagList = ({ list }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [isChecked, setIsChecked] = useState(false);
+  // const [isChecked, setIsChecked] = useState(false);
 
   //props분류
   const id = list.scheduleId;
@@ -16,11 +15,15 @@ const TodayTagList = ({ list }) => {
   const done = list.done;
   const timeCycle = list.timeCycle;
   const tagName = list.tagName;
+  let now = new Date();
+  let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
 
   const clickInput = () => {
-    setIsChecked(!isChecked);
+    // setIsChecked(!done);
     if (done === false) {
-      dispatch(__doneMyDaily(id));
+      dispatch(__doneMyDaily({ id, date: today }));
     }
   };
 
@@ -103,6 +106,9 @@ const STTodayTagList = styled.div`
         margin: 0 5px 5px 0;
       }
     }
+  }
+  &:last-child {
+    margin-bottom: 90px;
   }
 `;
 
