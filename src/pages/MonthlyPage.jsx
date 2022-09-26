@@ -107,6 +107,7 @@ const FooterContainer = styled.div`
         font-size: 16px;
         line-height: 19px;
         color: #ffffff;
+        margin-bottom: 20px;
       }
       & .titleDate {
         font-weight: 600;

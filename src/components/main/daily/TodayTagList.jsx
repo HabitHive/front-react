@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
 import { ConfirmAlert } from "../../common/Alert";
+import Swal from "sweetalert2";
 
 const TodayTagList = ({ list }) => {
   const dispatch = useDispatch();
@@ -22,12 +23,24 @@ const TodayTagList = ({ list }) => {
   const clickInput = () => {
     if (done === false) {
       dispatch(__doneMyDaily({ id, date: today })).then((res) => {
-        if (
-          res.payload[0].first === true &&
-          res.payload[0].bonusPoint === true
-        ) {
-          ConfirmAlert({
-            text: `${res.payload[0].bonusPoint}가 지급되었습니다`,
+        if (res.payload[0].first === true && res.payload[0].bonus === true) {
+          Swal.fire({
+            text: "20point가 지급되었습니다!",
+            icon: "success",
+            width: 300,
+
+            confirmButtonColor: "#3085d6", // 확인 버튼 색깔 지정
+            confirmButtonText: "확인", // 확인 버튼 텍스트 지정
+            reverseButtons: true, // 버튼 순서 거꾸로,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // 만약 확인 버튼을 눌렀다면
+              Swal.fire({
+                text: `완료 추가보너스 ${res.payload[0].bonusPoint}Point가 지급되었습니다!`,
+                icon: "success",
+                width: 300,
+              });
+            }
           });
         } else if (res.payload[0].first === true) {
           ConfirmAlert({ text: "20point 가 지급되었습니다" });

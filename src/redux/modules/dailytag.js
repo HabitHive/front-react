@@ -22,7 +22,6 @@ export const __doneMyDaily = createAsyncThunk(
   "doneMyDaily",
   async (payload)=> {
     const res = await axios.post(`/tag/done`,{scheduleId:payload.id,date:payload.date})
-    console.log(res)
     return [res.data.result,payload]
   }
 )
@@ -47,7 +46,6 @@ export const myDailySlice = createSlice({
     // })
     .addCase(__doneMyDaily.fulfilled,(state,action) => {
       const idx = state.myDaily.findIndex(data => {
-      console.log(action.payload)
         return data.scheduleId === action.payload[1].id;
         });
       state.myDaily[idx].done = true
