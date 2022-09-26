@@ -111,8 +111,9 @@ const STContainer = styled.div`
 `;
 
 const StHeaderContainer = styled.div`
-  background: linear-gradient(138.07deg, #e8d1fc -1.75%, #a6b8f6 85.02%);
+  background: linear-gradient(155.33deg, #907cf9 8.74%, #6334ff 91.82%);
   box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 0px 0px 16px 16px;
   opacity: 0.8;
   width: 360px;
   height: 214px;
