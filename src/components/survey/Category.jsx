@@ -9,6 +9,7 @@ import { useRef } from "react"
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux"
 import { __userCategory } from "../../redux/modules/user";
+import { ErrorAlert } from "../common/Alert";
 
 const Category = () => {
   const navigate = useNavigate();
@@ -19,9 +20,15 @@ const Category = () => {
   const categorySubmitHandler = () => {
     const category = userCategory.current
     dispatch(__userCategory(category))
-    .then(
-      navigate('/')
-    )
+    .then((res)=>{
+      if (res.type==="userCategory/rejected") {
+        ErrorAlert({
+          text: "Error: 관리자에게 문의바랍니다"
+        })
+      } else if (res.type==="userCategory/fulfilled") {
+        navigate("/")
+      }
+    })
   }
 
   return (

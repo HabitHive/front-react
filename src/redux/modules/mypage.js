@@ -22,6 +22,7 @@ const initialState = {
   email: "",
   nickname: "",
   point: 0,
+  petLevel: 1,
   userTags: {
     stillTags:[],
     successTags:[],
@@ -40,6 +41,7 @@ export const profileSlice = createSlice({
       state.email = action.payload.email
       state.nickname = action.payload.nickname
       state.point = action.payload.point
+      state.petLevel = action.payload.petLevel
     })
     builder
     .addCase(__getUserTags.fulfilled, (state, action) => {

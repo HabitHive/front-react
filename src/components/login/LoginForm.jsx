@@ -1,21 +1,24 @@
 import styled from "styled-components";
-import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
 import { FiAlertCircle } from "react-icons/fi"
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogin, __basicLogin, __kakaoLogin } from "../../redux/modules/user";
 
 import SaveButtonLong from "../common/SaveButtonLong";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
 import loginBG from "../../assets/loginImg/loginBG.png"
 import { BsFillChatFill } from "react-icons/bs"
+import { ConfirmToast } from "../common/Alert";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // 예외처리 메시지
+  const [msg, setMsg] = useState("");
 
   const initValue = {
     email: "",
@@ -29,23 +32,26 @@ const LoginForm = () => {
     handleSubmit,
   } = useForm({ 
     mode: 'onChange',
-    defaultValues: initValue,
+    defaultValues: initValue
   });
   
 
   //리액트훅폼은 e.preventDefault를 명시하지 않아도 된다
+  //에러코드에 따라서 예외처리, helpText 사용
   const onSubmit = (data) => {
     dispatch(__basicLogin(data))
-    .then((res) => {
-      ConfirmToast({text: "환영합니다"})
-      navigate("/main")
-    })
-    .catch((err) => {
-      // console.log(err) 예외 처리 시 확인
-      ErrorAlert({
-        title: "로그인 실패",
-        text: "잠시 후 다시 시도해 주세요"
-      })
+    .then((res)=>{
+      if (res.payload===400) {
+        setMsg("Error: 관리자에게 문의바랍니다")
+      } else if (res.payload===403) {
+        setMsg("이메일 또는 비밀번호를 잘못 입력했습니다")
+      } else if (res.payload===404) {
+        setMsg("연결이 불안정합니다. 잠시 후 다시 시도해 주세요")
+      } else if (res.type==="basicLogin/fulfilled") {  // 로그인 성공
+        ConfirmToast({
+          text: "환영합니다!"
+        })
+      }
     })
   };
 
@@ -54,16 +60,23 @@ const LoginForm = () => {
   const onSubmitKakao = () => {
     window.location.href = `${process.env.REACT_APP_ENDPOINT}/kakao`
   }
-  // 카카오api에서 쿼리로 온 token 값을 socialToken으로 저장
+  // 카카오api에서 파라미터로 온 token을 socialToken으로 저장
   let socialToken = new URL(window.location.href).searchParams.get("token");
-  // socialToken 값을 저장한 직후 백 서버에 api 요청
+  // socialToken 값이 바뀔 때(로그인해서 값이 생기면) thunk에서 로그인 처리
   useEffect(()=>{
     if (socialToken) {
       dispatch(__kakaoLogin(socialToken))
-      .then(navigate('/main')) 
+      .then((res)=>{
+        if (res.type==="basicLogin/fulfilled") {  // 로그인 성공
+          ConfirmToast({
+            text: "환영합니다!"
+          })
+        }
+      })
     }
   },[socialToken])
   
+
   return(
     <StLoginBG>
       <StLogo />
@@ -83,9 +96,10 @@ const LoginForm = () => {
               required: true,
             })}
           />
-          {errors.email && errors.email.type === "required" && (
+          {(errors.email && errors.email.type === "required" || errors.password && errors.password.type === "required") && (
             <p className="helpTXT"> <FiAlertCircle/> 이메일, 비밀번호를 입력해주세요 </p>
           )}
+          {msg!==""? <p className="helpTXT">{msg}</p> : null}
           <SaveButtonLong btnName={"로그인"} top={27}/>
           <StLogintoSingup>
             아직 회원이 아니신가요?&nbsp;
@@ -120,12 +134,12 @@ const StLoginBG = styled.div`
 const StLogo = styled.div`
   position: relative;
   top: 84px;
-  width: 220px;
-  height: 135px;
+  width: 284px;
+  height: 180px;
   background-image: url(${mainLogo});
   background-size: cover;
   background-repeat: no-repeat;
-  margin: 0 auto 50px;
+  margin: 0 auto 5px;
 `
 
 const StLoginWrap = styled.div`

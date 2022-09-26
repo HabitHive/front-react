@@ -7,7 +7,10 @@ import { __getProfile } from "../../redux/modules/mypage";
 
 import propfileBG from "../../assets/mypageImg/profileBG.png"
 import userIMG from "../../assets/mypageImg/userIMG.png"
-import userPet1 from "../../assets/mypageImg/userPet1.png"
+import LV1 from "../../assets/mypageImg/LV1.png"
+import LV2 from "../../assets/mypageImg/LV2.png"
+import LV3 from "../../assets/mypageImg/LV3.png"
+import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs";
 
 
@@ -29,7 +32,7 @@ const Profile = () => {
     <StProfileWrap>
       <span>마이메뉴</span>
       <StUserImg>
-        <StPetImg/>
+        <StPetImg level={profile.petLevel}/>
       </StUserImg>
       <p>{profile.nickname}</p>
       <StPoint>
@@ -73,16 +76,22 @@ const StUserImg = styled.div`
 `
 
 const StPetImg = styled.div`
-  background-color: gray;
+  background-color: #EDEAFF;
   width: 44px;
   height: 44px;
   border-radius: 100%;
   position: relative;
   top: 76px;
   left: 76px;
-  background-image: url(${userPet1});
-  background-image: contain;
+  background-image: url(
+    ${ props => props.level === 1 ? 
+        LV1 : props=>props.level === 2 ?
+        LV2 : props=>props.level === 3 ? 
+        LV3 : LV4 }
+  );
+  background-size: 70%;
   background-position: center;
+  background-repeat: no-repeat;
 `
 
 const StPoint = styled.div`
