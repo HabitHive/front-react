@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 
 import { HiOutlineTag } from "react-icons/hi";
-import { AiOutlineDollarCircle, AiOutlineSmile } from "react-icons/ai";
+import { AiOutlineDollarCircle } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
+import { VscOctoface } from "react-icons/vsc"
 import { useState } from "react";
 
 const Navbar = () => {
@@ -57,7 +58,7 @@ const Navbar = () => {
           className={pathname === "/pet" ? "active" : null}
         >
           <span>
-            <AiOutlineSmile />
+            <VscOctoface />
           </span>
           <p>Pet</p>
         </StNavli>

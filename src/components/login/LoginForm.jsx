@@ -129,6 +129,7 @@ const StLoginBG = styled.div`
   background-size: 110%;
   background-position: bottom;
   background-repeat: no-repeat;
+  background-color: #E2DCFF;
 `
 
 const StLogo = styled.div`
@@ -170,7 +171,7 @@ const StLoginInput = styled.input`
   outline: none;
   border: none;
   border-radius: 8px;
-  background-color: #EBEBEB;
+  background-color: #FFFFFF;
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
@@ -204,7 +205,7 @@ const StHorizonLine = styled.div`
   width: 100%;
   margin-top: 53px;
 
-  color: #dddddd;
+  color: #999999;
   text-align: center;
   font-size: 12px;
   
@@ -213,7 +214,7 @@ const StHorizonLine = styled.div`
   
   & span {  
     width: auto;
-    background-color: #F6F7FB;
+    background-color: #E2DCFF;
     padding: 0 10px;
     position: relative;
     top: 3px;

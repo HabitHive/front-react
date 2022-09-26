@@ -227,7 +227,7 @@ const StDrawerLable = styled.label`
   }
   &.active {
     color: white;
-    background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+    background: #674DED;
   }
 `
 
@@ -284,7 +284,7 @@ const StDrawerMyPt = styled.div`
 const StDrawerMyPtBox = styled.div`
   width: 150px;
   height: 40px;
-  background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+  background: #674DED;
   color: white;
   font-size: 20px;
   border-radius: 5px;
@@ -319,6 +319,7 @@ const StDrawerCancleBtn = styled.button`
   height: 42px;
   background: #CCCCCC;
   border-radius: 6px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
   text-align: center;
 
   font-weight: 700;
@@ -332,9 +333,10 @@ const StDrawerSubmitBtn = styled.button`
   cursor: pointer;
   width: 208px;
   height: 42px;
-  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
-  border: 1px solid #674DED;
+  background: #674DED;
+  border: none;
   border-radius: 6px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
   text-align: center;
 
   font-weight: 700;
