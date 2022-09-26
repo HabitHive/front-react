@@ -8,7 +8,7 @@ const RepeatDay = ({
   setInputCheck,
   weekCycle,
 }) => {
-  // 요일 체크시 색상 변경
+  // onChange함수를 사용하여 이벤트 감지, 필요한 인풋체크값 받아오기
   const inputCheckHandler = (checked, item) => {
     if (checked) {
       setInputCheck([...inputCheck, item]);

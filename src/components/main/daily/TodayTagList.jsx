@@ -2,12 +2,11 @@ import styled, { css } from "styled-components";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
+import { ConfirmAlert } from "../../common/Alert";
 
 const TodayTagList = ({ list }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const [isChecked, setIsChecked] = useState(false);
 
   //props분류
   const id = list.scheduleId;
@@ -21,9 +20,19 @@ const TodayTagList = ({ list }) => {
     .slice(0, 10);
 
   const clickInput = () => {
-    // setIsChecked(!done);
     if (done === false) {
-      dispatch(__doneMyDaily({ id, date: today }));
+      dispatch(__doneMyDaily({ id, date: today })).then((res) => {
+        if (
+          res.payload[0].first === true &&
+          res.payload[0].bonusPoint === true
+        ) {
+          ConfirmAlert({
+            text: `${res.payload[0].bonusPoint}가 지급되었습니다`,
+          });
+        } else if (res.payload[0].first === true) {
+          ConfirmAlert({ text: "20point 가 지급되었습니다" });
+        }
+      });
     }
   };
 
@@ -77,6 +86,7 @@ const STTodayTagList = styled.div`
     min-height: 82px;
     padding: 12px 12px 7px 12px;
     flex-grow: 1;
+
     //타임사이클
     & .tagCycle {
       font-size: 12px;
@@ -128,7 +138,7 @@ const STLabel = styled.label`
           background-color: #5039c8;
           border-color: #5039c8;
           &:after {
-            border: 2px solid #fff;
+            border: 2px solid #d3d3d3;
             border-top: none;
             border-right: none;
             content: "";
