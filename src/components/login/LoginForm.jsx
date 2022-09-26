@@ -61,17 +61,15 @@ const LoginForm = () => {
     window.location.href = `${process.env.REACT_APP_ENDPOINT}/kakao`
   }
   // 카카오api에서 파라미터로 온 token을 socialToken으로 저장
-  let socialToken = new URL(window.location.href).searchParams.get("token");
+  let socialToken = new URL(window.location.href).searchParams.get("accessToken");
   // socialToken 값이 바뀔 때(로그인해서 값이 생기면) thunk에서 로그인 처리
   useEffect(()=>{
     if (socialToken) {
       dispatch(__kakaoLogin(socialToken))
       .then((res)=>{
-        if (res.type==="basicLogin/fulfilled") {  // 로그인 성공
-          ConfirmToast({
-            text: "환영합니다!"
-          })
-        }
+        ConfirmToast({
+          text: "환영합니다!"
+        })
       })
     }
   },[socialToken])
@@ -129,6 +127,7 @@ const StLoginBG = styled.div`
   background-size: 110%;
   background-position: bottom;
   background-repeat: no-repeat;
+  background-color: #E2DCFF;
 `
 
 const StLogo = styled.div`
@@ -170,7 +169,7 @@ const StLoginInput = styled.input`
   outline: none;
   border: none;
   border-radius: 8px;
-  background-color: #EBEBEB;
+  background-color: #FFFFFF;
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
@@ -204,7 +203,7 @@ const StHorizonLine = styled.div`
   width: 100%;
   margin-top: 53px;
 
-  color: #dddddd;
+  color: #999999;
   text-align: center;
   font-size: 12px;
   
@@ -213,7 +212,7 @@ const StHorizonLine = styled.div`
   
   & span {  
     width: auto;
-    background-color: #F6F7FB;
+    background-color: #E2DCFF;
     padding: 0 10px;
     position: relative;
     top: 3px;

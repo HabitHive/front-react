@@ -66,16 +66,6 @@ export const __userCategory = createAsyncThunk(
   }
 )
 
-// 다시 확인하기
-export const __logout = createAsyncThunk(
-  "logout",
-  async (payload, api) => {
-    const res = await axios.delete(`/user/logout`) // 백서버 연결할 때 사용
-    console.log(res)
-    return
-  }
-)
-
 // userSlice라는 이름으로 유저 Slice 생성
 export const userSlice = createSlice({
   name: 'user',
@@ -123,10 +113,6 @@ export const userSlice = createSlice({
     })
     .addCase(__userCategory.rejected, (state, action) => {
       console.log(action.payload) //에러일 때 콘솔
-    })
-
-    // 로그아웃
-    .addCase(__logout.fulfilled, (state, action) => {
     })
   }
 });
