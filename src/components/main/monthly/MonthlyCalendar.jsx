@@ -11,23 +11,10 @@ const MonthlyCalendar = () => {
   const now = new Date();
   const dispatch = useDispatch();
   const [value, onChange] = useState(now);
-  console.log(value);
   const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
 
   const today = now.getDate();
   const piDate = useSelector((state) => state.getMonth);
-
-  // const getMonth = async () => {
-  //   dispatch(__getMonth(pickDate));
-  // };
-
-  // const getDay = async () => {
-  //   // dispatch(__getDayTag());
-  // };
-
-  // useEffect(() => {
-  //   getMonth();
-  // }, []);
 
   return (
     <>
