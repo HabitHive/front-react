@@ -5,9 +5,7 @@ import axios from "../../axios/axios";
 export const __getMonth = createAsyncThunk(
   "getMonth",
   async (payload, api) => {
-    console.log(payload)
     const res = await axios.get(`/tag/monthly/${payload}`)
-    console.log(res)
     return res
   }
 )

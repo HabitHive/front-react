@@ -1,21 +1,18 @@
 import styled from "styled-components"
 import { BsChevronRight } from "react-icons/bs"
 
-const TagLists = ({lists, setSelectedTag, setDrawer, disabled}) => {
+const RandomTagLists = ({lists, setSelectedTag, setDrawer}) => {
 
   const tagSelectHandler = (list) =>  {
-    if (disabled) {
-      return
-    }
     setSelectedTag(list.list)
     setDrawer(true)
   }
 
   return(
     <>
-      {lists?.map((list, tagId)=>{
+      {lists?.map((list, i)=>{
         return(
-          <StTag key={tagId} bgColor={disabled ? "#CFEEFF" : "#FFFFFF"}
+          <StTag key={i} bgColor={i}
             onClick={()=>tagSelectHandler({list})}
           >
             {list.tagName}
@@ -30,10 +27,7 @@ const TagLists = ({lists, setSelectedTag, setDrawer, disabled}) => {
                 })
               }
             </StTagCategories>
-            {
-              disabled ? null :
-              <BsChevronRight className="arrow"/>
-            }
+            <BsChevronRight className="arrow"/>
           </StTag>
         )
       })
@@ -41,12 +35,15 @@ const TagLists = ({lists, setSelectedTag, setDrawer, disabled}) => {
     </>
   )
 }
-export default TagLists
+export default RandomTagLists
 
 const StTag = styled.div`
   cursor: pointer;
 
-  background-color: ${props=>props.bgColor};
+  background-color: ${props=> 
+    props.bgColor === 0 ? "#CFEEFF" 
+    : props.bgColor === 1 ? "#FEE1DD" : "#FFEDDD"
+  };
   border-radius: 12px 12px 12px 0;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
   margin: 8px 0;

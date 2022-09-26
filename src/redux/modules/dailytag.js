@@ -1,31 +1,27 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useState } from "react";
 
 import axios from "../../axios/axios";
 
 export const __getMyDaily = createAsyncThunk(
   "getMyDaily",
-  async (payload, api) => {
+  async (payload) => {
     const now = new Date()
-    const today = now.getDate()
 
-    const startyear = now.getFullYear();
-    const startmoth = [
-    now.getMonth() + 1 > 9
-      ? new Date().getMonth() + 1
-      : "0" + (new Date().getMonth() + 1),
-    ];
-    const startDate = startyear + "-" + startmoth + "-" + today;
-
-    const res = await axios.get(`/tag/daily?todayDate=${startDate}`)
+    if (payload === undefined) {
+    payload = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
+    }
+    const res = await axios.get(`/tag/daily?todayDate=${payload}`)
     return res.data.result
-  }
+    }
 )
 
 export const __doneMyDaily = createAsyncThunk(
   "doneMyDaily",
-  async (payload, api )=> {
-    console.log(payload)
-    const res = await axios.post(`/tag/done`,{scheduleId:payload,date:"2022-09-22"})
+  async (payload)=> {
+    const res = await axios.post(`/tag/done`,{scheduleId:payload.id,date:payload.date})
     return payload
   }
 )
@@ -53,6 +49,12 @@ export const myDailySlice = createSlice({
         // .addCase(__getMyDaily.pending, (state, action) => {
     //   state.myDaily = action.payload
     // })
+    .addCase(__doneMyDaily.fulfilled,(state,action) => {
+      const idx = state.myDaily.findIndex(data => {
+        return data.scheduleId === action.payload.id;
+        });
+      state.myDaily[idx].done = true
+    })
     .addCase(__doneMyDaily.rejected,(state,action)=> {
       console.log(action.payload)
       })

@@ -1,25 +1,30 @@
 import styled from "styled-components";
-import Header from "../common/Header";
-import calendarImg from "../../assets/images/calendar.png";
-import timeImg from "../../assets/images/timeIcon.png";
-import SaveButton from "../common/SaveButton";
-import RepeatDay from "./RepeatDay";
-import { ConfirmToast } from "../common/Alert";
+import Header from "../components/common/Header";
+import calendarImg from "../assets/images/calendar.png";
+import timeImg from "../assets/images/timeIcon.png";
+import SaveButton from "../components/common/SaveButton";
+import EditRepeat from "./EditRepeat";
+import { ConfirmToast } from "../components/common/Alert";
+import { HiOutlineTrash } from "react-icons/hi";
 
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { setHours, setMinutes } from "date-fns";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { __addSchedule } from "../../redux/modules/schedule";
-import { __getMyTag } from "../../redux/modules/mytag";
+import { __updateSchedule, __deleteSchedule } from "../redux/modules/schedule";
+import { __getMyTag } from "../redux/modules/mytag";
+import { __getUserTags } from "../redux/modules/mypage";
 
 let now = new Date();
-const PostForm = () => {
+const EditForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //nav props로 선택한 태그정보 가져오기
+  const { state } = useLocation();
+  // console.log(state);
 
   const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
   const [endTime, setEndTime] = useState(null);
@@ -31,13 +36,6 @@ const PostForm = () => {
   //체크값 상태관리
   const [inputCheck, setInputCheck] = useState([]);
 
-  //보유습관에서 선택한 tag값 가져오기
-  const { state } = useLocation();
-
-  useEffect(() => {
-    dispatch(__getMyTag());
-  }, []);
-
   // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
@@ -46,21 +44,51 @@ const PostForm = () => {
     setEndDate(new Date(lastDate));
   };
 
-  const savePost = () => {
-    dispatch(
-      __addSchedule([startDate, startTime, endTime, inputCheck, state])
-    ).then((res) => {
-      ConfirmToast({ text: "등록이 완료되었습니다" });
+  useEffect(() => {
+    dispatch(__getMyTag());
+    dispatch(__getUserTags());
+  }, []);
+
+  //스케쥴 수정
+  const editPost = () => {
+    const startDay = startDate
+      .dispatch(
+        __updateSchedule([startDate, startTime, endTime, inputCheck, state])
+      )
+      .then((res) => {
+        ConfirmToast({ text: "수정이 완료되었습니다" });
+        navigate("/");
+      });
+  };
+  //스케쥴 삭제
+  const deletePost = () => {
+    dispatch(__deleteSchedule(state.scheduleId)).then((res) => {
+      ConfirmToast({ text: "수정이 완료되었습니다" });
       navigate("/");
     });
   };
 
+  // index로 무슨요일인지 찾기
+  const arr = [];
+  const a = state.weekCycle.split(",");
+  for (let i = 0; i < a.length; i++) {
+    arr.push(weekday[a[i]]);
+  }
+
   return (
-    <div>
-      <Header text={"데일리 설정"} />
+    <>
+      <STHeaderContainer>
+        <Header text={"데일리 편집"} />
+        <HiOutlineTrash
+          className="trash"
+          size={24}
+          onClick={() => deletePost()}
+        />
+      </STHeaderContainer>
+
       <BodyContainer>
         <div className="tagTitle">
-          {state.tagName} ( {state.period}일 )
+          {state.tagName} ( D - {state.period} )
         </div>
         <div className="startDate">
           <span className="startDateText">날짜 설정</span>
@@ -74,7 +102,7 @@ const PostForm = () => {
             dateFormat="yyyy.MM.dd"
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
             onChange={dateRange}
-            placeholderText="날짜 설정하기"
+            placeholderText={state.date}
           />
         </div>
         <div className="setTime">
@@ -89,7 +117,7 @@ const PostForm = () => {
               timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
-              placeholderText="시작시간 설정하기"
+              placeholderText={state.timeCycle.split("~")[0]}
             />
           </div>
           <div className="endTime">
@@ -109,7 +137,7 @@ const PostForm = () => {
               timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
-              placeholderText="종료시간 설정하기"
+              placeholderText={state.timeCycle.split("~")[1]}
             />
           </div>
         </div>
@@ -118,13 +146,14 @@ const PostForm = () => {
           <div className="repeatDayContainer">
             {weekday.map((repeatDayInput, repeatId) => {
               return (
-                <RepeatDay
+                <EditRepeat
                   key={repeatId}
                   repeatDayInput={repeatDayInput}
                   checkInput={checkInput}
                   repeatId={repeatId}
                   inputCheck={inputCheck}
                   setInputCheck={setInputCheck}
+                  weekCycle={state.weekCycle}
                 />
               );
             })}
@@ -132,12 +161,22 @@ const PostForm = () => {
         </div>
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton btnName={"저장"} onClick={() => savePost()} />
+        <SaveButton btnName={"저장"} onClick={() => editPost()} />
       </ButtonContainer>
-    </div>
+    </>
   );
 };
-export default PostForm;
+export default EditForm;
+
+const STHeaderContainer = styled.div`
+  position: relative;
+  .trash {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    cursor: pointer;
+  }
+`;
 
 const BodyContainer = styled.div`
   display: flex;

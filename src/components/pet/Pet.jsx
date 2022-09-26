@@ -3,10 +3,10 @@ import { BsStars } from "react-icons/bs";
 import { ErrorAlert, rabbitAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/SaveButtonLong";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { __getProfile } from "../../redux/modules/mypage"
-import pet, { __getPetData, __setPetXP } from "../../redux/modules/pet";
+import { __getPetData, __setPetXP } from "../../redux/modules/pet";
 
 import petBG from "../../assets/mypetImg/petBG.png"
 import LV1 from "../../assets/mypetImg/LV1.gif"
@@ -22,24 +22,15 @@ const Pet = () => {
   // 경험치 바 
   const xp = 2**(petInfo.level-1) * 100
   const progressWidth = ((petInfo.exp/xp)*100)
-  
+
   const feedPet = () => {
-    if(progressWidth === 100 && petInfo.level >= 3 ) {
+    if(petInfo.level >= 4 ) {
       rabbitAlert({
         text: "다음 레벨을 준비 중입니다!"
       })
+      return
     }
     dispatch(__setPetXP())
-    .then((res)=>{
-      // rabbitAlert({
-      //   text: "🐰 맛있어요 더 주세요!"
-      // })
-      if (petInfo.levelUp === true) {
-        rabbitAlert({
-          text: "🐰 레벨업!"
-        })
-      }
-    })
     .catch((err)=>{
       ErrorAlert({
         text: "다시 시도해 주세요"
@@ -103,7 +94,9 @@ const Pet = () => {
         <p>My Point |<span><BsStars/> {user.point} </span>point</p>
       </StMyPt>
       <StPetBtn onClick={feedPet}>
-        <BsStars/> <span>50 point</span> 펫 밥주기
+        {
+          petInfo.level === 4 ? "다음 레벨을 준비 중이에요!" : <><BsStars/> <span>50 point</span> 펫 밥주기</>
+        }
       </StPetBtn>
     </StPetBG>
   )

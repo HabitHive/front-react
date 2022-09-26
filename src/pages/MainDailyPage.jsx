@@ -105,8 +105,9 @@ const STModal = styled.div`
 `;
 
 const STContainer = styled.div`
-  /* display: flex;
-  flex-direction: column; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StHeaderContainer = styled.div`
@@ -116,14 +117,12 @@ const StHeaderContainer = styled.div`
   width: 360px;
   height: 214px;
   position: relative;
+  margin-bottom: 20px;
   & .headerImgContainer {
-    /* background: url("../assets/images/mainDailyHeader.png"); */
-    /* background-image: url(HedaerImg); */
-    height: 214px;
+    height: 100%;
     & .headerImg {
       width: 100%;
-      /* height: 303px; */
-      height: 227px;
+      height: 100%;
       object-fit: cover;
     }
   }
@@ -149,9 +148,10 @@ const StHeaderContainer = styled.div`
 `;
 const StBodyContainer = styled.div`
   position: relative;
+  flex: 1;
+  overflow: auto;
 `;
 
 const StFooterContainer = styled.div`
   width: 100%;
-  height: 30px;
 `;

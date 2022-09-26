@@ -1,23 +1,17 @@
 import styled from "styled-components";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getMyTags } from "../../../redux/modules/mytag";
 import { useNavigate } from "react-router-dom";
-import { setDate } from "date-fns";
 
 const MyTag = ({ setModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
 
   //리덕스에서 가져온 category들 정보
-  const categories = useSelector(
-    (state) =>
-      // console.log(state.myTag.myTags[0].userTagId);
-      state.myTag.myTags
-  );
+  const categories = useSelector((state) => state.myTag.myTags);
 
   const now = new Date();
   const thisYear = now.getFullYear();
@@ -51,7 +45,6 @@ const MyTag = ({ setModal }) => {
               className="category"
               key={category.userTagId}
               onClick={() => {
-                // setDate()
                 navigate("/post", { state: category });
               }}
             >

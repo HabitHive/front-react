@@ -4,7 +4,7 @@ import tagBuySlice from '../modules/tagbuy'
 import profileSlice from '../modules/mypage'
 import myTagSlice from "../modules/mytag"
 import getMonthSlice from "../modules/month"
-import myScheduleSlice from "../modules/post"
+import myScheduleSlice from "../modules/schedule"
 import petSlice from '../modules/pet'
 import  myDailySlice from '../modules/dailytag'
 

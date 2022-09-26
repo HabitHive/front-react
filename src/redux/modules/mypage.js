@@ -13,7 +13,8 @@ export const __getProfile = createAsyncThunk(
 export const __getUserTags = createAsyncThunk(
   "getUserTags",
   async (payload, api) => {
-    const res = await axios.put(`/user/mypage/tag`, {today:payload}) // 백서버 연결할 때 사용
+    const res = await axios.put(`/user/mypage/tag`) // 백서버 연결할 때 사용
+    console.log(res)
     return res.data.result
   }
 )
@@ -22,6 +23,7 @@ const initialState = {
   email: "",
   nickname: "",
   point: 0,
+  petLevel: 1,
   userTags: {
     stillTags:[],
     successTags:[],
@@ -40,6 +42,7 @@ export const profileSlice = createSlice({
       state.email = action.payload.email
       state.nickname = action.payload.nickname
       state.point = action.payload.point
+      state.petLevel = action.payload.petLevel
     })
     builder
     .addCase(__getUserTags.fulfilled, (state, action) => {

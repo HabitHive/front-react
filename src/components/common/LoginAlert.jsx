@@ -17,6 +17,9 @@ export const LoggedinNav = () => {
   const navigate = useNavigate();
 
   useEffect(()=>{
+    InfoAlert({
+      text: "로그인 상태입니다"
+    })
     navigate("/main")
   })
 }
