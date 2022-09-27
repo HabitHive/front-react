@@ -27,8 +27,20 @@ export const __setPetXP = createAsyncThunk(
   "setPetXP",
   async (payload, api) => {
     try {
-      const res = await axios.post(`/pet`) // 백서버 연결할 때 사용
+      const res = await axios.post(`/pet`) 
       return res.data.result
+    } catch (err) {
+      api.rejectWithValue(err)
+    }
+  }
+)
+
+export const __getPoint = createAsyncThunk(
+  "getPoint",
+  async (payload, api) => {
+    try {
+      const res = await axios.post(`/user/random`) 
+      return res.data.result.point
     } catch (err) {
       api.rejectWithValue(err)
     }
