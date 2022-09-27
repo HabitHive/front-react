@@ -63,33 +63,23 @@ const WeekCalendar = (value) => {
             <div>
               {weekDate.map((weekday, i) => {
                 return (
-                  <div
-                    className={
-                      { value } === weekday.date ? "active" : "daylistSelector"
-                    }
-                    key={i}
-                    onChange={() => {
-                      clickDate(weekday.back);
-                    }}
-                  >
-                    <STLabel>
-                      <input
-                        type="radio"
-                        className="week"
-                        name="asdf"
-                        value={weekday.day}
-                        ref={week}
-                      />
-                      {weekday.day}
-                    </STLabel>
-                    <STLabel>
-                      <input
-                        type="radio"
-                        className="day"
-                        name={value}
-                        value={weekday.date}
-                      />
-                      {weekday.date}
+                  <div className="daylistSelector" key={i}>
+                    <input
+                      style={{ display: "none" }}
+                      type="radio"
+                      className="day"
+                      id={weekday.date}
+                      name={value}
+                      value={weekday.date}
+                    />
+                    <STLabel
+                      onClick={() => {
+                        clickDate(weekday.back);
+                      }}
+                      htmlFor={weekday.date}
+                    >
+                      <div>{weekday.day}</div>
+                      <div>{weekday.date}</div>
                     </STLabel>
                   </div>
                 );
@@ -172,31 +162,10 @@ const StCalendar = styled.div`
       width: 40px;
       height: 60px;
       border-radius: 8px;
-      background: #ffffff;
-      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
-      color: #999999;
-
-      //마우스 올렸을 때
-      &:hover {
-        background: #5039c8;
+      //클릭시 색 변하기
+      & input:checked + label {
+        background-color: #5039c8;
         color: white;
-        & .week {
-          color: white;
-        }
-        & .day {
-          color: white;
-        }
-      }
-      //클릭했을 때
-      &:active {
-        background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-        color: #fff;
-        & .week {
-          color: white;
-        }
-        & .day {
-          color: white;
-        }
       }
     }
   }
@@ -209,10 +178,24 @@ const STLabel = styled.label`
   text-align: center;
   float: left;
   cursor: pointer;
-
   width: 40px;
   height: 60px;
   border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
+  color: #999999;
+
+  //마우스 올렸을 때
+  &:hover {
+    background: #5039c8;
+    color: white;
+    & .week {
+      color: white;
+    }
+    & .day {
+      color: white;
+    }
+  }
 
   & input {
     display: none;
