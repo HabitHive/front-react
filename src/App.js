@@ -13,7 +13,7 @@ const App = () => {
 
   if (accessToken) {
     setToken(accessToken)
-    dispatch(setLogin(accessToken))
+    dispatch(setLogin(true))
   }
 
   return (

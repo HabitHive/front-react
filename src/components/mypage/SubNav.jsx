@@ -1,10 +1,10 @@
 import styled from "styled-components"
+import { InfoAlert } from "../common/Alert";
 import { HiDocumentDuplicate, HiLogout } from "react-icons/hi"
 
 import { useNavigate } from "react-router"
 import { useDispatch } from "react-redux";
-
-import { InfoAlert } from "../common/Alert";
+import { setLogin } from "../../redux/modules/user";
 
 const SubNav = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ const SubNav = () => {
 
   const logoutHandler = async () => {
     localStorage.removeItem("accessToken")
+    dispatch(setLogin(false))
     InfoAlert({
       text: "로그아웃되었습니다"
     })
