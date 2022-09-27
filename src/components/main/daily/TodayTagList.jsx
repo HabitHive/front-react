@@ -85,14 +85,28 @@ export default TodayTagList;
 const STTodayTagList = styled.div`
   display: flex;
   margin: 0 20px 12px 20px;
+
+  &:nth-child(4n-3) > .tagListbox:nth-child(2):not(.donTag) {
+    background-color: #ccedff;
+  }
+  &:nth-child(4n-2) > .tagListbox:nth-child(2):not(.donTag) {
+    background-color: #fee1dd;
+  }
+  &:nth-child(4n-1) > .tagListbox:nth-child(2):not(.donTag) {
+    background-color: #cbf8f5;
+  }
+  &:nth-child(4n) > .tagListbox:nth-child(2):not(.donTag) {
+    background-color: #feeedf;
+  }
+
   & .checkBox {
     flex-shrink: 0;
     width: 30px;
     position: relative;
   }
+
   //말풍선 영역
   & .tagListbox {
-    background: #cfeeff;
     cursor: pointer;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 0px;
