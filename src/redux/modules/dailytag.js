@@ -17,8 +17,7 @@ export const __getMyDaily = createAsyncThunk(
 
     return [res.data.result,payload]
     }
-    )
-
+  )
 
 export const __doneMyDaily = createAsyncThunk(
   "doneMyDaily",
@@ -47,10 +46,10 @@ export const myDailySlice = createSlice({
     //   console.log(action.payload)
     // })
     .addCase(__doneMyDaily.fulfilled,(state,action) => {
-      const idx = state.myDaily.findIndex(data => {
+      const idx = state.myDaily[0].findIndex(data => {
         return data.scheduleId === action.payload[1].id;
         });
-      state.myDaily[idx].done = true
+      state.myDaily[0][idx].done = true
     })
     .addCase(__doneMyDaily.rejected,(state,action)=> {
       console.log(action.payload)

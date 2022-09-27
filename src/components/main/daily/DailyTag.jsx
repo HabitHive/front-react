@@ -4,9 +4,9 @@ import styled from "styled-components";
 import TodayTagList from "./TodayTagList";
 
 const DailyTag = () => {
-  const state = useSelector((state) => state.getMyDaily.myDaily[0]);
+  const state = useSelector((state) => state.getMyDaily.myDaily);
   //목록 분류
-  const myDaily = state;
+  const myDaily = state[0];
 
   //채크박스 확인
   const [beChecked, setBeChecked] = useState([]);
@@ -39,7 +39,7 @@ const STTagList = styled.div`
   width: 100%;
   & .empty {
     flex-direction: column;
-    color: #808080;
+    color: #d1d1d1;
     margin-left: 20px;
   }
 `;
