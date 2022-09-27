@@ -176,11 +176,6 @@ const StCalendar = styled.div`
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
       color: #999999;
 
-      //today표현
-      &:nth-child(1) {
-        border: 0.2rem solid #6334ff;
-      }
-
       //마우스 올렸을 때
       &:hover {
         background: #5039c8;

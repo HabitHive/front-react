@@ -2,12 +2,12 @@ import styled, { css } from "styled-components";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
+import { ConfirmAlert } from "../../common/Alert";
+import Swal from "sweetalert2";
 
 const TodayTagList = ({ list }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const [isChecked, setIsChecked] = useState(false);
 
   //props분류
   const id = list.scheduleId;
@@ -21,9 +21,31 @@ const TodayTagList = ({ list }) => {
     .slice(0, 10);
 
   const clickInput = () => {
-    // setIsChecked(!done);
     if (done === false) {
-      dispatch(__doneMyDaily({ id, date: today }));
+      dispatch(__doneMyDaily({ id, date: today })).then((res) => {
+        if (res.payload[0].first === true && res.payload[0].bonus === true) {
+          Swal.fire({
+            text: "20point가 지급되었습니다!",
+            icon: "success",
+            width: 300,
+
+            confirmButtonColor: "#3085d6", // 확인 버튼 색깔 지정
+            confirmButtonText: "확인", // 확인 버튼 텍스트 지정
+            reverseButtons: true, // 버튼 순서 거꾸로,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // 만약 확인 버튼을 눌렀다면
+              Swal.fire({
+                text: `완료 추가보너스 ${res.payload[0].bonusPoint}Point가 지급되었습니다!`,
+                icon: "success",
+                width: 300,
+              });
+            }
+          });
+        } else if (res.payload[0].first === true) {
+          ConfirmAlert({ text: "20point 가 지급되었습니다" });
+        }
+      });
     }
   };
 
@@ -35,7 +57,7 @@ const TodayTagList = ({ list }) => {
           <STInputCheckbox type="checkbox" isChecked={done}></STInputCheckbox>
         </div>
         <div
-          className="tagListbox"
+          className={done ? "doneTag" : "tagListbox"}
           onClick={() => {
             navigate("/edit", { state: list });
           }}
@@ -77,6 +99,7 @@ const STTodayTagList = styled.div`
     min-height: 82px;
     padding: 12px 12px 7px 12px;
     flex-grow: 1;
+
     //타임사이클
     & .tagCycle {
       font-size: 12px;
@@ -107,6 +130,48 @@ const STTodayTagList = styled.div`
       }
     }
   }
+  // 체크완료 시 CSS
+  & .doneTag {
+    background: #d9d9d9;
+    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
+    border-radius: 12px 12px 12px 0px;
+    min-height: 82px;
+    padding: 12px 12px 7px 12px;
+    flex-grow: 1;
+
+    //타임사이클
+    & .tagCycle {
+      font-size: 12px;
+      line-height: 14px;
+      margin-bottom: 2px;
+      color: white;
+    }
+    //습관이름
+    & .tagTitle {
+      font-size: 16px;
+      line-height: 19px;
+      margin-bottom: 4px;
+      color: white;
+    }
+    //카테고리들
+    & .tagCategories {
+      display: flex;
+      flex-wrap: wrap;
+      & .category {
+        background-color: #999999;
+        padding: 2px 6px;
+        border-radius: 4px;
+        align-items: center;
+        width: fit-content;
+        font-size: 12px;
+        line-height: 14px;
+        font-weight: 200;
+        color: white;
+        margin: 0 5px 5px 0;
+      }
+    }
+  }
+
   &:last-child {
     margin-bottom: 90px;
   }
@@ -128,7 +193,7 @@ const STLabel = styled.label`
           background-color: #5039c8;
           border-color: #5039c8;
           &:after {
-            border: 2px solid #fff;
+            border: 2px solid #d3d3d3;
             border-top: none;
             border-right: none;
             content: "";
