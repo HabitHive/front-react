@@ -152,6 +152,8 @@ const StDoneTagBox = styled.div`
   box-shadow: 3px 3px 8px lightgrey;
   padding: 16px 12px;
   display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
   justify-content: ${props=>props.justify};
   border-radius: 18px;
 `

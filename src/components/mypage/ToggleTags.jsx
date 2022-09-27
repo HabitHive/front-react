@@ -30,11 +30,12 @@ const StDoneTag =  styled.div`
   width: max-content;
   height: 22px;
   color: white;
-  margin-right: 5px;
+  margin: 0 6px 6px 0;
   background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
   border: 1px solid #674DED;
   border-radius: 6px;
   & p {
+    width: max-content;
     font-weight: 400;
     font-size: 12px;
     letter-spacing: -0.3px;
