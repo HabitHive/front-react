@@ -1,13 +1,12 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import TodayTagList from "./TodayTagList";
 
 const DailyTag = () => {
-  const state = useSelector((state) => state.getMyDaily);
+  const state = useSelector((state) => state.getMyDaily.myDaily[0]);
   //목록 분류
-  const myDaily = state.myDaily;
+  const myDaily = state;
 
   //채크박스 확인
   const [beChecked, setBeChecked] = useState([]);
@@ -15,10 +14,10 @@ const DailyTag = () => {
   return (
     <>
       <STTagList>
-        {myDaily.length === 0 ? (
+        {myDaily?.length === 0 ? (
           <div className="empty"> 목표가 없습니다</div>
         ) : (
-          myDaily.map((list) => {
+          myDaily?.map((list) => {
             return (
               <TodayTagList
                 list={list}

@@ -4,26 +4,35 @@ import MonthlyCalendar from "../components/main/monthly/MonthlyCalendar";
 import DailyTag from "../components/main/daily/DailyTag";
 import Header from "../components/common/Header";
 import moment from "moment";
-import { FiChevronLeft } from "react-icons/fi";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { __getMonth } from "../redux/modules/month";
 
 const MonthlyPage = () => {
   const dispatch = useDispatch();
-  const now = new Date();
-  const monthNameLong = now.toLocaleString("en-US", { month: "long" }); //이번달 영어로 풀
 
-  const today = now.getDate(); //오늘날짜
+  let now = new Date();
+  const pick = useSelector((state) => state.getMyDaily.myDaily[1]);
+
+  let pickMonth = new Date(now).toLocaleString("en-US", { month: "long" });
+  let pickDay = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(8, 10);
+  //today에서 클릭한 날짜로 데이터 변경
+  if (pick !== undefined) {
+    pickMonth = new Date(pick).toLocaleString("en-US", {
+      month: "long",
+    });
+    pickDay = new Date(
+      new Date(pick).getTime() - new Date(pick).getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .slice(8, 10);
+  }
 
   const [value, setValue] = useState(now);
   const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
-
-  // const getMonthInfo = async () => {
-  //   dispatch(__getMonth());
-  // };
 
   useEffect(() => {
     dispatch(__getMonth(pickDate));
@@ -33,17 +42,6 @@ const MonthlyPage = () => {
     <STContainer>
       <HeaderContainer>
         <Header text={"나의 월별 목표"} />
-        {/* <div className="iconContainer">
-          <button
-            className="icon"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            <FiChevronLeft />
-          </button>
-        </div>
-        <div className="monthContainer">My monthly</div> */}
       </HeaderContainer>
       <BodyContainer>
         <MonthlyCalendar />
@@ -53,8 +51,8 @@ const MonthlyPage = () => {
           <div className="topBox">
             <div className="titleText">나의 일별 목표</div>
             <div className="titleDate">
-              {monthNameLong}&nbsp;&nbsp;
-              {today}
+              {pickMonth}&nbsp;&nbsp;
+              {pickDay}
             </div>
           </div>
           <div className="dailyList">
@@ -74,7 +72,6 @@ const STContainer = styled.div`
   position: relative;
 `;
 const HeaderContainer = styled.div`
-  /* display: flex; */
   &.iconContainer {
     & .icon {
       cursor: pointer;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useState } from "react";
+
 
 import axios from "../../axios/axios";
 
@@ -14,9 +14,11 @@ export const __getMyDaily = createAsyncThunk(
     .slice(0, 10);
     }
     const res = await axios.get(`/tag/daily?todayDate=${payload}`)
-    return res.data.result
+
+    return [res.data.result,payload]
     }
-)
+    )
+
 
 export const __doneMyDaily = createAsyncThunk(
   "doneMyDaily",

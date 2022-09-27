@@ -6,7 +6,7 @@ export const __getMonth = createAsyncThunk(
   "getMonth",
   async (payload, api) => {
     const res = await axios.get(`/tag/monthly/${payload}`)
-    return res
+    return res.data.result
   }
 )
 
