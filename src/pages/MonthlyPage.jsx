@@ -90,11 +90,12 @@ const FooterContainer = styled.div`
     bottom: 0;
     width: 100%;
     height: 300px;
-
     background: #7a61ff;
     box-shadow: 0px -8px 12px rgba(0, 0, 0, 0.08),
       inset 0px 4px 4px rgba(255, 255, 255, 0.2);
     border-radius: 16px 16px 0px 0px;
+    overflow: auto;
+
     & .topBox {
       display: flex;
       justify-content: space-between;
