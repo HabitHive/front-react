@@ -1,14 +1,15 @@
 import styled from "styled-components"
 import { BsStars } from "react-icons/bs";
-import { ErrorAlert, rabbitAlert } from "../common/Alert"
+import { ConfirmAlert, ErrorAlert, rabbitAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/SaveButtonLong";
 
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { __getProfile } from "../../redux/modules/mypage"
-import { __getPetData, __setPetXP } from "../../redux/modules/pet";
+import { __getPetData, __setPetXP, __getPoint } from "../../redux/modules/pet";
 
 import petBG from "../../assets/mypetImg/petBG.png"
+import cursor from "../../assets/mypetImg/cursor.cur"
 import LV1 from "../../assets/mypetImg/LV1.gif"
 import LV2 from "../../assets/mypetImg/LV2.gif"
 import petData from "../pet/petData"
@@ -18,6 +19,9 @@ const Pet = () => {
 
   const user = useSelector((state)=>state.profile)
   const petInfo = useSelector((state)=>state.pet)
+
+  // 클릭 횟수 카운트
+  const [count, setCount] = useState(1);
   
   // 경험치 바 
   const xp = 2**(petInfo.level-1) * 100
@@ -38,25 +42,48 @@ const Pet = () => {
     })
   }
 
-  useEffect(()=>{
-    dispatch(__getPetData())
-    dispatch(__getProfile())
-  },[])
+  const petHandler = () => {
+    setCount(count+1)
+    if (count===5) {
+      dispatch(__getPoint())
+      .then((res)=>{
+        ConfirmAlert({
+          text: `${res.payload}포인트를 선물로 드릴게요!`
+        }) 
+      })
+    } 
+  }
 
+  const cursorEvent = () => {
+    // console.log("야")
+  }
+
+  //xp 바뀔 때마다 api 요청
   useEffect(()=>{
     dispatch(__getPetData())
     dispatch(__getProfile())
-  },[petInfo])
+  },[user])
+
+  // point 추가할 때마다 리렌더링
+  useEffect(()=>{
+    dispatch(__getProfile())
+  },[__getPoint()])
 
   return (
     <StPetBG>
+      
 
       <StPetTitle>
         <span>{user.nickname}</span> &nbsp; 님의 펫
       </StPetTitle>
 
       <StPetInfo>
-        <StPetImg level={petInfo.level}/>
+        <StPetImg level={petInfo.level}
+          onClick={()=>{
+            petHandler()
+            cursorEvent()
+          }}
+        />
 
         <StPetExpBox>
           <StPetExpNum>
@@ -147,6 +174,8 @@ const StPetImg = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
+
+  cursor: url(${cursor}), pointer;
 `
 
 const StPetExpBox = styled.div`
@@ -264,8 +293,10 @@ const StMyPt = styled.div`
 `
 
 const StPetBtn = styled(StSubmitBtn)`
+  background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+  border: 2px solid #674ded;
+  box-shadow: 2px 2px 3px 4px rgba(88, 56, 255, 0.25);
   width: 224px;
   margin: 21px auto;
   left: 68px
 `
-
