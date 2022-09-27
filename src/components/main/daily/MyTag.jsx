@@ -101,13 +101,14 @@ const STMyTag = styled.div`
   & .tagCategories {
     display: flex;
     flex-wrap: wrap;
-    cursor: pointer;
+    overflow: scroll;
     & .category {
       background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
       padding: 2px 6px;
       border: 1px solid #674ded;
       border-radius: 6px;
       align-items: center;
+      cursor: pointer;
       width: fit-content;
       font-size: 12px;
       line-height: 14px;

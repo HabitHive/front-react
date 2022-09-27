@@ -16,7 +16,7 @@ import { __getMyDaily } from "../redux/modules/dailytag";
 const MainDailyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
 
   useEffect(() => {
     dispatch(__getMyDaily());
