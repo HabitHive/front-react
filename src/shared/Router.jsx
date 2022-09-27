@@ -15,7 +15,7 @@ import PetPage from "../pages/PetPage";
 
 import { useSelector } from "react-redux";
 
-import { LoginAlert, LoggedinNav } from "../components/common/LoginAlert";
+import { LoginAlert } from "../components/common/LoginAlert";
 
 const Router = () => {
   const isLog = useSelector((state) => state.user.isLog);
