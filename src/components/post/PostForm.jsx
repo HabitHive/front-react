@@ -25,6 +25,7 @@ const PostForm = () => {
   const [endTime, setEndTime] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [finalDate, setFinalDate] = useState(null);
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
@@ -34,6 +35,11 @@ const PostForm = () => {
   //보유습관에서 선택한 tag값 가져오기
   const { state } = useLocation();
 
+  const now = new Date();
+  const today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
+
   useEffect(() => {
     dispatch(__getMyTag());
   }, []);
@@ -41,9 +47,19 @@ const PostForm = () => {
   // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
-    const lastDate = firstDate.setDate(firstDate.getDate() + state.period);
+    let lastDate = firstDate.setDate(firstDate.getDate() + state.period - 1);
+    let finalDate = null;
+    if (state.date != null) {
+      //만약 이미 한번이라도 일정등록을 한 적이 있다면
+      if (new Date(today) < new Date(new Date(state.date.slice(13)))) {
+        //등록한 날짜가 지난 이후의 추가 post라면 endDate는 첫 post시의 endDate로 고정
+        finalDate = new Date(state.date.slice(13));
+        lastDate = state.date.slice(13);
+      }
+    }
     setStartDate(update[0]);
     setEndDate(new Date(lastDate));
+    setFinalDate(finalDate);
   };
 
   const savePost = () => {
@@ -73,8 +89,9 @@ const PostForm = () => {
             endDate={endDate}
             dateFormat="yyyy.MM.dd"
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
+            maxDate={finalDate} // 첫번째 등록 이후라면 endDate는 첫 post시의 endDate로 고정
             onChange={dateRange}
-            placeholderText="날짜 설정하기"
+            placeholderText={state.date == null ? "날짜 설정하기" : state.date}
           />
         </div>
         <div className="setTime">
