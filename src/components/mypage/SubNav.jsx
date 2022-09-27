@@ -13,9 +13,6 @@ const SubNav = () => {
   const logoutHandler = async () => {
     localStorage.removeItem("accessToken")
     dispatch(setLogin(false))
-    InfoAlert({
-      text: "로그아웃되었습니다"
-    })
   }
  
   return (

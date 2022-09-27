@@ -73,7 +73,6 @@ export const userSlice = createSlice({
   reducers: { 
     //로그인 상태 유지
     setLogin: (state, action) => {
-      console.log(action.payload)
       state.isLog = action.payload
     },
   },
