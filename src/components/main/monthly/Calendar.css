@@ -113,12 +113,14 @@ border-radius: 6px;
   border: 1px solid #674DED;
   border-radius: 8px;
 }
+/* 년도로 갔을 때 */
 .react-calendar__tile--hasActive {
-  background: #76baff;
+  background: #674DED;
 }
+/* 년도 호버됐을 때 */
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: #a9d4ff;
+  background: #674DED;
 }
 /* 오늘날짜표시 =>따로 안하기로함*/
 .react-calendar__tile--active {
