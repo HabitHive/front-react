@@ -25,6 +25,7 @@ const PostForm = () => {
   const [endTime, setEndTime] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [finalDate, setFinalDate] = useState(null);
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
@@ -47,15 +48,18 @@ const PostForm = () => {
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
     let lastDate = firstDate.setDate(firstDate.getDate() + state.period - 1);
+    let finalDate = null;
     if (state.date != null) {
       //만약 이미 한번이라도 일정등록을 한 적이 있다면
       if (new Date(today) < new Date(new Date(state.date.slice(13)))) {
         //등록한 날짜가 지난 이후의 추가 post라면 endDate는 첫 post시의 endDate로 고정
-        lastDate = new Date(state.date.slice(13));
+        finalDate = new Date(state.date.slice(13));
+        lastDate = state.date.slice(13);
       }
     }
     setStartDate(update[0]);
     setEndDate(new Date(lastDate));
+    setFinalDate(finalDate);
   };
 
   const savePost = () => {
@@ -85,9 +89,9 @@ const PostForm = () => {
             endDate={endDate}
             dateFormat="yyyy.MM.dd"
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
-            maxDate={endDate}
+            maxDate={finalDate} // 첫번째 등록 이후라면 endDate는 첫 post시의 endDate로 고정
             onChange={dateRange}
-            placeholderText="날짜 설정하기"
+            placeholderText={state.date == null ? "날짜 설정하기" : state.date}
           />
         </div>
         <div className="setTime">
