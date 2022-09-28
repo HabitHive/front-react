@@ -39,16 +39,17 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
     }
     await dispatch(__addTag(bought))
     .then((res) => {
-      ConfirmToast({text: "구매 완료"})
-      navigate("/")
+      if (res.payload.response.status===400) {
+        const cal = Math.abs(res.payload.response.data.result)
+        ErrorAlert({
+          text: `${cal}point가 부족합니다`
+        })
+      } else if (res.type==="basicLogin/fulfilled") {
+        ConfirmToast({text: "구매 완료"})
+        navigate("/")
+      }
     })
-    .catch((err) => {
-      // console.log(err) 예외처리 할 때 확인
-      ErrorAlert({
-        title: "구매 실패",
-        text: "잠시 후 다시 시도해 주세요"
-      })
-    })
+    
   };
 
   return (

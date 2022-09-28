@@ -13,6 +13,10 @@ import LV3 from "../../assets/mypageImg/LV3.png"
 import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs";
 
+//테스트
+
+import Loading from "../common/Loading";
+
 
 const Profile = () => {
   const dispatch = useDispatch();
