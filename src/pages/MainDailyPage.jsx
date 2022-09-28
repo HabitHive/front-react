@@ -57,8 +57,14 @@ const MainDailyPage = () => {
                 setModal(true);
               }}
             >
-              <div className="myTitle">나의 습관목록</div>
-              <MdKeyboardArrowUp className="upIcon" size="30" color="#5039C8" />
+              <div className="container">
+                <div className="myTitle">나의 습관목록</div>
+                <MdKeyboardArrowUp
+                  className="upIcon"
+                  size="30"
+                  color="#5039C8"
+                />
+              </div>
             </STModal>
           ) : (
             <MyTag setModal={setModal} />
@@ -75,22 +81,25 @@ const MainDailyPage = () => {
 export default MainDailyPage;
 
 const STModal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 320px;
-  height: 52px;
   position: fixed;
-  z-index: 2;
-  margin-left: 20px;
   bottom: 84px;
-  max-width: 420px;
-  padding: 16px;
-
-  background-color: #ffffff;
-  border: 1px solid #efefef;
-  border-radius: 16px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
+  max-width: 450px;
+  min-height: 52px;
+  z-index: 2;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+  & .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border: 1px solid #efefef;
+    border-radius: 16px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
+    margin: 0 20px;
+  }
 
   & .myTitle {
     font-style: normal;

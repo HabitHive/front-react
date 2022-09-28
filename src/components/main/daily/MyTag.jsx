@@ -26,30 +26,32 @@ const MyTag = ({ setModal }) => {
 
   return (
     <STMyTag>
-      <div
-        className="titleIcon"
-        onClick={() => {
-          setModal(false);
-        }}
-      >
-        <div className="myTitle">나의 습관목록</div>
-        <MdKeyboardArrowDown className="downIcon" size="30" color="#5039C8" />
-      </div>
-      <hr className="hr"></hr>
-      <div className="tagCategories">
-        {categories?.map((category) => {
-          return (
-            <div
-              className="category"
-              key={category.userTagId}
-              onClick={() => {
-                navigate("/post", { state: category });
-              }}
-            >
-              {category.tagName}
-            </div>
-          );
-        })}
+      <div className="Container">
+        <div
+          className="titleIcon"
+          onClick={() => {
+            setModal(false);
+          }}
+        >
+          <div className="myTitle">나의 습관목록</div>
+          <MdKeyboardArrowDown className="downIcon" size="30" color="#5039C8" />
+        </div>
+        <hr className="hr"></hr>
+        <div className="tagCategories">
+          {categories?.map((category) => {
+            return (
+              <div
+                className="category"
+                key={category.userTagId}
+                onClick={() => {
+                  navigate("/post", { state: category });
+                }}
+              >
+                {category.tagName}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </STMyTag>
   );
@@ -60,17 +62,22 @@ export default MyTag;
 const STMyTag = styled.div`
   position: fixed;
   bottom: 84px;
-  width: 320px;
-  min-width: 220px;
+  max-width: 450px;
   height: 180px;
   min-height: 52px;
   z-index: 2;
-  margin: 0 20px;
-  padding: 12px 16px;
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #efefef;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+  & .Container {
+    padding: 12px 16px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #efefef;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
+    margin: 0 20px;
+  }
+
   & .titleIcon {
     display: flex;
     justify-content: space-between;
@@ -91,7 +98,7 @@ const STMyTag = styled.div`
   & .hr {
     border: none;
     border-bottom: 1px solid #5039c8;
-    width: 288px;
+    max-width: 410px;
     margin-bottom: 12px;
   }
   //카테고리들
