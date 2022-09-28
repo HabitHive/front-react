@@ -89,7 +89,7 @@ const StTagsWrap = styled.div`
 `
 
 const StTagTitle = styled.h3`
-  margin: 10px 0;
+  margin: 32px 0 8px 0;
   font-weight: 600;
   font-size: 16px;
   color: #343434;
@@ -108,7 +108,7 @@ const StTagShadowBox = styled.div`
   background-color: #CFEEFF;
   width: 100%;
   height: 68px;
-  margin: 6px auto;
+  margin: 8px auto;
   padding: 12px;
   display: flex;
   justify-content: space-between;
@@ -147,9 +147,9 @@ const StStillTagdDay =  styled.div`
 const StDoneTagBox = styled.div`
   background-color: white;
   width: 100%;
-  margin: 10px auto;
+  margin: 2px auto;
   min-height: 150px;
-  box-shadow: 3px 3px 8px lightgrey;
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.08);
   padding: 16px 12px;
   display: flex;
   flex-wrap: wrap;

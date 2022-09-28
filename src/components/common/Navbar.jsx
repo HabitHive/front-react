@@ -42,17 +42,6 @@ const Navbar = () => {
         </StNavli>
         <StNavli
           onClick={() => {
-            navigate("/mypage");
-          }}
-          className={pathname === "/mypage" ? "active" : null}
-        >
-          <span>
-            <BsPerson />
-          </span>
-          <p>My</p>
-        </StNavli>
-        <StNavli
-          onClick={() => {
             navigate("/pet");
           }}
           className={pathname === "/pet" ? "active" : null}
@@ -61,6 +50,17 @@ const Navbar = () => {
             <MdPets/>
           </span>
           <p>Pet</p>
+        </StNavli>
+        <StNavli
+          onClick={() => {
+            navigate("/mypage");
+          }}
+          className={pathname === "/mypage" ? "active" : null}
+        >
+          <span>
+            <BsPerson />
+          </span>
+          <p>My</p>
         </StNavli>
       </StNavUl>
     </StNavContainer>
@@ -85,7 +85,7 @@ const StNavUl = styled.ul`
   align-items: center;
   justify-content: space-between;
   border-radius: 16px 16px 0 0;
-  box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.06);
   & .active {
     color: #674ded;
   }
