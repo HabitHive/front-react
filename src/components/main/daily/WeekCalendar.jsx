@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { FaChevronLeft } from "react-icons/fa";
-import { FaChevronRight } from "react-icons/fa";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -42,74 +41,83 @@ const WeekCalendar = (value) => {
   }
 
   //weekbar 양옆 버튼 누를 때마다 6일짜리 돌아감
-  const changFuture = () => {
+  const changeFuture = () => {
     setPast(past + 6);
     setFuture(future + 6);
   };
-  const changPast = () => {
+  const changePast = () => {
     setPast(past - 6);
     setFuture(future - 6);
   };
 
   return (
-    <STWeekCalender>
-      <StCalendar>
+    <STWeekCalendar>
+      <STCalendar>
         <div className="Month">{weekDate[0].month}</div>
-        <DayContainer className="Day">
-          <div className="daylistContainer">
-            <button>
-              <FaChevronLeft onClick={changPast} />
-            </button>
-            <div>
-              {weekDate.map((weekday, i) => {
-                return (
-                  <div className="daylistSelector" key={i}>
-                    <input
-                      style={{ display: "none" }}
-                      type="radio"
-                      className="day"
-                      id={weekday.date}
-                      name={value}
-                      value={weekday.date}
-                    />
-                    <STLabel
-                      onClick={() => {
-                        clickDate(weekday.back);
-                      }}
-                      htmlFor={weekday.date}
-                    >
-                      <div>{weekday.day}</div>
-                      <div>{weekday.date}</div>
-                    </STLabel>
-                  </div>
-                );
-              })}
-            </div>
-            <button>
-              <FaChevronRight onClick={changFuture} />
-            </button>
+      </STCalendar>
+      <STDayContainer>
+        <div className="daylistContainer">
+          <button>
+            <HiChevronLeft
+              className="leftIcon"
+              onClick={changePast}
+              size="22"
+              color="#5039C8"
+            />
+          </button>
+          <div>
+            {weekDate.map((weekday, i) => {
+              return (
+                <div className="daylistSelector" key={i}>
+                  <input
+                    type="radio"
+                    id={weekday.date}
+                    name={value}
+                    value={weekday.date}
+                  />
+                  <STLabel
+                    onClick={() => {
+                      clickDate(weekday.back);
+                    }}
+                    htmlFor={weekday.date}
+                  >
+                    <div className="weekday">{weekday.day}</div>
+                    <div className="weekdate">{weekday.date}</div>
+                  </STLabel>
+                </div>
+              );
+            })}
           </div>
-        </DayContainer>
-      </StCalendar>
-    </STWeekCalender>
+          <button>
+            <HiChevronRight
+              className="rightIcon"
+              onClick={changeFuture}
+              size="22"
+              color="#5039C8"
+            />
+          </button>
+        </div>
+      </STDayContainer>
+    </STWeekCalendar>
   );
 };
 
 export default WeekCalendar;
-const STWeekCalender = styled.div`
+const STWeekCalendar = styled.div`
   position: absolute;
   width: 100%;
-  left: 0;
   bottom: 15%;
 `;
-const StCalendar = styled.div`
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+const STCalendar = styled.div`
   width: 100%;
-  overflow: initial;
+  display: flex;
+  justify-content: center;
   & .Month {
-    font-style: normal;
+    background-color: #fbfbfb;
+    border-radius: 6px;
+    padding: 6px 10px;
+    /* width: 52px;
+    height: 26px; */
     font-weight: 700;
     font-size: 12px;
     line-height: 14px;
@@ -117,56 +125,76 @@ const StCalendar = styled.div`
     color: #5039c8;
     margin-bottom: 12px;
   }
+`;
 
-  /* 주간캘린더 일전체 컨테이너 */
-  & .Day {
-    justify-content: center;
-    align-content: center;
-    text-align: center;
-    height: 3.5rem;
-    font-size: 14px;
+/* 주간캘린더 일전체 컨테이너 */
+const STDayContainer = styled.div`
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  height: 3.5rem;
+  font-size: 14px;
 
-    & .daylistContainer {
-      display: flex;
-      justify-content: space-between;
+  & .daylistContainer {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    & button {
       position: relative;
-      & button {
-        position: relative;
-        right: 20px;
+      right: 20px;
+      top: 15px;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      &:nth-child(1) {
+        left: 18px;
         top: 15px;
-        border: none;
-        justify-content: center;
-        align-content: center;
-        text-align: center;
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        background: #ffffff;
-        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
-        cursor: pointer;
-        &:nth-child(1) {
-          left: 18px;
-          top: 15px;
-        }
       }
     }
-    /* 하루짜리 날짜 배열 Daylist */
-    & .daylistSelector {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      float: left;
-      margin-right: 4px;
-      width: 40px;
-      height: 60px;
-      border-radius: 8px;
-      //클릭시 색 변하기
-      & input:checked + label {
-        background-color: #5039c8;
-        color: white;
-      }
+    & .leftIcon {
+      background-color: #ffffff;
+      border-radius: 50%;
+      position: absolute;
+      left: 0.1px;
+      top: 0.1px;
+    }
+    & .rightIcon {
+      background-color: #ffffff;
+      border-radius: 50%;
+      position: absolute;
+      left: 0.1px;
+      top: 0.1px;
+    }
+  }
+  /* 하루짜리 날짜 배열 Daylist */
+  & .daylistSelector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    float: left;
+    margin-right: 4px;
+    width: 40px;
+    height: 60px;
+    border-radius: 8px;
+    //클릭시 색 변하기
+    & input:checked + label {
+      background-color: #5039c8;
+      color: white;
+    }
+    & input {
+      display: none;
+      position: absolute;
+      width: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
     }
   }
 `;
@@ -174,9 +202,6 @@ const STLabel = styled.label`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  float: left;
   cursor: pointer;
   width: 40px;
   height: 60px;
@@ -184,45 +209,19 @@ const STLabel = styled.label`
   background: #ffffff;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
   color: #999999;
+  font-weight: 600;
+  & .weekday {
+    font-size: 10px;
+    line-height: 12px;
+  }
+  & .weekdate {
+    font-size: 14px;
+    line-height: 17px;
+  }
 
   //마우스 올렸을 때
   &:hover {
     background: #5039c8;
     color: white;
-    & .week {
-      color: white;
-    }
-    & .day {
-      color: white;
-    }
   }
-
-  & input {
-    display: none;
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-  }
-
-  & .week {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 10px;
-    color: #999999;
-  }
-  & .day {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
-    color: #999999;
-  }
-`;
-
-const DayContainer = styled.div`
-  display: block;
 `;

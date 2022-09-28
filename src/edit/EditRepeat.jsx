@@ -55,7 +55,10 @@ const STRepeatDay = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #ebebeb;
-    color: black;
+    color: #343434;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
     border: none;
     border-radius: 50%;
     box-sizing: border-box;
@@ -75,7 +78,7 @@ const STRepeatDay = styled.div`
     border: 0;
     //요일 클릭시에 색 변경
     &:checked + label {
-      background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
+      background-color: #674ded;
       color: #fff;
     }
   }
