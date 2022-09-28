@@ -73,6 +73,7 @@ const STMyTag = styled.div`
 
   background: #ffffff;
   border-radius: 16px;
+  border: 1px solid #efefef;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(16px);
   & .titleIcon {
@@ -93,7 +94,8 @@ const STMyTag = styled.div`
   }
 
   & .hr {
-    border: 1px solid #5039c8;
+    border: none;
+    border-bottom: 1px solid #5039c8;
     width: 288px;
     margin-bottom: 12px;
   }
@@ -104,15 +106,21 @@ const STMyTag = styled.div`
     overflow: scroll;
     & .category {
       background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-      padding: 2px 6px;
+      padding: 4px 12px;
       border: 1px solid #674ded;
       border-radius: 6px;
+
+      height: 22px;
+      justify-content: center;
       align-items: center;
       cursor: pointer;
       width: fit-content;
+      height: fit-content;
+      font-weight: 400;
       font-size: 12px;
       line-height: 14px;
-      font-weight: 200;
+      letter-spacing: -0.3px;
+
       color: white;
       margin: 0 5px 5px 0;
     }
