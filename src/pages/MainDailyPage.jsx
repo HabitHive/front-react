@@ -52,15 +52,13 @@ const MainDailyPage = () => {
         <StBodyContainer>
           <DailyTag />
           {modal === false ? (
-            <STModal>
+            <STModal
+              onClick={() => {
+                setModal(true);
+              }}
+            >
               <div className="myTitle">나의 습관목록</div>
-              <MdKeyboardArrowUp
-                className="upIcon"
-                size="16"
-                onClick={() => {
-                  setModal(true);
-                }}
-              />
+              <MdKeyboardArrowUp className="upIcon" size="30" color="#5039C8" />
             </STModal>
           ) : (
             <MyTag setModal={setModal} />
@@ -89,10 +87,10 @@ const STModal = styled.div`
   max-width: 420px;
   padding: 16px;
 
-  background: #ffffff;
+  background-color: #ffffff;
+  border: 1px solid #efefef;
   border-radius: 16px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(16px);
 
   & .myTitle {
     font-style: normal;

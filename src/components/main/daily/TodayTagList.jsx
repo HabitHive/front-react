@@ -103,6 +103,7 @@ const STTodayTagList = styled.div`
     flex-shrink: 0;
     width: 30px;
     position: relative;
+    margin-right: 8px;
   }
 
   //말풍선 영역
