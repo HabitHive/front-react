@@ -14,7 +14,6 @@ import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs";
 
 //테스트
-
 import Loading from "../common/Loading";
 
 
@@ -49,8 +48,10 @@ const Profile = () => {
 export default Profile
 
 const StProfileWrap = styled.div`
-  height: 326px;
   background-image: url(${propfileBG});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
