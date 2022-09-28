@@ -214,13 +214,14 @@ const BodyContainer = styled.div`
     }
     //시작날짜인풋박스
     & .startDateInput {
-      /* background-image: url(${(props) => props.calendarImg}); */
       background-image: url(${calendarImg});
       background-repeat: no-repeat;
       background-position: center left 3px;
+      background-color: #ebebeb;
       width: 100%;
       height: 42px;
       box-sizing: border-box;
+      border: none;
       padding-left: 25px;
       border-radius: 8px;
       margin-top: 8px;
@@ -246,11 +247,13 @@ const BodyContainer = styled.div`
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
+        background-color: #ebebeb;
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
         border-radius: 8px;
+        border: none;
         margin-top: 8px;
       }
     }
@@ -268,11 +271,13 @@ const BodyContainer = styled.div`
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
+        background-color: #ebebeb;
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
         border-radius: 8px;
+        border: none;
         margin-top: 8px;
       }
     }

@@ -134,6 +134,7 @@ const StHeaderContainer = styled.div`
     display: flex;
     justify-content: center;
     & .headerTitle {
+      color: #ffffff;
       position: absolute;
       top: 47px;
     }
