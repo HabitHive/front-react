@@ -33,7 +33,7 @@ export default SubNav
 const StSubNav = styled.nav`
   & ul {
     list-style: none;
-    margin-bottom: 70px;
+    margin-bottom: 90px;
   }
 `
 
