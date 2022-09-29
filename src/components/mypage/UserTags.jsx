@@ -42,24 +42,25 @@ const UserTags = () => {
         <StTagTitle>
           진행 중인 습관
         </StTagTitle>
-        { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
-          stillTags?.map((stillTag, tagName)=>{
-            return (
-            <StTagShadowBox key={tagName}>
-              <StStillTag>
-                <StStillTagName>
-                  <p>{stillTag.tagName}</p>
-                </StStillTagName>
-                <TagWeekday weekData={stillTag.week}/>
-              </StStillTag>
-              <StStillTagdDay>
-                <p>D-{stillTag.dDay}</p>
-              </StStillTagdDay>
-            </StTagShadowBox>
-            )
-          })
-        }
-
+        <StScrollBox>
+          { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
+            stillTags?.map((stillTag, tagName)=>{
+              return (
+              <StTagShadowBox key={tagName}>
+                <div>
+                  <StStillTagName>
+                    <p>{stillTag.tagName}</p>
+                  </StStillTagName>
+                  <TagWeekday weekData={stillTag.week}/>
+                </div>
+                <StStillTagdDay>
+                  <p>D-{stillTag.dDay}</p>
+                </StStillTagdDay>
+              </StTagShadowBox>
+              )
+            })
+          }
+        </StScrollBox>
         <StTagTitle>
           도전했던 습관
         </StTagTitle>
@@ -89,7 +90,7 @@ const StTagsWrap = styled.div`
 `
 
 const StTagTitle = styled.h3`
-  margin: 10px 0;
+  margin: 32px 0 8px 0;
   font-weight: 600;
   font-size: 16px;
   color: #343434;
@@ -104,20 +105,25 @@ const StTagHelpTxt = styled.p`
   color: #999999;
 `
 
+const StScrollBox = styled.div`
+  width: 100%;
+  height: 23vh;
+  padding: 1%;
+  overflow: scroll;
+  box-shadow: 6px 6px 8px rgba(0 0 0 0.08);
+`
+
 const StTagShadowBox = styled.div`
   background-color: #CFEEFF;
   width: 100%;
   height: 68px;
-  margin: 6px auto;
+  margin: 8px auto;
   padding: 12px;
   display: flex;
   justify-content: space-between;
 
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
   border-radius: 12px 12px 12px 0px;
-`
-
-const StStillTag =  styled.div`
 `
 
 const StStillTagName =  styled.div`
@@ -147,9 +153,9 @@ const StStillTagdDay =  styled.div`
 const StDoneTagBox = styled.div`
   background-color: white;
   width: 100%;
-  margin: 10px auto;
+  margin: 2px auto;
   min-height: 150px;
-  box-shadow: 3px 3px 8px lightgrey;
+  box-shadow: 6px 6px 8px rgba(0, 0, 0, 0.08);
   padding: 16px 12px;
   display: flex;
   flex-wrap: wrap;

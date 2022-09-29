@@ -31,26 +31,26 @@ const TagBuylist = () => {
     <>
       <StTagBuyWrap>
         
-        <StTitle>
+        <h1>
           습관 구매
-        </StTitle>
+        </h1>
 
-        <StTaglist>
+        <div>
           <StSubTittle>
-            <p>BEST 습관 <HiFire className="icon"/> </p>
+            <h4>BEST 습관 <HiFire className="icon"/> </h4>
           </StSubTittle>
           <StBestTaglist>
             <RandomTagLists lists={randomTagList} setSelectedTag={setSelectedTag} setDrawer={setDrawer}/>
           </StBestTaglist>
-        </StTaglist>
+        </div>
 
-        <StTaglist>
+        <div>
           <StSubTittle>
-            <span>전체 습관 <HiOutlineMenu className="icon purple"/> </span>
-            <h5>(총 {tagAllList?.length}개)</h5>
+            <h4 className="black"> 전체습관 <HiOutlineMenu className="icon purple"/> </h4>
+            <p>(총 {tagAllList?.length}개)</p>
           </StSubTittle>
           <TagLists lists={tagAllList} setSelectedTag={setSelectedTag} setDrawer={setDrawer}/>
-        </StTaglist>
+        </div>
       </StTagBuyWrap>
 
       <TagBuyDrawer selectedTag={[selectedTag]} setDrawer={setDrawer} drawer={drawer}/>
@@ -63,29 +63,25 @@ const StTagBuyWrap = styled.div`
   padding: 20px;
   background-image: url(${buyBG});
   background-repeat: no-repeat;
+  background-size: contain; 
+  background-position-x: center;
   position: relative;
   top: -17px;
-  margin-bottom: 40px;
-`
-
-const StTitle = styled.div`
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  margin: 49px auto 15px;
-  color: white;
-`
-
-const StTaglist = styled.div`
+  & h1 {
+    font-size: 18px;
+    text-align: center;
+    font-weight: 700;
+    margin: 49px auto 15px;
+    color: white;
+  }
 `
 
 const StBestTaglist = styled.div`
-  width: 320px;
-
+  width: 100%;
   background: #FFFFFF;
   border-radius: 16px;
-
   padding: 12px 16px;
+  margin-bottom: 7%;
 `
 
 const StSubTittle = styled.div`
@@ -102,14 +98,16 @@ const StSubTittle = styled.div`
       position: relative;
       top: 4px;
   }
+  & .black {
+    color: #343434;
+  }
   & .purple {
       color: #674DED;
     }
-
-  & h5 {
+  & p {
     color: #343434;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: 700;
+    font-size: 0.8rem;
   }
   & span {
     color: #343434;

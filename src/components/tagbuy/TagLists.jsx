@@ -49,7 +49,7 @@ const StTag = styled.div`
   background-color: ${props=>props.bgColor};
   border-radius: 12px 12px 12px 0;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
-  margin: 8px 0;
+  margin: 3% 0;
 
   padding: 12px;
   font-size: 18px;

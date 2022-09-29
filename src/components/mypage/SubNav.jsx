@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { InfoAlert } from "../common/Alert";
 import { HiDocumentDuplicate, HiLogout } from "react-icons/hi"
 
 import { useNavigate } from "react-router"
@@ -33,11 +32,11 @@ export default SubNav
 const StSubNav = styled.nav`
   & ul {
     list-style: none;
-    margin-bottom: 70px;
   }
 `
 
 const StSubNavMenu = styled.li`
+  width: max-content;
   color: #4E4E4E;
   font-weight: 700;
   font-size: 16px;

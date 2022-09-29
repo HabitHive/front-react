@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
-import { ConfirmAlert } from "../../common/Alert";
+import { ConfirmAlert, ErrorAlert } from "../../common/Alert";
 import Swal from "sweetalert2";
 
 const TodayTagList = ({ list }) => {
@@ -59,7 +59,11 @@ const TodayTagList = ({ list }) => {
         <div
           className={done ? "doneTag" : "tagListbox"}
           onClick={() => {
-            navigate("/edit", { state: list });
+            if (done === false) {
+              navigate("/edit", { state: list });
+            } else {
+              ErrorAlert({ text: "이미 완료한 습관입니다" });
+            }
           }}
         >
           <div className="tagCycle">{timeCycle}</div>
@@ -103,6 +107,7 @@ const STTodayTagList = styled.div`
     flex-shrink: 0;
     width: 30px;
     position: relative;
+    margin-right: 8px;
   }
 
   //말풍선 영역

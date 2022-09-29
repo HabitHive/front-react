@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import WeekCalendar from "../components/main/daily/WeekCalendar";
-import HedaerImg from "../assets/main/mainDaily.png";
+import HeaderImg from "../assets/main/mainDaily.png";
 import Navbar from "../components/common/Navbar";
 import { HiCalendar } from "react-icons/hi";
 import Monthly from "../assets/images/calendart.png";
@@ -27,13 +27,7 @@ const MainDailyPage = () => {
     <>
       <STContainer>
         <StHeaderContainer>
-          <div className="headerImgContainer">
-            <img
-              className="headerImg"
-              src={HedaerImg}
-              alt="이미지를 불러오는 중입니다"
-            />
-          </div>
+          <div className="headerImg"></div>
           <div className="topContainer">
             <p className="headerTitle">나의 일별 목표</p>
           </div>
@@ -52,15 +46,19 @@ const MainDailyPage = () => {
         <StBodyContainer>
           <DailyTag />
           {modal === false ? (
-            <STModal>
-              <div className="myTitle">나의 습관목록</div>
-              <MdKeyboardArrowUp
-                className="upIcon"
-                size="16"
-                onClick={() => {
-                  setModal(true);
-                }}
-              />
+            <STModal
+              onClick={() => {
+                setModal(true);
+              }}
+            >
+              <div className="container">
+                <div className="myTitle">나의 습관목록</div>
+                <MdKeyboardArrowUp
+                  className="upIcon"
+                  size="30"
+                  color="#5039C8"
+                />
+              </div>
             </STModal>
           ) : (
             <MyTag setModal={setModal} />
@@ -77,22 +75,25 @@ const MainDailyPage = () => {
 export default MainDailyPage;
 
 const STModal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 320px;
-  height: 52px;
   position: fixed;
-  z-index: 2;
-  margin-left: 20px;
   bottom: 84px;
-  max-width: 420px;
-  padding: 16px;
-
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(16px);
+  max-width: 450px;
+  min-height: 52px;
+  z-index: 2;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+  & .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: #ffffff;
+    border: 1px solid #efefef;
+    border-radius: 16px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
+    margin: 0 20px;
+  }
 
   & .myTitle {
     font-style: normal;
@@ -113,27 +114,27 @@ const STContainer = styled.div`
 `;
 
 const StHeaderContainer = styled.div`
-  background: linear-gradient(155.33deg, #907cf9 8.74%, #6334ff 91.82%);
-  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.12);
-  border-radius: 0px 0px 16px 16px;
+  background-color: linear-gradient(155.33deg, #907cf9 8.74%, #6334ff 91.82%);
   opacity: 0.8;
-  width: 360px;
+  max-width: 450px;
   height: 214px;
   position: relative;
   margin-bottom: 20px;
-  & .headerImgContainer {
+  & .headerImg {
+    background-image: url(${HeaderImg});
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.12);
+    border-radius: 0px 0px 16px 16px;
+    width: 100%;
     height: 100%;
-    & .headerImg {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
   }
 
   & .topContainer {
     display: flex;
     justify-content: center;
     & .headerTitle {
+      color: #ffffff;
       position: absolute;
       top: 47px;
     }
@@ -164,6 +165,11 @@ const StHeaderContainer = styled.div`
     }
   }
 `;
+
+const STHeaderImg = styled.div`
+  background-image: url(${HeaderImg});
+`;
+
 const StBodyContainer = styled.div`
   position: relative;
   flex: 1;

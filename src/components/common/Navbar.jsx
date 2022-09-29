@@ -1,22 +1,19 @@
 import styled from "styled-components";
 
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
-import { HiOutlineTag } from "react-icons/hi";
-import { AiOutlineDollarCircle } from "react-icons/ai";
-import { BsPerson } from "react-icons/bs";
+import { HiTag, HiOutlineTag } from "react-icons/hi";
+import { RiMoneyDollarCircleFill, RiMoneyDollarCircleLine } from "react-icons/ri";
 import { MdPets } from "react-icons/md"
+import { BsPersonFill, BsPerson } from "react-icons/bs";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [active, setActive] = useState("");
-
   let pathname = window.location.pathname;
 
   return (
-    <StNavContainer pathname={pathname}>
+    <StNavContainer>
       <StNavUl>
         <StNavli
           onClick={() => {
@@ -25,7 +22,7 @@ const Navbar = () => {
           className={pathname === "/" ? "active" : null}
         >
           <span>
-            <HiOutlineTag />
+            {pathname === "/" ? <HiTag/> : <HiOutlineTag/>}
           </span>
           <p>Daily</p>
         </StNavli>
@@ -36,20 +33,9 @@ const Navbar = () => {
           className={pathname === "/buy" ? "active" : null}
         >
           <span>
-            <AiOutlineDollarCircle />
+          {pathname === "/buy" ? <RiMoneyDollarCircleFill/> : <RiMoneyDollarCircleLine/>}
           </span>
           <p>Shop</p>
-        </StNavli>
-        <StNavli
-          onClick={() => {
-            navigate("/mypage");
-          }}
-          className={pathname === "/mypage" ? "active" : null}
-        >
-          <span>
-            <BsPerson />
-          </span>
-          <p>My</p>
         </StNavli>
         <StNavli
           onClick={() => {
@@ -62,6 +48,17 @@ const Navbar = () => {
           </span>
           <p>Pet</p>
         </StNavli>
+        <StNavli
+          onClick={() => {
+            navigate("/mypage");
+          }}
+          className={pathname === "/mypage" ? "active" : null}
+        >
+          <span>
+            {pathname === "/mypage" ? <BsPersonFill/> : <BsPerson/>}
+          </span>
+          <p>My</p>
+        </StNavli>
       </StNavUl>
     </StNavContainer>
   );
@@ -70,10 +67,8 @@ export default Navbar;
 
 const StNavContainer = styled.nav`
   width: 100%;
-  max-width: 360px;
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  position: ${(props) => (props.pathname === "/" ? "relative" : "fixed")};
 `;
 
 const StNavUl = styled.ul`
@@ -85,7 +80,7 @@ const StNavUl = styled.ul`
   align-items: center;
   justify-content: space-between;
   border-radius: 16px 16px 0 0;
-  box-shadow: 0 -4px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.06);
   & .active {
     color: #674ded;
   }

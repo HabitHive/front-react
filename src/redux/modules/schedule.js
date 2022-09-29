@@ -19,7 +19,7 @@ export const __addSchedule = createAsyncThunk(
 )
 
 export const __updateSchedule = createAsyncThunk(
-  "__updateSchedule",
+  "updateSchedule",
   async (payload) => {
     const startDate = new Date(payload[0].getTime() - payload[0].getTimezoneOffset() * 60000)
     .toISOString()

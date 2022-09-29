@@ -4,7 +4,7 @@ import calendarImg from "../assets/images/calendar.png";
 import timeImg from "../assets/images/timeIcon.png";
 import SaveButton from "../components/common/SaveButton";
 import EditRepeat from "./EditRepeat";
-import { ConfirmToast } from "../components/common/Alert";
+import { ConfirmToast, ErrorAlert } from "../components/common/Alert";
 import { HiOutlineTrash } from "react-icons/hi";
 
 import DatePicker from "react-datepicker";
@@ -24,12 +24,31 @@ const EditForm = () => {
 
   //nav props로 선택한 태그정보 가져오기
   const { state } = useLocation();
-  // console.log(state);
 
-  const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
-  const [endTime, setEndTime] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startTime, setStartTime] = useState(
+    new Date(
+      `Thu Sep 29 2022 ${
+        state.timeCycle.split("~")[0]
+      }:00 GMT+0900 (한국 표준시)`
+    )
+  );
+  const [endTime, setEndTime] = useState(
+    new Date(
+      `Thu Sep 29 2022 ${
+        state.timeCycle.split("~")[1]
+      }:00 GMT+0900 (한국 표준시)`
+    )
+  );
+  const [startDate, setStartDate] = useState(
+    new Date(state.date.split("~")[0])
+  );
+  const [endDate, setEndDate] = useState(
+    new Date(
+      new Date(state.date.split("~")[0]).setDate(
+        new Date(state.date.split("~")[0]).getDate() + state.period
+      )
+    )
+  );
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
@@ -51,19 +70,17 @@ const EditForm = () => {
 
   //스케쥴 수정
   const editPost = () => {
-    const startDay = startDate
-      .dispatch(
-        __updateSchedule([startDate, startTime, endTime, inputCheck, state])
-      )
-      .then((res) => {
-        ConfirmToast({ text: "수정이 완료되었습니다" });
-        navigate("/");
-      });
+    dispatch(
+      __updateSchedule([startDate, startTime, endTime, inputCheck, state])
+    ).then((res) => {
+      ConfirmToast({ text: "수정이 완료되었습니다" });
+      navigate("/");
+    });
   };
   //스케쥴 삭제
   const deletePost = () => {
     dispatch(__deleteSchedule(state.scheduleId)).then((res) => {
-      ConfirmToast({ text: "수정이 완료되었습니다" });
+      ConfirmToast({ text: "삭제가 완료되었습니다" });
       navigate("/");
     });
   };
@@ -102,7 +119,6 @@ const EditForm = () => {
             dateFormat="yyyy.MM.dd"
             minDate={now} //시작일은 최소 오늘날짜 이후만 가능 (오늘 날짜 가능)
             onChange={dateRange}
-            placeholderText={state.date}
           />
         </div>
         <div className="setTime">
@@ -117,7 +133,6 @@ const EditForm = () => {
               timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
-              placeholderText={state.timeCycle.split("~")[0]}
             />
           </div>
           <div className="endTime">
@@ -137,7 +152,6 @@ const EditForm = () => {
               timeIntervals={10}
               timeCaption="Time"
               dateFormat="h:mm aa"
-              placeholderText={state.timeCycle.split("~")[1]}
             />
           </div>
         </div>
@@ -214,13 +228,14 @@ const BodyContainer = styled.div`
     }
     //시작날짜인풋박스
     & .startDateInput {
-      /* background-image: url(${(props) => props.calendarImg}); */
       background-image: url(${calendarImg});
       background-repeat: no-repeat;
       background-position: center left 3px;
+      background-color: #ebebeb;
       width: 100%;
       height: 42px;
       box-sizing: border-box;
+      border: none;
       padding-left: 25px;
       border-radius: 8px;
       margin-top: 8px;
@@ -246,11 +261,13 @@ const BodyContainer = styled.div`
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
+        background-color: #ebebeb;
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
         border-radius: 8px;
+        border: none;
         margin-top: 8px;
       }
     }
@@ -268,11 +285,13 @@ const BodyContainer = styled.div`
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
+        background-color: #ebebeb;
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
         border-radius: 8px;
+        border: none;
         margin-top: 8px;
       }
     }

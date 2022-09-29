@@ -4,7 +4,7 @@ import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
 import SaveButton from "../common/SaveButton";
 import RepeatDay from "./RepeatDay";
-import { ConfirmToast } from "../common/Alert";
+import { ConfirmToast, ErrorAlert } from "../common/Alert";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -31,6 +31,8 @@ const PostForm = () => {
   const checkInput = useRef([]);
   //체크값 상태관리
   const [inputCheck, setInputCheck] = useState([]);
+
+  const [msg, setMsg] = useState("");
 
   //보유습관에서 선택한 tag값 가져오기
   const { state } = useLocation();
@@ -66,8 +68,12 @@ const PostForm = () => {
     dispatch(
       __addSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {
-      ConfirmToast({ text: "등록이 완료되었습니다" });
-      navigate("/");
+      if (res.type === "addSchedule/rejected") {
+        setMsg("설정하지 않은 날짜,시간 혹은 요일이 있습니다");
+      } else if (res.type === "addSchedule/fulfilled") {
+        ConfirmToast({ text: "등록이 완료되었습니다" });
+        navigate("/");
+      }
     });
   };
 
@@ -147,6 +153,7 @@ const PostForm = () => {
             })}
           </div>
         </div>
+        {msg !== "" ? <p className="helpTXT">{msg}</p> : null}
       </BodyContainer>
       <ButtonContainer>
         <SaveButton btnName={"저장"} onClick={() => savePost()} />
@@ -192,15 +199,16 @@ const BodyContainer = styled.div`
     }
     //시작날짜인풋박스
     & .startDateInput {
-      /* background-image: url(${(props) => props.calendarImg}); */
       background-image: url(${calendarImg});
       background-repeat: no-repeat;
       background-position: center left 3px;
+      background-color: #ebebeb;
       width: 100%;
       height: 42px;
       box-sizing: border-box;
       padding-left: 25px;
       border-radius: 8px;
+      border: none;
       margin-top: 8px;
     }
   }
@@ -224,11 +232,13 @@ const BodyContainer = styled.div`
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
+        background-color: #ebebeb;
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
         border-radius: 8px;
+        border: none;
         margin-top: 8px;
       }
     }
@@ -246,11 +256,13 @@ const BodyContainer = styled.div`
         background-image: url(${timeImg});
         background-repeat: no-repeat;
         background-position: center left 5px;
+        background-color: #ebebeb;
         width: 100%;
         height: 42px;
         box-sizing: border-box;
         padding-left: 25px;
         border-radius: 8px;
+        border: none;
         margin-top: 8px;
       }
     }
@@ -269,6 +281,15 @@ const BodyContainer = styled.div`
       display: flex;
       margin-top: 24px;
     }
+  }
+  //에러메시지
+  & .helpTXT {
+    color: #f53232;
+    font-weight: 400;
+    font-size: 12px;
+    position: absolute;
+    left: 176px;
+    bottom: 300px;
   }
 `;
 const ButtonContainer = styled.div`
