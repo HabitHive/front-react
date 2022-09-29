@@ -14,7 +14,7 @@ const initialState = {
 export const __getTagBuyList = createAsyncThunk(
   "getTagBuyList",
   async (payload, api) => {
-    const data = await axios.get(`/tag/list=`)
+    const data = await axios.get(`/tag/list?attention=`)
     return data.data.result
   }
 )
