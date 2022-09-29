@@ -69,7 +69,7 @@ const STMyTag = styled.div`
   margin: 0 auto;
   & .Container {
     padding: 12px 16px;
-    background: #ffffff;
+    background: #fff;
     border-radius: 16px;
     border: 1px solid #efefef;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);

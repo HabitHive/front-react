@@ -3,8 +3,7 @@ import styled from "styled-components";
 import WeekCalendar from "../components/main/daily/WeekCalendar";
 import HeaderImg from "../assets/main/mainDaily.png";
 import Navbar from "../components/common/Navbar";
-import { HiCalendar } from "react-icons/hi";
-import Monthly from "../assets/images/calendart.png";
+import Calendar from "../assets/images/maincalendar.png";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import DailyTag from "../components/main/daily/DailyTag";
 import MyTag from "../components/main/daily/MyTag";
@@ -31,15 +30,13 @@ const MainDailyPage = () => {
           <div className="topContainer">
             <p className="headerTitle">나의 일별 목표</p>
           </div>
-          <div className="headerIconContainer">
-            <img
-              className="calendarImg"
-              src={Monthly}
-              alt="이미지를 로딩중입니다"
+          <div className="calendarContainer">
+            <div
+              className="headerCalendarImg"
               onClick={() => {
                 navigate("/monthly");
               }}
-            />
+            ></div>
           </div>
           <WeekCalendar />
         </StHeaderContainer>
@@ -114,13 +111,13 @@ const STContainer = styled.div`
 `;
 
 const StHeaderContainer = styled.div`
-  background-color: linear-gradient(155.33deg, #907cf9 8.74%, #6334ff 91.82%);
   opacity: 0.8;
   max-width: 450px;
   height: 214px;
   position: relative;
   margin-bottom: 20px;
   & .headerImg {
+    background-color: linear-gradient(155.33deg, #907cf9 8.74%, #6334ff 91.82%);
     background-image: url(${HeaderImg});
     background-repeat: no-repeat;
     background-size: cover;
@@ -139,35 +136,25 @@ const StHeaderContainer = styled.div`
       top: 47px;
     }
   }
-  & .headerIconContainer {
+
+  & .calendarContainer {
+    position: relative;
+    top: -165px;
+    right: -400px;
     background-color: #fff;
-    width: 24px;
     border-radius: 4px;
-    position: absolute;
-    top: 47px;
-    right: 20px;
-    & .calendarImg {
-      margin-left: 4px;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-    & .headerIcon {
-      background-color: #ffffff;
-      border-radius: 4px;
-      position: absolute;
-      top: 47px;
-      right: 20px;
-      cursor: pointer;
+    width: 24px;
+    height: 24px;
+    padding-left: 3.9px;
+    padding-top: 4px;
+    & .headerCalendarImg {
+      background-image: url(${Calendar});
+      background-repeat: no-repeat;
       width: 24px;
       height: 24px;
-      color: #5039c8;
+      cursor: pointer;
     }
   }
-`;
-
-const STHeaderImg = styled.div`
-  background-image: url(${HeaderImg});
 `;
 
 const StBodyContainer = styled.div`
