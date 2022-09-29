@@ -63,8 +63,6 @@ const STMyTag = styled.div`
   position: fixed;
   bottom: 84px;
   max-width: 450px;
-  height: 180px;
-  min-height: 52px;
   z-index: 2;
   left: 0px;
   right: 0px;
