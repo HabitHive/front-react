@@ -30,7 +30,7 @@ export const __setPetXP = createAsyncThunk(
       const res = await axios.post(`/pet`) 
       return res.data.result
     } catch (err) {
-      api.rejectWithValue(err)
+      return api.rejectWithValue(err)
     }
   }
 )
@@ -42,7 +42,7 @@ export const __getPoint = createAsyncThunk(
       const res = await axios.post(`/user/random`) 
       return res.data.result.point
     } catch (err) {
-      api.rejectWithValue(err)
+      return api.rejectWithValue(err)
     }
   }
 )
