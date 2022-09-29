@@ -14,9 +14,7 @@ import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs";
 
 //테스트
-
 import Loading from "../common/Loading";
-
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -35,6 +33,7 @@ const Profile = () => {
   <>
     <StProfileWrap>
       <span>마이메뉴</span>
+      <div></div>
       <StUserImg>
         <StPetImg level={profile.petLevel}/>
       </StUserImg>
@@ -49,20 +48,23 @@ const Profile = () => {
 export default Profile
 
 const StProfileWrap = styled.div`
-  height: 326px;
   background-image: url(${propfileBG});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 0 0 16px 16px;
   & > span {
     font-weight: 700;
     font-size: 18px;
     color: #343434;
     letter-spacing: -0.3px;
-    margin: 47px auto 12px auto;
+    margin: 7% 0 5% 0;
   }
   & p {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 20px;
     color: #343434;
   }
@@ -70,8 +72,8 @@ const StProfileWrap = styled.div`
 
 const StUserImg = styled.div`
   background-color: lightgray;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 100%;
   margin: 12px auto 15px auto;
   background-image: url(${userIMG});
@@ -81,12 +83,13 @@ const StUserImg = styled.div`
 
 const StPetImg = styled.div`
   background-color: #EDEAFF;
-  width: 44px;
-  height: 44px;
+  width: 66px;
+  height: 66px;
+  border: 1px solid #AE9FFF;
   border-radius: 100%;
   position: relative;
-  top: 76px;
-  left: 76px;
+  top: 84px;
+  left: 84px;
   background-image: url(
     ${ props => props.level === 1 ? 
         LV1 : props=>props.level === 2 ?

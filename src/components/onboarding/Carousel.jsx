@@ -4,13 +4,18 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 import carouselContents from "./carouselContents"
-import SaveButtonLong from "../common/SaveButtonLong"
+import { StSubmitBtn } from "../common/SaveButtonLong"
+import { useEffect } from "react"
 
 const Carousel = () => {
   const navigate = useNavigate();
   
   // StCarouselContent 위치 값
   const [positionX, setPositionX] = useState(0);
+
+  // 마우스 포지션 값
+  const [mouseDown, seMouseDown] = useState(0);
+  const [mouseUp, seMouseUp] = useState(0);
 
   const carouselHandler = () => {
     if(positionX===300) {
@@ -19,12 +24,40 @@ const Carousel = () => {
     setPositionX(positionX+100)
   }
 
+  // 인디케이터 className 으로 CSS 활성화
   const dots = [0,100,200,300]
+
+  // carousel 드래그 감지
+  const getMouseDown = (e) => {
+    seMouseDown(e.screenX)
+  }
+
+  const getMouseUp = (e) => {
+    seMouseUp(e.screenX)
+  }
+
+  useEffect(()=>{
+    if (mouseDown < mouseUp) {
+      if (positionX===0) {
+        return
+      } else {
+        setPositionX(positionX-100)
+      }
+    } else if (mouseDown > mouseUp) {
+      if (positionX===300) {
+        return
+      } else {
+        setPositionX(positionX+100)
+      }
+    }
+  },[mouseUp])
  
   return(
     <>
-      <StCarouselLayout>
-
+      <StCarouselLayout
+        onMouseDown={(e)=>getMouseDown(e)}
+        onMouseUp={(e)=>getMouseUp(e)}
+      >
         <StCarouselContent positionX={positionX}>
           {
             carouselContents.map((data, img)=>{
@@ -45,13 +78,14 @@ const Carousel = () => {
         </StCarouselContent>
       </StCarouselLayout>
       
-      <StCarouselBottom>
+      <div>
         <StCarouselDotwrap>
           {
             dots.map((dot, i)=>{
               return(
                 <StCarouselDot key={i}
                   className={dot === positionX ? "active" : null}
+                  onClick={()=>setPositionX(dot)}
                 />
               )
             })
@@ -63,15 +97,13 @@ const Carousel = () => {
               <StCarouselLink onClick={()=>navigate("/survey")}>skip</StCarouselLink>
               <StCarouselBtn onClick={carouselHandler} >Next</StCarouselBtn>
             </StCarouselBtnWrap>
-          : <SaveButtonLong 
-              onClick={()=>navigate("/survey")}
-              btnName={"시작하기"}
-              top={56}
-              left={20}
-            />
+          : <StCarouselBtnWrap>
+              <StSubmitBtn onClick={()=>navigate("/survey")}>
+                시작하기
+              </StSubmitBtn> 
+            </StCarouselBtnWrap>
         }
-            
-      </StCarouselBottom>
+      </div>
     </>
   )
 }
@@ -79,18 +111,19 @@ export default Carousel
 
 const StCarouselLayout = styled.div`
   position: relative;
-  width: 360px;
+  max-width: 450px;
   height: calc(100vh - 112px - 48px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-`
+  cursor: grab;
+  `
 
 const StCarouselContent = styled.div`
-  width: 360px;
-  height: 750px;
+  width: 100%;
+  height: 65vh;
   position: absolute;
-  top: 0;
+  top: -5vh;
   right: calc(${props=>props.positionX}%);
   transition: 1s;
   display: flex;
@@ -98,40 +131,39 @@ const StCarouselContent = styled.div`
 
 const StCarouselImg = styled.div`
   flex: none;
-  width: 360px;
-  height: 464px;
+  width: 100%;
   background-image: url(${props=>props.img});
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 `
 
 const StCarouselParagraph = styled.div`
   position: relative;
-  top: 464px;
+  top: 63vh;
   margin: 32px 20px 0 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `
 
 const StCarouselTitle = styled.h1`
-  font-size: 22px;
+  font-size: 1.2em;
   color: #343434;
 `
 
 const StCarouselTxt = styled.p`
   padding-top: 14px;
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 400;
   color: #2D2D2D;
-`
-
-const StCarouselBottom = styled.div`
-
 `
 
 const StCarouselDotwrap = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 96px;
+  width: 20%;
   margin: auto;
 `
 
@@ -145,12 +177,13 @@ const StCarouselDot = styled.div`
     width: 30px;
     border-radius: 100px;
   }
+  cursor: pointer;
 `
 
 const StCarouselBtnWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 70px 20px 0 20px;
+  margin: 10vh 20px 0 20px;
 `
 
 const StCarouselLink = styled.button`
@@ -172,4 +205,3 @@ const StCarouselBtn = styled.button`
   align-items: center;
   color: white;
 `
-

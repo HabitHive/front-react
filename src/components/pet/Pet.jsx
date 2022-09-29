@@ -55,74 +55,72 @@ const Pet = () => {
   }
 
   const cursorEvent = () => {
-    // console.log("야")
+    // console.log("추가하기")
   }
 
   //xp 바뀔 때마다 api 요청
   useEffect(()=>{
     dispatch(__getPetData())
     dispatch(__getProfile())
-  },[user])
+  },[])
 
   // point 추가할 때마다 리렌더링
   useEffect(()=>{
     dispatch(__getProfile())
-  },[__getPoint()])
+  },[petInfo])
 
   return (
     <StPetBG>
       
-
-      <StPetTitle>
+      <h1>
         <span>{user.nickname}</span> &nbsp; 님의 펫
-      </StPetTitle>
+      </h1>
 
-      <StPetInfo>
-        <StPetImg level={petInfo.level}
-          onClick={()=>{
-            petHandler()
-            cursorEvent()
-          }}
-        />
+      <StPetImg level={petInfo.level}
+        onClick={()=>{
+          petHandler()
+          cursorEvent()
+        }}
+      />
 
-        <StPetExpBox>
-          <StPetExpNum>
-            <p>EXP.</p>
-            <p>{petInfo.exp}/{xp}xp</p>
-          </StPetExpNum>
+      <StPetExpBox>
+        <StPetExpNum>
+          <p>EXP.</p>
+          <p>{petInfo.exp}/{xp}xp</p>
+        </StPetExpNum>
 
-          <StPetExpBar>
-            <StPetExpLV>
-              Lv. 0{petInfo.level}
-            </StPetExpLV>
-            <StPetProgress>
-              <StPetProgressActive width={progressWidth}/>
-            </StPetProgress>
-          </StPetExpBar>
-          <StPetData>
-            {
-              petData.map((myPet, i)=>{
-                return(
-                  <div key={i}>
-                    <StPetDataKey>
-                       {myPet.key} 
-                    </StPetDataKey>
-                    <StPetDataValue>
-                       {myPet.value} 
-                    </StPetDataValue>
-                  </div>
-                )
-              })
-            }
-          </StPetData>
-        </StPetExpBox>
-      </StPetInfo>
+        <StPetExpBar>
+          <StPetExpLV>
+            Lv. 0{petInfo.level}
+          </StPetExpLV>
+          <StPetProgress>
+            <StPetProgressActive width={progressWidth}/>
+          </StPetProgress>
+        </StPetExpBar>
+        <StPetData>
+          {
+            petData.map((myPet, i)=>{
+              return(
+                <div key={i}>
+                  <StPetDataKey>
+                      {myPet.key} 
+                  </StPetDataKey>
+                  <StPetDataValue>
+                      {myPet.value} 
+                  </StPetDataValue>
+                </div>
+              )
+            })
+          }
+        </StPetData>
+      </StPetExpBox>
+
       <StMyPt>
         <p>My Point |<span><BsStars/> {user.point} </span>point</p>
       </StMyPt>
       <StPetBtn onClick={feedPet}>
         {
-          petInfo.level === 4 ? "다음 레벨을 준비 중이에요!" : <><BsStars/> <span>50 point</span> 펫 밥주기</>
+          petInfo.level === 4 ? "Max Level !" : <><BsStars/> <span>50 point</span> 펫 밥주기</>
         }
       </StPetBtn>
     </StPetBG>
@@ -131,40 +129,34 @@ const Pet = () => {
 export default Pet
 
 const StPetBG = styled.div`
-  width: 360px;
-  height: 100vh;
-  background-color: #AE9FFF;
+  max-width: 450px;
+  height: calc(100vh - 60px);
+  background-color: #E2DCFF;
   background-image: url(${petBG});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-`
-
-const StPetTitle = styled.h1`
-  height: 110px;
-  width: max-content;
-  margin: auto;
-  font-weight: 700; 
-  font-size: 18px;
-  text-align: center;
-  color: #343434;
-  letter-spacing: -0.3px;
   display: flex;
+  flex-direction: column; 
   align-items: center;
-  & > span {
-    color: #6334FF;
+  & h1 {
+    margin: 12% 0;
+    font-weight: 700; 
+    font-size: 1.2rem;
+    text-align: center;
+    color: #343434;
+    letter-spacing: -0.1rem;
+    & span {
+      color: #6334FF;
+    }
   }
-`
-
-const StPetInfo = styled.div`
-  width: 328px;
-  margin: auto;
 `
 
 const StPetImg = styled.div`
   width: 248px;
   height: 248px;
-  margin: 0 40px;
+  min-width: 124px;
+  min-height: 124px;
   background-color: #EDEAFF;
   border-radius: 100%;
   border: 8px solid #AB9BFF;
@@ -179,12 +171,11 @@ const StPetImg = styled.div`
 `
 
 const StPetExpBox = styled.div`
-  width: 328px;
-  height: 154px;  
+  width: 80%; 
   background-color: white;
-  margin-top: 71px;
+  margin-top: 15%;
   border-radius: 16px;
-  padding: 16px 20px;
+  padding: 4% 4%;
 `
 
 const StPetExpNum = styled.div`
@@ -192,7 +183,7 @@ const StPetExpNum = styled.div`
   justify-content: space-between;
   & p {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 0.8rem;
   }
 `
 
@@ -232,7 +223,6 @@ const StPetProgressActive = styled.div`
   border-radius: 7px;
   transition: 1s;
 `
-
 
 const StPetData = styled.div`
   display: flex;
@@ -293,10 +283,11 @@ const StMyPt = styled.div`
 `
 
 const StPetBtn = styled(StSubmitBtn)`
+  width: 55%;
+  margin: 21px auto 0 auto;
+  position: relative;
+
   background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-  border: 2px solid #674ded;
-  box-shadow: 2px 2px 3px 4px rgba(88, 56, 255, 0.25);
-  width: 224px;
-  margin: 21px auto;
-  left: 68px
+  border: 1px solid #674ded;
+  box-shadow: 0 0 12px rgba(88, 56, 255, 0.25);
 `

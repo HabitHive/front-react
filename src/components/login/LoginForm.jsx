@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __basicLogin, __kakaoLogin } from "../../redux/modules/user";
 
-import SaveButtonLong from "../common/SaveButtonLong";
+import { StSubmitBtn } from "../common/SaveButtonLong";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
 import loginBG from "../../assets/loginImg/loginBG.png"
 import { BsFillChatFill } from "react-icons/bs"
@@ -62,18 +62,28 @@ const LoginForm = () => {
   }
   // 카카오api에서 파라미터로 온 token을 socialToken으로 저장
   let socialToken = new URL(window.location.href).searchParams.get("accessToken");
+  // 회원가입과 로그인을 구별
+  let exUser = new URL(window.location.href).searchParams.get("exuser");
   // socialToken 값이 바뀔 때(로그인해서 값이 생기면) thunk에서 로그인 처리
+
   useEffect(()=>{
     if (socialToken) {
       dispatch(__kakaoLogin(socialToken))
       .then((res)=>{
-        ConfirmToast({
-          text: "환영합니다!"
-        })
+        if (exUser===false) {
+          ConfirmToast({
+            text: "회원가입을 축하합니다!"
+          })
+          navigate("/onboarding")
+        } else {
+          ConfirmToast({
+            text: "환영합니다!"
+          })
+          navigate("/")
+        }
       })
     }
   },[socialToken])
-  
 
   return(
     <StLoginBG>
@@ -98,9 +108,13 @@ const LoginForm = () => {
             <p className="helpTXT"> <FiAlertCircle/> 이메일, 비밀번호를 입력해주세요 </p>
           )}
           {msg!==""? <p className="helpTXT">{msg}</p> : null}
-          <SaveButtonLong btnName={"로그인"} top={27}/>
+          
+          <StLoginBtn> 
+            로그인
+          </StLoginBtn>
+
           <StLogintoSingup>
-            아직 회원이 아니신가요?&nbsp;
+            아직 회원이 아니신가요? &nbsp;
             <span onClick={()=>{navigate("/signup")}}>회원가입 하기</span>
           </StLogintoSingup>
         </StLoginForm> 
@@ -108,11 +122,11 @@ const LoginForm = () => {
         <StHorizonLine>
           <span>or</span>
         </StHorizonLine>
-        <StKaKaoLogin
-          onClick={onSubmitKakao}
-        >
+
+        <StKaKaoLoginBtn onClick={onSubmitKakao}>
           <BsFillChatFill/> 카카오로 로그인
-        </StKaKaoLogin>
+        </StKaKaoLoginBtn>
+
       </StLoginWrap>
     </StLoginBG>
   )
@@ -121,7 +135,7 @@ export default LoginForm
 
 const StLoginBG = styled.div`
   position: relative;
-  width: 360px;
+  max-width: 450px;
   height: 100vh;
   background-image: url(${loginBG});
   background-size: 110%;
@@ -132,39 +146,40 @@ const StLoginBG = styled.div`
 
 const StLogo = styled.div`
   position: relative;
-  top: 84px;
-  width: 284px;
-  height: 180px;
+  top: 8%;
+  width: 80%;
+  height: 22%;
   background-image: url(${mainLogo});
-  background-size: cover;
+  background-position: center;
+  background-size: contain;
   background-repeat: no-repeat;
-  margin: 0 auto 5px;
+  margin: 0 auto;
 `
 
 const StLoginWrap = styled.div`
-  width: 360px;
-  height: 531px;
-  padding: 80px 20px 0;
+  width: 90%;
+  height: 60%;
+  margin: 15% auto 0;
 `
 
 const StLoginForm = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 50px;
+  top: 10%;
   & .helpTXT {
     color: #F53232;
     font-weight: 400;
     font-size: 12px;
     position: absolute;
-    top: 150px;
+    top: 50%
   }
 `
 
 const StLoginInput = styled.input`
   width: 100%;
-  min-height: 55px;
-  margin: 0 auto 30px auto;
+  height: 55px;
+  margin: 0 auto 12px auto;
   padding-left: 12px;
   outline: none;
   border: none;
@@ -182,12 +197,24 @@ const StLoginInput = styled.input`
   }
 `
 
+const StLoginBtn = styled(StSubmitBtn)`
+  margin-top: 10%;
+`
+
+const StKaKaoLoginBtn = styled(StSubmitBtn)`
+  background-color: #F6E34B;
+  
+  margin-top: 10%;
+  
+  color: #343434;
+  letter-spacing: -1px;
+`
+
 const StLogintoSingup = styled.p`
-  width: 100%;
+  margin-top: 5%;
   text-align: center;
   font-size: 14px;
   font-weight: 500;
-  margin: 44px auto;
   color: #999999;
   & span {
     cursor: pointer;
@@ -201,7 +228,7 @@ const StLogintoSingup = styled.p`
 
 const StHorizonLine = styled.div`
   width: 100%;
-  margin-top: 53px;
+  margin-top: 23%;
 
   color: #999999;
   text-align: center;
@@ -217,21 +244,4 @@ const StHorizonLine = styled.div`
     position: relative;
     top: 3px;
   } 
-`
-
-const StKaKaoLogin = styled.button`
-  cursor: pointer;
-  width: 320px;
-  height: 48px;  
-  margin-top: 39px;
-  
-  border: none;
-  border-radius: 16px;
-
-  color: #343434;
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: -0.3px;
-
-  background-color: #F6E34B;
 `

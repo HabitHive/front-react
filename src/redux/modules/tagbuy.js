@@ -14,7 +14,8 @@ const initialState = {
 export const __getTagBuyList = createAsyncThunk(
   "getTagBuyList",
   async (payload, api) => {
-    const data = await axios.get(`/tag/list`) //백서버 연결
+    const data = await axios.post(`/tag/list`, {attention: ""})
+    console.log()
     return data.data.result
   }
 )
@@ -24,7 +25,7 @@ export const __addTag = createAsyncThunk(
   "addTag",
   async (payload, api) => {
   try {
-    const res = await axios.post(`/tag/buy`, payload) // 백서버 연결
+    const res = await axios.post(`/tag/buy`, payload)
     return res.data
   } catch (err) {
     return api.rejectWithValue(err)
