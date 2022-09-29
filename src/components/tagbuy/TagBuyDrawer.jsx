@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __addTag } from "../../redux/modules/tagbuy";
 
 import TagLists from "./TagLists";
+import { StSubmitBtn } from "../common/SaveButtonLong";
 
 const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   const dispatch = useDispatch();
@@ -25,11 +26,6 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   // 유저의 보유 포인트
   const userPoint = useSelector((state)=>state.tagBuy.userPoint)
 
-  //Drawer 닫기
-  const drawerHandler = () => {
-    setDrawer(false)
-  }
-
   const tagSubmitHandler = async () => {
     if (bought.period===0) {
       ErrorAlert({
@@ -40,7 +36,6 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
     await dispatch(__addTag(bought))
     .then((res) => {
       if (res.type==="addTag/fulfilled") {
-        console.log(res)
         ConfirmToast({text: "구매 완료"})
         navigate("/")
       } else if (res.payload.response.status===400) {
@@ -59,58 +54,57 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
           <p>선택한 습관</p>
           <VscChromeClose
             style={{cursor:"pointer"}}
-            onClick={drawerHandler}
+            onClick={()=>setDrawer(false)}
           />
         </StDrawerHeader>
+
         <TagLists lists={selectedTag} disabled={"disabled"}/>
 
-        <StDrawerBody>
-          <span>기간선택</span>
-          <StDrawerPeriodSelect
-            onChange={e=>{
-              setBought({
-                ...bought,
-                period: Number(e.target.value),
-                tagId: selectedTag[0].tagId
-              })
-            }}
+        <StDrawerPeriodSelect
+          onChange={e=>{
+            setBought({
+              ...bought,
+              period: Number(e.target.value),
+              tagId: selectedTag[0].tagId
+            })
+          }}
           >
-            <StDrawerLable style={{width:"100%"}} 
-              className={bought.period===1? "active" : null}
+          <span>기간선택</span>
+          <StDrawerLable style={{width:"100%"}} 
+            className={bought.period===1? "active" : null}
+          >
+            <p>EVENT!! 1일</p>
+            <input type="radio" value={1} name="period"/>
+          </StDrawerLable>
+          <div>
+            <StDrawerLable style={{width:"95px"}} 
+              className={bought.period===5? "active" : null}
             >
-              <p>EVENT!! 1일</p>
-              <input type="radio" value={1} name="period"/>
+              <p>5일</p>
+              <input type="radio" value={5} name="period"/>
             </StDrawerLable>
-            <div>
-              <StDrawerLable style={{width:"95px"}} 
-                className={bought.period===5? "active" : null}
-              >
-                <p>5일</p>
-                <input type="radio" value={5} name="period"/>
-              </StDrawerLable>
-              <StDrawerLable style={{width:"95px"}} 
-                className={bought.period===15? "active" : null}
-              >
-                <p>15일</p>
-                <input type="radio" value={15} name="period"/>
-              </StDrawerLable>
-              <StDrawerLable style={{width:"95px"}} 
-                className={bought.period===30? "active" : null}
-              >
-                <p>30일</p>
-                <input type="radio" value={30} name="period"/>
-              </StDrawerLable>
-            </div>
-          </StDrawerPeriodSelect> 
-          <StDrawerCost>
-            <p>소비포인트</p>
-            <h5><span>{bought.period*10}</span>point</h5>
-          </StDrawerCost>
-        </StDrawerBody>
+            <StDrawerLable style={{width:"95px"}} 
+              className={bought.period===15? "active" : null}
+            >
+              <p>15일</p>
+              <input type="radio" value={15} name="period"/>
+            </StDrawerLable>
+            <StDrawerLable style={{width:"95px"}} 
+              className={bought.period===30? "active" : null}
+            >
+              <p>30일</p>
+              <input type="radio" value={30} name="period"/>
+            </StDrawerLable>
+          </div>
+        </StDrawerPeriodSelect> 
+        <StDrawerCost>
+          <p>소비포인트</p>
+          <h5><span>{bought.period*10}</span>point</h5>
+        </StDrawerCost>
 
         <StDrawerDiv/>
 
-        <StDrawerFooter>
+        <div>
           <StDrawerPt>
             <p>내 포인트</p>
             <StDrawerMyPt>
@@ -123,10 +117,11 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
             <StDrawerCalc>
               사용 후 포인트 {userPoint-bought.period*10} point
             </StDrawerCalc>
-        </StDrawerFooter>
+        </div>
+
         <StDrawerBtnWrap>
           <StDrawerCancleBtn
-            onClick={drawerHandler}
+            onClick={()=>setDrawer(false)}
           >
             취소하기
           </StDrawerCancleBtn>
@@ -143,16 +138,17 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
 export default TagBuyDrawer
 
 const StDrawerBg = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
-  width: 360px;
+  left: inherit;
+  width: 450px;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 1;
   display: ${props=>props.display};
+  z-index: 1;
 `
 
-const CarouselUp = keyframes`
+const DrawerUp = keyframes`
   from {
     transform: translateY(100px);
   } to {
@@ -161,18 +157,17 @@ const CarouselUp = keyframes`
 `
 
 const StDrawer = styled.div`
-  width: inherit;
-  height: 442px;
-  background-color: white;
   position: fixed;
   bottom: 0;
+  width: 100%;
+  max-width: 450px;
+
+  background-color: white;
   border-radius: 16px 16px 0 0;
   padding: 20px;
 
-  animation-duration: 0.4s;
-  animation-timing-function: ease-out;
-  animation-name: ${CarouselUp};
-  animation-fill-mode: forwards;
+  animation: ${DrawerUp} 0.5s;
+  animation-direction: alternate;
 `
   
 const StDrawerHeader = styled.div`
@@ -181,21 +176,20 @@ const StDrawerHeader = styled.div`
   justify-content: space-between;
   font-size: 16px;
   font-weight: 600;
-  color: #343434
-`
-
-const StDrawerBody = styled.div`
-  width: 320px;
-  & span {
-      color: #674DED;
-      font-size: 14px;
-      font-weight: 600;
-    }
+  color: #343434;
+  font-size: 1rem;
+  font-weight: 600;
 `
 
 const StDrawerPeriodSelect = styled.form`
   display: flex;
   flex-direction: column;
+  & span {
+    color: #674DED;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 4px 0 8px 0;
+  }
   & div {
     width: 100%;
     display: flex;
@@ -205,9 +199,9 @@ const StDrawerPeriodSelect = styled.form`
 
 const StDrawerLable = styled.label`
   background-color: #F6F7FB;
-  width: 102px;
-  height: 24px;
-  margin: 3px 0;
+  min-width: 31%;
+  height: 30px;
+  margin: 1% 0;
   border-radius: 6px;
   
   display: flex;
@@ -216,15 +210,12 @@ const StDrawerLable = styled.label`
   
   color: #999999;
   font-weight: 600;
-  font-size: 12px;
-  text-align: center;
+  font-size: 0.8rem;
 
   cursor: pointer;
+
   & input {
-    visibility: hidden;
-  }
-  & p {
-    text-align: center;
+    all: unset;
   }
   &.active {
     color: white;
@@ -236,7 +227,7 @@ const StDrawerCost = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
+  margin: 5% 0;
   font-size: 15px;
   font-weight: 600;
   color: #343434;
@@ -258,9 +249,6 @@ const StDrawerDiv = styled.div`
   left: -20px;
   margin-bottom: 12px;
   background: #F6F7FB;
-`
-
-const StDrawerFooter = styled.div`  
 `
 
 const StDrawerPt = styled.div`
@@ -313,35 +301,15 @@ const StDrawerBtnWrap = styled.div`
   justify-content: space-between;
 `
 
-const StDrawerCancleBtn = styled.button`
-  all: unset;
-  cursor: pointer;
-  width: 100px;
-  height: 42px;
+const StDrawerCancleBtn = styled(StSubmitBtn)`
   background: #CCCCCC;
   border-radius: 6px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
-  text-align: center;
-
-  font-weight: 700;
-  font-size: 16px;
-  text-align: center;
-  color: #FFFFFF;
+  width: 30%;
+  height: 42px;
 `
 
-const StDrawerSubmitBtn = styled.button`
-  all: unset;
-  cursor: pointer;
-  width: 208px;
-  height: 42px;
-  background: #674DED;
-  border: none;
+const StDrawerSubmitBtn = styled(StSubmitBtn)`
   border-radius: 6px;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.08);
-  text-align: center;
-
-  font-weight: 700;
-  font-size: 16px;
-  text-align: center;
-  color: #FFFFFF;
+  width: 67%;
+  height: 42px;
 `

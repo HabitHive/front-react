@@ -12,16 +12,14 @@ export default SaveButtonLong
 
 export const StSubmitBtn = styled.button`
   cursor: pointer;
-  width: 320px;
+  width: 100%;
   height: 48px;
-  position: relative;
-  top: ${props=>props.top}px;
-  left: ${props=>props.left}px;
+
   background: #674DED;
   border: none;
   border-radius: 16px;
 
-  color: white;
+  color: #FFFFFF;
   font-weight: 700;
   font-size: 16px;
 `
