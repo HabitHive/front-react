@@ -4,6 +4,8 @@ import { ErrorAlert } from '../components/common/Alert'
 import { useNavigate } from 'react-router'
 import { setLogin } from '../redux/modules/user'
 
+import { useDispatch } from 'react-redux'
+
 const instance = axios.create({
     baseURL: process.env.REACT_APP_ENDPOINT,
     headers: {
@@ -24,7 +26,7 @@ instance.interceptors.response.use(
             ErrorAlert({
                text: "토큰 만료. 다시 로그인해 주세요"
             })
-            setLogin(false)
+            useDispatch(setLogin(false))
             useNavigate("/")
         }
         return Promise.reject(error);

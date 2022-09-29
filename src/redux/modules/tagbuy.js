@@ -15,7 +15,6 @@ export const __getTagBuyList = createAsyncThunk(
   "getTagBuyList",
   async (payload, api) => {
     const data = await axios.post(`/tag/list`, {attention: ""})
-    console.log()
     return data.data.result
   }
 )

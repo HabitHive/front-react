@@ -1,4 +1,4 @@
-const petData = [
+export const petData = [
   { 
     key : "Race",
     value : "Alien"
@@ -12,4 +12,3 @@ const petData = [
     value : "0.21m"
   },
 ]
-export default petData
