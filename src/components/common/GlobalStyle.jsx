@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     }
     body{
         background-color: #E2DCFF;
+        font-family: 'Pretendard', sans-serif;
     }
     ::-webkit-scrollbar {
         display: none;

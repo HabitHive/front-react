@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import { BsStars } from "react-icons/bs";
-import { ConfirmAlert, ErrorAlert, rabbitAlert } from "../common/Alert"
+import { ErrorAlert, rabbitAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/SaveButtonLong";
 
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import petBG from "../../assets/mypetImg/petBG.png"
 import cursor from "../../assets/mypetImg/cursor.cur"
 import LV1 from "../../assets/mypetImg/LV1.gif"
 import LV2 from "../../assets/mypetImg/LV2.gif"
-import petData from "../pet/petData"
+import { petData } from "../pet/petData"
 
 const Pet = () => {
   const dispatch = useDispatch();
@@ -26,6 +26,12 @@ const Pet = () => {
   // 경험치 바 
   const xp = 2**(petInfo.level-1) * 100
   const progressWidth = ((petInfo.exp/xp)*100)
+
+  // 펫 클릭 시 지급하는 추가 포인트
+  const [plusPoint, setPlusPoint] = useState(0);
+
+  const [textHandler, setTextHandler] = useState(false);
+  const [petText, setPetText] = useState("");
 
   const feedPet = () => {
     if(petInfo.level >= 4 ) {
@@ -47,25 +53,22 @@ const Pet = () => {
     if (count===5) {
       dispatch(__getPoint())
       .then((res)=>{
-        ConfirmAlert({
-          text: `${res.payload}포인트를 선물로 드릴게요!`
-        }) 
+        if (res.type==="getPoint/rejected") {
+          return
+        } else {
+          setPlusPoint(res.payload)
+          setPetText(`${res.payload} 포인트 선물🎁`)
+          setTextHandler(true)
+          setTimeout(()=>{
+            setTextHandler(false)
+          },5000)
+        }
       })
-    } 
+    }
   }
 
-  const cursorEvent = () => {
-    // console.log("추가하기")
-  }
-
-  //xp 바뀔 때마다 api 요청
   useEffect(()=>{
     dispatch(__getPetData())
-    dispatch(__getProfile())
-  },[])
-
-  // point 추가할 때마다 리렌더링
-  useEffect(()=>{
     dispatch(__getProfile())
   },[petInfo])
 
@@ -76,10 +79,13 @@ const Pet = () => {
         <span>{user.nickname}</span> &nbsp; 님의 펫
       </h1>
 
+      {
+        textHandler ? <div className="petText">{petText}</div> : null
+      } 
+
       <StPetImg level={petInfo.level}
         onClick={()=>{
           petHandler()
-          cursorEvent()
         }}
       />
 
@@ -116,7 +122,7 @@ const Pet = () => {
       </StPetExpBox>
 
       <StMyPt>
-        <p>My Point |<span><BsStars/> {user.point} </span>point</p>
+        <p>My Point |<span><BsStars/> {user.point + plusPoint} </span>point</p>
       </StMyPt>
       <StPetBtn onClick={feedPet}>
         {
@@ -127,6 +133,20 @@ const Pet = () => {
   )
 }
 export default Pet
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+`;
 
 const StPetBG = styled.div`
   max-width: 450px;
@@ -139,6 +159,13 @@ const StPetBG = styled.div`
   display: flex;
   flex-direction: column; 
   align-items: center;
+  & .petText {
+    font-family: 'Jua', sans-serif;
+    animation: ${fadeIn} 5s;
+    position: absolute;
+    top: 20vh;
+    color: #6334FF;
+  }
   & h1 {
     margin: 12% 0;
     font-weight: 700; 
