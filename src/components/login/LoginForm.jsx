@@ -62,19 +62,28 @@ const LoginForm = () => {
   }
   // 카카오api에서 파라미터로 온 token을 socialToken으로 저장
   let socialToken = new URL(window.location.href).searchParams.get("accessToken");
+  // 회원가입과 로그인을 구별
+  let exUser = new URL(window.location.href).searchParams.get("exuser");
   // socialToken 값이 바뀔 때(로그인해서 값이 생기면) thunk에서 로그인 처리
+
   useEffect(()=>{
     if (socialToken) {
       dispatch(__kakaoLogin(socialToken))
       .then((res)=>{
-        ConfirmToast({
-          text: "환영합니다!"
-        })
-        navigate("/")
+        if (exUser===false) {
+          ConfirmToast({
+            text: "회원가입을 축하합니다!"
+          })
+          navigate("/onboarding")
+        } else {
+          ConfirmToast({
+            text: "환영합니다!"
+          })
+          navigate("/")
+        }
       })
     }
   },[socialToken])
-  
 
   return(
     <StLoginBG>

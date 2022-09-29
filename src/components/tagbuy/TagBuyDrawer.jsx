@@ -36,7 +36,6 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
     await dispatch(__addTag(bought))
     .then((res) => {
       if (res.type==="addTag/fulfilled") {
-        console.log(res)
         ConfirmToast({text: "구매 완료"})
         navigate("/")
       } else if (res.payload.response.status===400) {

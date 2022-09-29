@@ -7,7 +7,7 @@ import carousel4 from "../../assets/onboardingImg/carousel4.png"
 const carouselContents = [
   {
     title: "내 관심사에 맞는 습관을 추천",
-    txt: "여러분의 관심사 및 습관 빈도를 분석하여　　　　　　꼭 맞는 습관을 추천드립니다.",
+    txt: "여러분의 관심사 및 습관 빈도를 분석하여 꼭 맞는 습관을 추천드립니다.",
     img: carousel1
   },
   {

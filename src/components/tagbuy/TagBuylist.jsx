@@ -67,7 +67,6 @@ const StTagBuyWrap = styled.div`
   background-position-x: center;
   position: relative;
   top: -17px;
-  margin-bottom: 40px;
   & h1 {
     font-size: 18px;
     text-align: center;

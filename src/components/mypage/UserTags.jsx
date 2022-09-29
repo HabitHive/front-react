@@ -42,24 +42,25 @@ const UserTags = () => {
         <StTagTitle>
           진행 중인 습관
         </StTagTitle>
-        { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
-          stillTags?.map((stillTag, tagName)=>{
-            return (
-            <StTagShadowBox key={tagName}>
-              <StStillTag>
-                <StStillTagName>
-                  <p>{stillTag.tagName}</p>
-                </StStillTagName>
-                <TagWeekday weekData={stillTag.week}/>
-              </StStillTag>
-              <StStillTagdDay>
-                <p>D-{stillTag.dDay}</p>
-              </StStillTagdDay>
-            </StTagShadowBox>
-            )
-          })
-        }
-
+        <StScrollBox>
+          { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
+            stillTags?.map((stillTag, tagName)=>{
+              return (
+              <StTagShadowBox key={tagName}>
+                <div>
+                  <StStillTagName>
+                    <p>{stillTag.tagName}</p>
+                  </StStillTagName>
+                  <TagWeekday weekData={stillTag.week}/>
+                </div>
+                <StStillTagdDay>
+                  <p>D-{stillTag.dDay}</p>
+                </StStillTagdDay>
+              </StTagShadowBox>
+              )
+            })
+          }
+        </StScrollBox>
         <StTagTitle>
           도전했던 습관
         </StTagTitle>
@@ -104,6 +105,14 @@ const StTagHelpTxt = styled.p`
   color: #999999;
 `
 
+const StScrollBox = styled.div`
+  width: 100%;
+  height: 23vh;
+  padding: 1%;
+  overflow: scroll;
+  box-shadow: 6px 6px 8px rgba(0 0 0 0.08);
+`
+
 const StTagShadowBox = styled.div`
   background-color: #CFEEFF;
   width: 100%;
@@ -115,9 +124,6 @@ const StTagShadowBox = styled.div`
 
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
   border-radius: 12px 12px 12px 0px;
-`
-
-const StStillTag =  styled.div`
 `
 
 const StStillTagName =  styled.div`

@@ -55,19 +55,19 @@ const Pet = () => {
   }
 
   const cursorEvent = () => {
-    // console.log("야")
+    // console.log("추가하기")
   }
 
   //xp 바뀔 때마다 api 요청
   useEffect(()=>{
     dispatch(__getPetData())
     dispatch(__getProfile())
-  },[user])
+  },[])
 
   // point 추가할 때마다 리렌더링
   useEffect(()=>{
     dispatch(__getProfile())
-  },[__getPoint()])
+  },[petInfo])
 
   return (
     <StPetBG>
