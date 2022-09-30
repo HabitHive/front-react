@@ -21,7 +21,7 @@ export default ToggleTags
 const StTagHelpTxt = styled.p`
   font-size: 14px;
   text-align: center;
-  margin: auto;
+  margin: 13% auto 0;
   letter-spacing: -0.3px;
   color: #999999;
 `
