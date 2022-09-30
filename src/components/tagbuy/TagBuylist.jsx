@@ -9,25 +9,21 @@ import { __getTagBuyList } from "../../redux/modules/tagbuy";
 
 import Tag from "../common/Tag";
 import TagBuyDrawer from "./TagBuyDrawer";
-import categories from "../survey/categories"
+import SelectBox from "./SelectBox";
 
 const TagBuylist = () => {
   const dispatch = useDispatch();
 
   // 선택한 습관
   const [selectedTag, setSelectedTag] = useState([]);
-
   // drawer 상태
   const [drawer, setDrawer] = useState(false);
-
   // 선택한 카테고리
   const [attention, setAttention] = useState("");
 
   const randomTagList = useSelector((state)=>state.tagBuy.randomTagList)
   const tagAllList = useSelector((state)=>state.tagBuy.tagAllList)
-  
-  console.log(attention)
-  
+    
   useEffect(()=>{
     dispatch(__getTagBuyList(attention));
   },[attention])
@@ -50,23 +46,10 @@ const TagBuylist = () => {
         }
         <StSubTittle>
           <h4 className="black"> 
-            전체습관 
+            전체습관
             <AiOutlineUnorderedList className="icon"/> 
           </h4>
-          <select className="dropdown"
-            onChange={(e)=>setAttention(e.target.value)}
-          >
-            <option value=""> 전체 </option>
-            {
-              categories.map((category, categoryId)=>{
-                return (
-                  <option value={category.categoryId} key={categoryId}>
-                    {category.value}
-                  </option>
-                )
-              })
-            }
-          </select>
+          <SelectBox setAttention={setAttention}/>
         </StSubTittle>
         {
           tagAllList.length === 0 ? <div className="soldOut all"> <p>추천하는 습관이 없습니다</p> </div> :
@@ -124,8 +107,5 @@ const StSubTittle = styled.div`
   & .black {
     margin-top: 5%;
     color: #343434;
-  }
-  & .dropdown {
-    color: red;
   }
 `
