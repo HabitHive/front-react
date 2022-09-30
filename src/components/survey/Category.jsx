@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import Swal from "sweetalert2";
 
 import SaveButtonLong from "../common/SaveButtonLong"
 import categories from "./categories"

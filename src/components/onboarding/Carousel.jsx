@@ -14,8 +14,8 @@ const Carousel = () => {
   const [positionX, setPositionX] = useState(0);
 
   // 마우스 포지션 값
-  const [mouseDown, seMouseDown] = useState(0);
-  const [mouseUp, seMouseUp] = useState(0);
+  const [down, setDown] = useState(0);
+  const [up, setUp] = useState(0);
 
   const carouselHandler = () => {
     if(positionX===300) {
@@ -29,34 +29,34 @@ const Carousel = () => {
 
   // carousel 드래그 감지
   const getMouseDown = (e) => {
-    seMouseDown(e.screenX)
+    setDown(e.touches[0].screenX)
   }
 
   const getMouseUp = (e) => {
-    seMouseUp(e.screenX)
+    setUp(e.changedTouches[0].screenX)
   }
 
   useEffect(()=>{
-    if (mouseDown < mouseUp) {
+    if (down < up) {
       if (positionX===0) {
         return
       } else {
         setPositionX(positionX-100)
       }
-    } else if (mouseDown > mouseUp) {
+    } else if (down > up) {
       if (positionX===300) {
         return
       } else {
         setPositionX(positionX+100)
       }
     }
-  },[mouseUp])
+  },[up])
  
   return(
     <>
       <StCarouselLayout
-        onMouseDown={(e)=>getMouseDown(e)}
-        onMouseUp={(e)=>getMouseUp(e)}
+        onTouchStart={(e)=>getMouseDown(e)}  
+        onTouchEnd={(e)=>getMouseUp(e)}
       >
         <StCarouselContent positionX={positionX}>
           {
