@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux"
 import { __userCategory } from "../../redux/modules/user";
 import { ErrorAlert } from "../common/Alert";
 
-const Category = () => {
+const Category = ({toSurvey}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,7 +25,11 @@ const Category = () => {
           text: "Error: 관리자에게 문의바랍니다"
         })
       } else if (res.type==="userCategory/fulfilled") {
-        navigate("/")
+        if (toSurvey==="/onboarding") {
+          navigate("/")
+        } else {
+          navigate("/mypage")
+        }
       }
     })
   }

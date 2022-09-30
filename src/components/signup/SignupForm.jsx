@@ -13,6 +13,9 @@ const SignupForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //현재 주소값, 이 주소값에 따라서 carouel 다음에 이동하는 위치가 달라진다
+  const path = window.location.pathname
+
   const initValue = {
     email: "",
     password: "",
@@ -50,7 +53,7 @@ const SignupForm = () => {
         ConfirmAlert({
           text: "회원가입을 축하합니다!"
         })
-        navigate("/onboarding")
+        navigate("/onboarding", { state: path })
       }
     })
   };

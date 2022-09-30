@@ -10,6 +10,9 @@ const SubNav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  //현재 주소값, 이 주소값에 따라서 carouel 다음에 이동하는 위치가 달라진다
+  const path = window.location.pathname
+
   const logoutHandler = async () => {
     localStorage.removeItem("accessToken")
     dispatch(setLogin(false))
@@ -22,7 +25,7 @@ const SubNav = () => {
         <StSubNavMenu onClick={() => {navigate("/survey")}}>
           <BsFillSuitHeartFill/> &nbsp; 관심사 변경하기
         </StSubNavMenu>
-        <StSubNavMenu onClick={() => {navigate("/onboarding")}}>
+        <StSubNavMenu onClick={() => {navigate("/onboarding", { state: path })}}>
           <HiDocumentDuplicate/> &nbsp; 사용자 가이드
         </StSubNavMenu>
         <StSubNavMenu onClick={logoutHandler}>
