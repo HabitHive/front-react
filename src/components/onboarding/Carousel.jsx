@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 import carouselContents from "./carouselContents"
-import { StSubmitBtn } from "../common/SaveButtonLong"
+import { StSubmitBtn } from "../common/ButtonStyle"
 import { useEffect } from "react"
 
 const Carousel = () => {

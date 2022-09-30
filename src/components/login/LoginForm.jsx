@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __basicLogin, __kakaoLogin } from "../../redux/modules/user";
 
-import { StSubmitBtn } from "../common/SaveButtonLong";
+import { StSubmitBtn } from "../common/ButtonStyle";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
 import loginBG from "../../assets/loginImg/loginBG.png"
 import { BsFillChatFill } from "react-icons/bs"

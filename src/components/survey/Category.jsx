@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import SaveButtonLong from "../common/SaveButtonLong"
+import { StSubmitBtn } from "../common/ButtonStyle"
 import categories from "./categories"
 import CategoryBtn from "./CategoryBtn";
 
@@ -51,9 +51,9 @@ const Category = () => {
         }
       </StCategoryWrap>
 
-      <SaveButtonLong btnName={"선택완료"}
-        onClick={categorySubmitHandler}
-      />
+      <StSubmitBtn onClick={categorySubmitHandler}>
+        선택완료
+      </StSubmitBtn>
     </>
   )
 }
