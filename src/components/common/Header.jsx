@@ -4,19 +4,25 @@ import { useNavigate } from "react-router";
 
 import { IoIosArrowBack } from "react-icons/io";
 
-const Header = (props) => {
+const Header = ({text, setModal}) => {
   const navigate = useNavigate();
+
+  const path = window.location.pathname
 
   return (
     <StHeader>
       <StHeaderBtn
         onClick={() => {
-          navigate(-1);
+          if (path==="/mypage") {
+            setModal(false)
+          } else {
+            navigate(-1)
+          }
         }}
       >
         <IoIosArrowBack/>
       </StHeaderBtn>
-      <StHeaderTxt>{props.text}</StHeaderTxt>
+      <StHeaderTxt>{text}</StHeaderTxt>
     </StHeader>
   );
 };
@@ -26,19 +32,19 @@ const StHeader = styled.div`
   height: 52px;
   display: flex;
   align-items: center;
-  margin-top: 32px;
+  margin: 4vh 3vw 0;
 `;
 
 const StHeaderBtn = styled.button`
   all: unset;
   cursor: pointer;
   font-size: 24px;
-  margin: 7px 0 0 20px;
+  margin-top: 7px;
 `;
 
 const StHeaderTxt = styled.p`
   margin: auto;
-  padding-right: 44px;
+  text-align: center;
   font-weight: 700;
   font-size: 18px;
   letter-spacing: -0.3px;
