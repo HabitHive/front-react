@@ -96,7 +96,7 @@ const StPetImg = styled.div`
         LV2 : props=>props.level === 3 ? 
         LV3 : LV4 }
   );
-  background-size: 70%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 `

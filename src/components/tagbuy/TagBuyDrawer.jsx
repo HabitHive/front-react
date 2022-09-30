@@ -8,8 +8,8 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { __addTag } from "../../redux/modules/tagbuy";
 
-import TagLists from "./TagLists";
-import { StSubmitBtn } from "../common/SaveButtonLong";
+import Tag from "../common/Tag"
+import { StSubmitBtn } from "../common/ButtonStyle";
 
 const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
           />
         </StDrawerHeader>
 
-        <TagLists lists={selectedTag} disabled={"disabled"}/>
+        <Tag lists={selectedTag} disabled={"disabled"}/>
 
         <StDrawerPeriodSelect
           onChange={e=>{

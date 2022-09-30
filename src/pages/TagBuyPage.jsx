@@ -12,3 +12,4 @@ const TagBuyPage = () => {
 };
 
 export default TagBuyPage;
+
