@@ -26,13 +26,12 @@ const PostForm = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [finalDate, setFinalDate] = useState(null);
+  const [msg, setMsg] = useState("");
 
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
   //체크값 상태관리
   const [inputCheck, setInputCheck] = useState([]);
-
-  const [msg, setMsg] = useState("");
 
   //보유습관에서 선택한 tag값 가져오기
   const { state } = useLocation();
@@ -68,6 +67,7 @@ const PostForm = () => {
     dispatch(
       __addSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {
+      console.log(res);
       if (res.type === "addSchedule/rejected") {
         setMsg("설정하지 않은 날짜,시간 혹은 요일이 있습니다");
       } else if (res.type === "addSchedule/fulfilled") {
@@ -153,7 +153,10 @@ const PostForm = () => {
             })}
           </div>
         </div>
-        {msg !== "" ? <p className="helpTXT">{msg}</p> : null}
+        <p className="helpTXT">
+          {"설정하신 날짜에 맞게 요일을 꼭 맞춰주세요 !"}
+        </p>
+        {msg !== "" ? <p className="errTXT">{msg}</p> : null}
       </BodyContainer>
       <ButtonContainer>
         <SaveButton btnName={"저장"} onClick={() => savePost()} />
@@ -283,13 +286,21 @@ const BodyContainer = styled.div`
     }
   }
   //에러메시지
-  & .helpTXT {
+  & .errTXT {
     color: #f53232;
     font-weight: 400;
     font-size: 12px;
-    position: absolute;
-    left: 176px;
-    bottom: 300px;
+    position: relative;
+    left: -18px;
+    bottom: -40px;
+  }
+  & .helpTXT {
+    color: green;
+    font-weight: 400;
+    font-size: 12px;
+    position: relative;
+    left: -20px;
+    bottom: -25px;
   }
 `;
 const ButtonContainer = styled.div`
