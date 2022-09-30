@@ -63,6 +63,7 @@ const TagBuylist = () => {
 export default TagBuylist
 
 const StTagBuyWrap = styled.div`
+  flex: 1;
   padding: 20px;
   background-image: url(${buyBG});
   background-repeat: no-repeat;
