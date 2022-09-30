@@ -58,7 +58,7 @@ const EditForm = () => {
   // 시작날짜 선택시 습관이 며칠짜리인지에 따라 자동으로 범위선택
   const dateRange = (update) => {
     const firstDate = new Date(update[0]);
-    const lastDate = firstDate.setDate(firstDate.getDate() + state.period);
+    const lastDate = firstDate.setDate(firstDate.getDate() + state.period - 1);
     setStartDate(update[0]);
     setEndDate(new Date(lastDate));
   };

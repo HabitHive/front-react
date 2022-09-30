@@ -35,7 +35,7 @@ const RepeatDay = ({ repeatDayInput, repeatId, inputCheck, setInputCheck }) => {
 export default RepeatDay;
 
 const STRepeatDay = styled.div`
-  margin: 0 16px 0 0;
+  margin: 0 auto 0 0;
   &:last-child {
     margin: 0;
   }
@@ -49,11 +49,11 @@ const STRepeatDay = styled.div`
     font-size: 12px;
     line-height: 14px;
     border: none;
-    border-radius: 50%;
+    border-radius: 8px;
     box-sizing: border-box;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     padding: 9px;
   }
 
