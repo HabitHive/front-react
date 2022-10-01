@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components"
 import { BsStars } from "react-icons/bs";
 import { ErrorAlert, rabbitAlert } from "../common/Alert"
-import { StSubmitBtn } from "../common/SaveButtonLong";
+import { StSubmitBtn } from "../common/ButtonStyle";
 
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,9 +9,12 @@ import { __getProfile } from "../../redux/modules/mypage"
 import { __getPetData, __setPetXP, __getPoint } from "../../redux/modules/pet";
 
 import petBG from "../../assets/mypetImg/petBG.png"
+import petBox from "../../assets/mypetImg/petBox.png"
 import cursor from "../../assets/mypetImg/cursor.cur"
 import LV1 from "../../assets/mypetImg/LV1.gif"
 import LV2 from "../../assets/mypetImg/LV2.gif"
+import LV3 from "../../assets/mypetImg/LV3.gif"
+import LV4 from "../../assets/mypetImg/LV4.gif"
 import { petData } from "../pet/petData"
 
 const Pet = () => {
@@ -25,7 +28,7 @@ const Pet = () => {
   
   // 경험치 바 
   const xp = 2**(petInfo.level-1) * 100
-  const progressWidth = ((petInfo.exp/xp)*100)
+  const progressWidth = (petInfo.exp/xp) * 100
 
   // 펫 클릭 시 지급하는 추가 포인트
   const [plusPoint, setPlusPoint] = useState(0);
@@ -150,7 +153,7 @@ const fadeIn = keyframes`
 
 const StPetBG = styled.div`
   max-width: 450px;
-  height: calc(100vh - 60px);
+  height: 100vh;
   background-color: #E2DCFF;
   background-image: url(${petBG});
   background-size: cover;
@@ -184,12 +187,14 @@ const StPetImg = styled.div`
   height: 248px;
   min-width: 124px;
   min-height: 124px;
-  background-color: #EDEAFF;
   border-radius: 100%;
-  border: 8px solid #AB9BFF;
-  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.14), inset -2px -2px 4px rgba(0, 0, 0, 0.12);
-
-  background-image: url(${ props=>props.level === 1 ? LV1 : LV2 });
+ 
+  background-image:
+    url(
+      ${ props => props.level === 1 ? LV1 : 
+      props=>props.level === 2 ? LV2 :
+      props=>props.level === 3 ? LV3 : LV4 }
+    ), url(${petBox});
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -217,25 +222,28 @@ const StPetExpNum = styled.div`
 const StPetExpBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `
 
 const StPetExpLV = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 50px;
   height: 22px;
   background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
   border-radius: 6px;
-  margin: 5px 5px 0 0;
+  margin: 5px 0;
 
   font-weight: 600;
-  font-size: 14px;
-  text-align: center;
+  font-size: 0.9rem;
   letter-spacing: -0.3px;
-
   color: #FFFFFF;
 `
 
 const StPetProgress = styled.div`
-  width: 236px;
+  width: 82%;
   height: 14px;
 
   background: #EBEBEB;
@@ -264,13 +272,16 @@ const StPetData = styled.div`
 `
 
 const StPetDataKey = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 68px;
   height: 26px;
   border: 1px solid #5039C8;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 14px;
-  text-align: center;
+  font-size: 0.9rem;
   color: #674DED;
 `
 

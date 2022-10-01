@@ -1,7 +1,13 @@
 import styled from "styled-components";
+
+import { useLocation } from "react-router";
+
 import Category from "../components/survey/Category";
 
 const SurveyPage = () => {
+  const location = useLocation();
+
+  const toSurvey = location.state
 
   return (
     <StSurveyWrap>
@@ -9,7 +15,7 @@ const SurveyPage = () => {
         관심사를 선택해 주세요!
         <span>적절한 습관을 추천받을 수 있어요</span>
       </StSurveyTitle>
-      <Category/>
+      <Category toSurvey={toSurvey}/>
     </StSurveyWrap>
   )
 };

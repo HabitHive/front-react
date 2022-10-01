@@ -7,11 +7,14 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __signup } from "../../redux/modules/user";
 
-import SaveButtonLong from "../common/SaveButtonLong";
+import { StSubmitBtn } from "../common/ButtonStyle";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //현재 주소값, 이 주소값에 따라서 carouel 다음에 이동하는 위치가 달라진다
+  const path = window.location.pathname
 
   const initValue = {
     email: "",
@@ -50,7 +53,7 @@ const SignupForm = () => {
         ConfirmAlert({
           text: "회원가입을 축하합니다!"
         })
-        navigate("/onboarding")
+        navigate("/onboarding", { state: path })
       }
     })
   };
@@ -148,7 +151,9 @@ const SignupForm = () => {
           <p className="nameConfirm"> * 사용 가능한 닉네임입니다 </p>
         )}
       </div>
-      <SaveButtonLong btnName={"회원가입"} top={130}/>
+      <StSubmitBtn className="signUp">
+        회원가입
+      </StSubmitBtn>
     </StSignupForm>
   )
 }
@@ -160,6 +165,9 @@ const StSignupForm = styled.form`
   position: relative;
   top: 32px;
   padding: 0 20px;
+  & div {
+    height: max-content;
+  }
   & p {
     margin-bottom: 5px;
     color: #F53232;
@@ -170,41 +178,44 @@ const StSignupForm = styled.form`
   }
   & .emailError {
     position: absolute;
-    top: 80px;
+    top: 76px;
   }
   & .emailConfirm {
     color: #999999;
     position: absolute;
-    top: 80px;
+    top: 76px;
   }
   & .pwError {
     position: absolute;
-    top: 188px;
+    top: 180px;
   }
   & .pwCheckError {
     position: absolute;
-    top: 272px;
+    top: 265px;
   }
   & .pwConfirm {
     color: #999999;
     position: absolute;
-    top: 272px;
+    top: 265px;
   }
   & .nameError {
     position: absolute;
-    top: 380px;
+    top: 368px;
   }
   & .nameConfirm {
     color: #999999;
     position: absolute;
-    top: 380px;
+    top: 368px;
+  }
+  & .signUp {
+    position: relative;
+    top: 10vh;
   }
 `
 
 const StSignupLabel = styled.label`
   font-weight: 500;
   font-size: 14px;
-  margin-bottom: 8px;
 `
 
 const StSignupInput = styled.input`

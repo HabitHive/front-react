@@ -67,6 +67,7 @@ const STMyTag = styled.div`
   left: 0px;
   right: 0px;
   margin: 0 auto;
+
   & .Container {
     padding: 12px 16px;
     background: #fff;
@@ -103,7 +104,8 @@ const STMyTag = styled.div`
   & .tagCategories {
     display: flex;
     flex-wrap: wrap;
-    overflow: scroll;
+    max-height: 121px;
+    overflow: auto;
     & .category {
       background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
       padding: 4px 12px;

@@ -13,9 +13,6 @@ import LV3 from "../../assets/mypageImg/LV3.png"
 import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs";
 
-//테스트
-import Loading from "../common/Loading";
-
 const Profile = () => {
   const dispatch = useDispatch();
 
@@ -96,7 +93,7 @@ const StPetImg = styled.div`
         LV2 : props=>props.level === 3 ? 
         LV3 : LV4 }
   );
-  background-size: 70%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 `
