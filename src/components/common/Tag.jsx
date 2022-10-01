@@ -9,7 +9,11 @@ import mask1 from "../../assets/tag/mask1.png"
 import mask2 from "../../assets/tag/mask2.png"
 import mask3 from "../../assets/tag/mask3.png"
 
+import TagWeekday from "../mypage/TagWeekday"
+
 const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow}) => {
+
+  const mypage = window.location.pathname
 
   const colorCode = ["#CFEEFF", "#FEE1DD", "#CBF8F5", "#FEEEDF"]
 
@@ -25,11 +29,14 @@ const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow}) => {
     <>
       {lists?.map((list, tagId)=>{
         return(
-          <StTag key={tagId} num={list.color} disabled={disabled} shadow={shadow}
+          <StTag key={tagId} num={list.color} disabled={disabled} shadow={shadow} mypage={mypage}
           bgColor={colorCode[list.color]} 
           onClick={()=>tagSelectHandler({list})}
           >
-            {list.tagName}
+            <div className="title">
+              {list.tagName}
+              { list.dDay ? <div className="dBox"> D-{list.dDay} </div> : null }
+            </div>
             <StTagCategories>
               {
                 (list.category)?.map((category, i)=>{
@@ -40,6 +47,7 @@ const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow}) => {
                   )
                 })
               }
+              { list.week ? <TagWeekday weekData={list.week}/> : null }
             </StTagCategories>
           </StTag>
         )
@@ -56,15 +64,14 @@ const StTag = styled.div`
   height: 82px;
   background-image: 
     url(
-      ${ props => props.num === 0 ? 
-        icon0 : props=>props.num === 1 ?
-        icon1 : props=>props.num === 2 ? 
-        icon2 : icon3 }
+      ${ props => props.mypage === "/mypage" ? null : 
+        props.num === 0 ? icon0 : 
+        props=>props.num === 1 ? icon1 : 
+        props=>props.num === 2 ? icon2 : icon3 }
     ), url(
-    ${ props => props.num === 0 ? 
-        mask0 : props=>props.num === 1 ?
-        mask1 : props=>props.num === 2 ? 
-        mask2 : mask3 }
+    ${ props => props.num === 0 ? mask0 : 
+       props=>props.num === 1 ? mask1 : 
+       props=>props.num === 2 ? mask2 : mask3 }
     );
   background-repeat: no-repeat;
   background-position: 95%, right;
@@ -81,6 +88,26 @@ const StTag = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  & .title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  & .dBox{
+    width: 45px;
+    height: 21px;
+    background: #B3A5FF;
+    border-radius: 4px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+    font-size: 14px;
+    color: #FFFFFF;
+  }
 `
 
 const StTagCategories = styled.div`

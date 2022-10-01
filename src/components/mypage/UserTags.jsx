@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { __getUserTags } from "../../redux/modules/mypage";
 import Tag from "../common/Tag"
+
 import ToggleTags from "./ToggleTags";
 
 const UserTags = ({setModal}) => {
@@ -15,7 +16,7 @@ const UserTags = ({setModal}) => {
 
   //태그 목록 분류
   const stillTags = tags.stillTags;
-  const preTags = stillTags.slice(0,3);
+  const preTags = tags.stillTags.slice(0,3);
   const successTags = tags.successTags;
   const failTags = tags.failTags;
 
