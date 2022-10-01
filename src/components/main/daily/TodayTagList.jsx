@@ -5,7 +5,16 @@ import { __doneMyDaily } from "../../../redux/modules/dailytag";
 import { ConfirmAlert, ErrorAlert } from "../../common/Alert";
 import Swal from "sweetalert2";
 
-const TodayTagList = ({ list }) => {
+import icon0 from "../../../assets/tag/icon0.png"
+import icon1 from "../../../assets/tag/icon1.png"
+import icon2 from "../../../assets/tag/icon2.png"
+import icon3 from "../../../assets/tag/icon3.png"
+import mask0 from "../../../assets/tag/mask0.png"
+import mask1 from "../../../assets/tag/mask1.png"
+import mask2 from "../../../assets/tag/mask2.png"
+import mask3 from "../../../assets/tag/mask3.png"
+
+const TodayTagList = ({ list,num,bgColor }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,6 +28,7 @@ const TodayTagList = ({ list }) => {
   let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 10);
+  
 
   const clickInput = () => {
     if (done === false) {
@@ -53,10 +63,10 @@ const TodayTagList = ({ list }) => {
     <>
       <STTodayTagList>
         <div className="checkBox">
-          <STLabel onClick={clickInput} isChecked={done}></STLabel>
+          <STLabel onClick={clickInput} isChecked={done}  ></STLabel>
           <STInputCheckbox type="checkbox" isChecked={done}></STInputCheckbox>
         </div>
-        <div
+        <STTagListBox
           className={done ? "doneTag" : "tagListbox"}
           onClick={() => {
             if (done === false) {
@@ -65,6 +75,7 @@ const TodayTagList = ({ list }) => {
               ErrorAlert({ text: "이미 완료한 습관입니다" });
             }
           }}
+          num={num} bgColor={bgColor}
         >
           <div className="tagCycle">{timeCycle}</div>
           <div className="tagTitle">{tagName}</div>
@@ -77,7 +88,7 @@ const TodayTagList = ({ list }) => {
               );
             })}
           </div>
-        </div>
+        </STTagListBox>
       </STTodayTagList>
     </>
   );
@@ -90,18 +101,6 @@ const STTodayTagList = styled.div`
   display: flex;
   margin: 0 20px 12px 20px;
 
-  &:nth-child(4n-3) > .tagListbox:nth-child(2):not(.donTag) {
-    background-color: #ccedff;
-  }
-  &:nth-child(4n-2) > .tagListbox:nth-child(2):not(.donTag) {
-    background-color: #fee1dd;
-  }
-  &:nth-child(4n-1) > .tagListbox:nth-child(2):not(.donTag) {
-    background-color: #cbf8f5;
-  }
-  &:nth-child(4n) > .tagListbox:nth-child(2):not(.donTag) {
-    background-color: #feeedf;
-  }
 
   & .checkBox {
     flex-shrink: 0;
@@ -112,6 +111,8 @@ const STTodayTagList = styled.div`
 
   //말풍선 영역
   & .tagListbox {
+
+
     cursor: pointer;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 0px;
@@ -195,6 +196,21 @@ const STTodayTagList = styled.div`
   &:last-child {
     margin-bottom: 90px;
   }
+`;
+
+const STTagListBox = styled.div`
+  background-image: url(
+    ${ props => props.num === 0 ? icon0 : 
+      props=>props.num === 1 ? icon1 : 
+      props=>props.num === 2 ? icon2 : icon3 }),
+      url(
+  ${ props => props.num === 0 ? mask0 : 
+    props=>props.num === 1 ? mask1 : 
+    props=>props.num === 2 ? mask2 : mask3 });
+
+  background-repeat: no-repeat;
+  background-position: 95%, right;
+  background-color: ${(props)=>props.bgColor};
 `;
 
 const STLabel = styled.label`

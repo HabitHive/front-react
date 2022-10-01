@@ -7,8 +7,9 @@ const DailyTag = () => {
   const state = useSelector((state) => state.getMyDaily.myDaily);
   //목록 분류
   const myDaily = state[0];
-
-  //채크박스 확인
+  const colorCode = ["#CFEEFF", "#FEE1DD", "#CBF8F5", "#FEEEDF"]
+  
+  //체크박스 확인
   const [beChecked, setBeChecked] = useState([]);
 
   return (
@@ -24,6 +25,8 @@ const DailyTag = () => {
                 key={list.scheduleId}
                 beChecked={beChecked}
                 setBeChecked={setBeChecked}
+                num={list.color}
+                bgColor={colorCode[list.color]}
               />
             );
           })
