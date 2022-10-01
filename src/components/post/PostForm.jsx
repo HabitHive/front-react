@@ -290,24 +290,24 @@ const BodyContainer = styled.div`
   //에러메시지
   & .errTXT {
     color: #f53232;
-    font-weight: 400;
-    font-size: 12px;
-    position: relative;
-    left: -18px;
-    bottom: -40px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    line-height: 18px;
+    margin: 24px 0 0 -30%;
   }
   & .helpTXT {
-    color: green;
-    font-weight: 400;
-    font-size: 12px;
-    position: relative;
-    left: -20px;
-    bottom: -25px;
+    color: #999999;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.3px;
+    line-height: 18px;
+    margin: 24px 0 0 -30%;
   }
 `;
 const ButtonContainer = styled.div`
   position: relative;
-  bottom: -250px;
+  bottom: -180px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
