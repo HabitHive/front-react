@@ -42,7 +42,11 @@ const STTagList = styled.div`
   width: 100%;
   & .empty {
     flex-direction: column;
-    color: #d1d1d1;
-    margin-left: 20px;
+    margin: 25% 0;
+    text-align: center;
+    color: #999999;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.3px;
   }
 `;
