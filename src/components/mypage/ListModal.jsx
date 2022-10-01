@@ -45,6 +45,12 @@ const StListModal = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 10vh;
-    font: #434343 1rem;    
+    
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: -0.3px;
+    color: #999999;
+    line-height: 18px;
   }
 `

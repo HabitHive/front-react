@@ -1,7 +1,5 @@
 import styled from "styled-components"
 import buyBG from "../../assets/buyImg/buyBG.png"
-import { HiFire } from "react-icons/hi"
-import { AiOutlineUnorderedList } from "react-icons/ai"
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,20 +33,14 @@ const TagBuylist = () => {
           습관 구매
         </h1>
         <StSubTittle>
-          <h4>
-            BEST 습관
-            <HiFire className="icon"/> 
-          </h4>
+          <h4> BEST 습관 </h4>
         </StSubTittle>
         {
           randomTagList.length === 0 ? <div className="soldOut"> <p>추천하는 습관이 없습니다</p> </div> :
           <Tag lists={randomTagList} setSelectedTag={setSelectedTag} setDrawer={setDrawer} shadow={true}/>
         }
         <StSubTittle>
-          <h4 className="black"> 
-            전체습관
-            <AiOutlineUnorderedList className="icon"/> 
-          </h4>
+          <h4 className="black"> 전체습관 </h4>
           <SelectBox setAttention={setAttention}/>
         </StSubTittle>
         {
@@ -97,14 +89,7 @@ const StSubTittle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-
-  & .icon {   
-    width: 20px;
-    height: 20px;
-    position: relative;
-    top: 4px;
-    margin-left: 5px;
-  }
+  
   & .black {
     margin-top: 5%;
     color: #343434;

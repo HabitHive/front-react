@@ -100,15 +100,14 @@ const StTagTitle = styled.h3`
 
     font-weight: 500;
     font-size: 0.8rem;
-    line-height: 14px;
     text-align: right;
 
     color: #999999;
   }
 
   & .icon {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 `
 
@@ -119,6 +118,7 @@ const StTagHelpTxt = styled.p`
   text-align: center;
   letter-spacing: -0.3px;
   color: #999999;
+  line-height: 18px;
 `
 
 const StDoneTagBox = styled.div`
