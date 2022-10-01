@@ -139,6 +139,7 @@ const STDayContainer = styled.div`
     display: flex;
     justify-content: space-between;
     position: relative;
+
     & button {
       position: relative;
       right: 20px;
@@ -151,7 +152,7 @@ const STDayContainer = styled.div`
       box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
       cursor: pointer;
       &:nth-child(1) {
-        left: 18px;
+        left: 20px;
         top: 15px;
       }
     }
@@ -191,6 +192,10 @@ const STDayContainer = styled.div`
     &:nth-child(1) {
       background-color: #b3a5ff;
       color: #fff;
+    }
+    //마지막일자는 margin빼기
+    &:last-child {
+      margin-right: 0;
     }
 
     & input {
