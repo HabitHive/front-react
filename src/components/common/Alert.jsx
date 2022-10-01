@@ -25,6 +25,19 @@ export const ConfirmToast = ({text}) => {
   )
 }
 
+// 에러토스트메시지
+export const ErrorToast = ({text}) => {
+  return (
+    Swal.fire({
+      width: 300,
+      icon: "error",
+      text: `${text}`,
+      showConfirmButton: false,
+      timer: 3000
+    })
+  )
+}
+
 // 에러메시지
 export const ErrorAlert = ({text, title}) => {
   return (
