@@ -42,18 +42,6 @@ export const __kakaoLogin = createAsyncThunk(
   }
 )
 
-export const __getNewToken = createAsyncThunk(
-  "getNewToken",
-  async (payload, api) => {
-    try {
-      const res = await axios.post(`/user/login`, payload) 
-      return res.data.accessToken
-    } catch (err) {
-      return api.rejectWithValue(err.response.status)
-    }
-  }
-)
-
 export const __userCategory = createAsyncThunk(
   "userCategory",
   async (payload, api) => {

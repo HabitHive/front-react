@@ -32,8 +32,6 @@ const Router = () => {
             <Route path="/post" element={isLog ?<PostingPage/>: <LoginAlert/>}/>
             <Route path="/edit" element={isLog ?<EditingPage/>: <LoginAlert/>}/>
             <Route path="/mypage" element={isLog ?<MyPage/>: <LoginAlert/>}/>
-            <Route path="/category" element={isLog ?<SurveyPage/>: <LoginAlert/>}/>
-            <Route path="/guide" element={isLog ? <OnboardingPage/> : <LoginAlert/>}/>
             <Route path="/pet" element={isLog ?<PetPage/>: <LoginAlert/>}/>
             <Route path="/*" element={<NotFoundPage/>}/>
         </Routes>

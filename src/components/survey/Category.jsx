@@ -1,7 +1,6 @@
 import styled from "styled-components"
-import Swal from "sweetalert2";
 
-import SaveButtonLong from "../common/SaveButtonLong"
+import { StSubmitBtn } from "../common/ButtonStyle"
 import categories from "./categories"
 import CategoryBtn from "./CategoryBtn";
 
@@ -11,7 +10,7 @@ import { useDispatch } from "react-redux"
 import { __userCategory } from "../../redux/modules/user";
 import { ErrorAlert } from "../common/Alert";
 
-const Category = () => {
+const Category = ({toSurvey}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,7 +25,11 @@ const Category = () => {
           text: "Error: 관리자에게 문의바랍니다"
         })
       } else if (res.type==="userCategory/fulfilled") {
-        navigate("/")
+        if (toSurvey==="/onboarding") {
+          navigate("/")
+        } else {
+          navigate("/mypage")
+        }
       }
     })
   }
@@ -52,9 +55,9 @@ const Category = () => {
         }
       </StCategoryWrap>
 
-      <SaveButtonLong btnName={"선택완료"}
-        onClick={categorySubmitHandler}
-      />
+      <StSubmitBtn onClick={categorySubmitHandler}>
+        선택완료
+      </StSubmitBtn>
     </>
   )
 }

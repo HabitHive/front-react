@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components"
 import { BsStars } from "react-icons/bs";
 import { ErrorAlert, rabbitAlert } from "../common/Alert"
-import { StSubmitBtn } from "../common/SaveButtonLong";
+import { StSubmitBtn } from "../common/ButtonStyle";
 
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";

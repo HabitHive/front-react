@@ -97,7 +97,7 @@ const StTagTitle = styled.h3`
 `
 
 const StTagHelpTxt = styled.p`
-  margin: 20px 0;
+  margin: 20% 0;
   font-weight: 500;
   font-size: 14px;
   text-align: center;

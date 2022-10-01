@@ -1,15 +1,5 @@
 import styled from "styled-components"
 
-const SaveButtonLong = (props) => {
-
-  return(
-    <StSubmitBtn onClick={props.onClick} top={props.top} left={props.left}>
-      {props.btnName}
-    </StSubmitBtn>
-  )
-}
-export default SaveButtonLong
-
 export const StSubmitBtn = styled.button`
   cursor: pointer;
   width: 100%;

@@ -4,18 +4,21 @@ import { useState } from "react"
 import { useNavigate } from "react-router"
 
 import carouselContents from "./carouselContents"
-import { StSubmitBtn } from "../common/SaveButtonLong"
+import { StSubmitBtn } from "../common/ButtonStyle"
 import { useEffect } from "react"
 
-const Carousel = () => {
+const Carousel = ({path}) => {
   const navigate = useNavigate();
+
+  //현재 주소값, 이 주소값에 따라서 survey 다음에 이동하는 위치가 달라진다
+  const toSurvey = window.location.pathname
   
   // StCarouselContent 위치 값
   const [positionX, setPositionX] = useState(0);
 
-  // 마우스 포지션 값
-  const [mouseDown, seMouseDown] = useState(0);
-  const [mouseUp, seMouseUp] = useState(0);
+  // 터치 이벤트로 carousel 드래그
+  const [down, setDown] = useState(0);
+  const [up, setUp] = useState(0);
 
   const carouselHandler = () => {
     if(positionX===300) {
@@ -29,34 +32,34 @@ const Carousel = () => {
 
   // carousel 드래그 감지
   const getMouseDown = (e) => {
-    seMouseDown(e.screenX)
+    setDown(e.touches[0].screenX)
   }
 
   const getMouseUp = (e) => {
-    seMouseUp(e.screenX)
+    setUp(e.changedTouches[0].screenX)
   }
 
   useEffect(()=>{
-    if (mouseDown < mouseUp) {
+    if (down < up) {
       if (positionX===0) {
         return
       } else {
         setPositionX(positionX-100)
       }
-    } else if (mouseDown > mouseUp) {
+    } else if (down > up) {
       if (positionX===300) {
         return
       } else {
         setPositionX(positionX+100)
       }
     }
-  },[mouseUp])
+  },[up])
  
   return(
     <>
       <StCarouselLayout
-        onMouseDown={(e)=>getMouseDown(e)}
-        onMouseUp={(e)=>getMouseUp(e)}
+        onTouchStart={(e)=>getMouseDown(e)}  
+        onTouchEnd={(e)=>getMouseUp(e)}
       >
         <StCarouselContent positionX={positionX}>
           {
@@ -94,11 +97,25 @@ const Carousel = () => {
         {
           positionX !== 300 ? 
             <StCarouselBtnWrap>
-              <StCarouselLink onClick={()=>navigate("/survey")}>skip</StCarouselLink>
+              <StCarouselLink onClick={()=>{
+                if (path==="/signup") {
+                  navigate("/survey", { state: toSurvey })
+               } else {
+                  navigate("/mypage")
+               }
+              }}>
+                skip
+              </StCarouselLink>
               <StCarouselBtn onClick={carouselHandler} >Next</StCarouselBtn>
             </StCarouselBtnWrap>
           : <StCarouselBtnWrap>
-              <StSubmitBtn onClick={()=>navigate("/survey")}>
+              <StSubmitBtn onClick={()=>{
+               if (path==="/signup") {
+                  navigate("/survey", { state: toSurvey })
+               } else {
+                  navigate("/mypage")
+               }
+              }}>
                 시작하기
               </StSubmitBtn> 
             </StCarouselBtnWrap>
