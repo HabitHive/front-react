@@ -1,19 +1,22 @@
 import styled from "styled-components"
+import { IoIosArrowForward } from "react-icons/io"
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { __getUserTags } from "../../redux/modules/mypage";
-import TagWeekday from "./TagWeekday";
+import Tag from "../common/Tag"
+
 import ToggleTags from "./ToggleTags";
 
-const UserTags = () => {
+const UserTags = ({setModal}) => {
   const dispatch = useDispatch();
 
   const tags = useSelector(state=>state.profile.userTags)
 
   //태그 목록 분류
   const stillTags = tags.stillTags;
+  const preTags = tags.stillTags.slice(0,3);
   const successTags = tags.successTags;
   const failTags = tags.failTags;
 
@@ -41,26 +44,16 @@ const UserTags = () => {
       <StTagsWrap>
         <StTagTitle>
           진행 중인 습관
+          <button
+            onClick={()=>setModal(true)}
+          >
+            전체목록 
+          <IoIosArrowForward className="icon"/> </button>
         </StTagTitle>
-        <StScrollBox>
-          { stillTags?.length === 0 ? <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
-            stillTags?.map((stillTag, tagName)=>{
-              return (
-              <StTagShadowBox key={tagName}>
-                <div>
-                  <StStillTagName>
-                    <p>{stillTag.tagName}</p>
-                  </StStillTagName>
-                  <TagWeekday weekData={stillTag.week}/>
-                </div>
-                <StStillTagdDay>
-                  <p>D-{stillTag.dDay}</p>
-                </StStillTagdDay>
-              </StTagShadowBox>
-              )
-            })
+          { stillTags?.length === 0 ? 
+            <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
+            <Tag lists={preTags} shadow={true}/>
           }
-        </StScrollBox>
         <StTagTitle>
           도전했던 습관
         </StTagTitle>
@@ -94,6 +87,29 @@ const StTagTitle = styled.h3`
   font-weight: 600;
   font-size: 16px;
   color: #343434;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  & button {
+    all: unset;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    font-weight: 500;
+    font-size: 0.8rem;
+    line-height: 14px;
+    text-align: right;
+
+    color: #999999;
+  }
+
+  & .icon {
+    width: 30px;
+    height: 30px;
+  }
 `
 
 const StTagHelpTxt = styled.p`
@@ -103,51 +119,6 @@ const StTagHelpTxt = styled.p`
   text-align: center;
   letter-spacing: -0.3px;
   color: #999999;
-`
-
-const StScrollBox = styled.div`
-  width: 100%;
-  height: 23vh;
-  padding: 1%;
-  overflow: scroll;
-  box-shadow: 6px 6px 8px rgba(0 0 0 0.08);
-`
-
-const StTagShadowBox = styled.div`
-  background-color: #CFEEFF;
-  width: 100%;
-  height: 68px;
-  margin: 8px auto;
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-
-  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
-  border-radius: 12px 12px 12px 0px;
-`
-
-const StStillTagName =  styled.div`
-  width: max-content;
-  font-weight: 700;
-  font-size: 18px;
-  color: #343434;
-  & p {
-    position: relative;
-    top: -4px;
-  }
-`
-
-const StStillTagdDay =  styled.div`
-  width: 37px;
-  height: 21px;
-  background-color: #674DED;
-  border-radius: 4px;
-  & p {
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-  }
 `
 
 const StDoneTagBox = styled.div`
