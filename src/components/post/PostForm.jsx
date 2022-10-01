@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Header from "../common/Header";
 import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
-import SaveButton from "../common/SaveButton";
+import { StSubmitBtn } from "../common/ButtonStyle";
 import RepeatDay from "./RepeatDay";
 import { ConfirmToast, ErrorAlert } from "../common/Alert";
 
@@ -159,7 +159,9 @@ const PostForm = () => {
         {msg !== "" ? <p className="errTXT">{msg}</p> : null}
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton btnName={"저장"} onClick={() => savePost()} />
+        <StSubmitBtn className="button" onClick={() => savePost()}>
+          {"저장"}
+        </StSubmitBtn>
       </ButtonContainer>
     </div>
   );
@@ -304,8 +306,15 @@ const BodyContainer = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 32px;
+  position: relative;
+  bottom: -250px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  & .button {
+    display: block;
+    margin: 0 auto;
+    min-width: 180px;
+    width: calc(100% - 136px);
+  }
 `;

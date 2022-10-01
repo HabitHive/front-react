@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Header from "../components/common/Header";
 import calendarImg from "../assets/images/calendar.png";
 import timeImg from "../assets/images/timeIcon.png";
-import SaveButton from "../components/common/SaveButton";
+import { StSubmitBtn } from "../components/common/ButtonStyle";
 import EditRepeat from "./EditRepeat";
 import { ConfirmToast, ErrorAlert } from "../components/common/Alert";
 import { HiOutlineTrash } from "react-icons/hi";
@@ -175,7 +175,9 @@ const EditForm = () => {
         </div>
       </BodyContainer>
       <ButtonContainer>
-        <SaveButton btnName={"저장"} onClick={() => editPost()} />
+        <StSubmitBtn className="button" onClick={() => editPost()}>
+          {"저장"}
+        </StSubmitBtn>
       </ButtonContainer>
     </>
   );
@@ -313,8 +315,15 @@ const BodyContainer = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 32px;
+  position: relative;
+  bottom: -250px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  & .button {
+    display: block;
+    margin: 0 auto;
+    min-width: 180px;
+    width: calc(100% - 136px);
+  }
 `;
