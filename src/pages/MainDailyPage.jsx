@@ -111,15 +111,14 @@ const STContainer = styled.div`
 `;
 
 const StHeaderContainer = styled.div`
-  opacity: 0.8;
   max-width: 450px;
   height: 214px;
   position: relative;
   margin-bottom: 20px;
   & .headerImg {
-    background-color: linear-gradient(155.33deg, #907cf9 8.74%, #6334ff 91.82%);
     background-image: url(${HeaderImg});
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
     box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.12);
     border-radius: 0px 0px 16px 16px;
