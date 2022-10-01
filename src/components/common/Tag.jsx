@@ -34,7 +34,7 @@ const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow}) => {
           onClick={()=>tagSelectHandler({list})}
           >
             <div className="title">
-              {list.tagName}
+              { list.tagName }
               { list.dDay ? <div className="dBox"> D-{list.dDay} </div> : null }
             </div>
             <StTagCategories>
