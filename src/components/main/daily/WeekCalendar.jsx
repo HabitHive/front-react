@@ -187,6 +187,12 @@ const STDayContainer = styled.div`
       background-color: #5039c8;
       color: white;
     }
+    //today표현
+    &:nth-child(1) {
+      background-color: #b3a5ff;
+      color: #fff;
+    }
+
     & input {
       display: none;
       position: absolute;
@@ -206,10 +212,11 @@ const STLabel = styled.label`
   width: 40px;
   height: 60px;
   border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
   color: #999999;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
   font-weight: 600;
+
   & .weekday {
     font-size: 10px;
     line-height: 12px;
@@ -218,7 +225,6 @@ const STLabel = styled.label`
     font-size: 14px;
     line-height: 17px;
   }
-
   //마우스 올렸을 때
   &:hover {
     background: #5039c8;

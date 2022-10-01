@@ -171,6 +171,7 @@ const STTodayTagList = styled.div`
       line-height: 19px;
       margin-bottom: 4px;
       color: white;
+      text-decoration: line-through;
     }
     //카테고리들
     & .tagCategories {
