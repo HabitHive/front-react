@@ -7,8 +7,6 @@ import Tag from "../common/Tag"
 const ListModal = ({setModal}) => {
 
   const stillTags = useSelector(state=>state.profile.userTags.stillTags)
-
-  console.log(stillTags)
       
   return (
     <StListModal>
