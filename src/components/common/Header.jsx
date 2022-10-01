@@ -44,6 +44,7 @@ const StHeaderBtn = styled.button`
 
 const StHeaderTxt = styled.p`
   margin: auto;
+  padding-right: 24px;
   text-align: center;
   font-weight: 700;
   font-size: 18px;
