@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
     }
     body{
-        background-color: #E2DCFF;
+        background-color: #F1F1F5;
         font-family: 'Pretendard', sans-serif;
     }
     ::-webkit-scrollbar {
