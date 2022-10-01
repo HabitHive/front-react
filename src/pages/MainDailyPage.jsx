@@ -134,6 +134,9 @@ const StHeaderContainer = styled.div`
       color: #ffffff;
       position: absolute;
       top: 47px;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 21px;
     }
   }
 
