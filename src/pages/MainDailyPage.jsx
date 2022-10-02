@@ -142,12 +142,12 @@ const StHeaderContainer = styled.div`
   & .calendarContainer {
     position: relative;
     top: -165px;
-    right: -400px;
+    right: -85%;
     background-color: #fff;
     border-radius: 4px;
     width: 24px;
     height: 24px;
-    padding-left: 3.9px;
+    padding-left: 4px;
     padding-top: 4px;
     & .headerCalendarImg {
       background-image: url(${Calendar});

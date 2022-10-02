@@ -7,6 +7,7 @@ import { __getMyDaily } from "../../../redux/modules/dailytag";
 
 const WeekCalendar = (value) => {
   const dispatch = useDispatch();
+  const [ clickDay, setClickDay ] = useState(null);
 
   useEffect(() => {
     // return () => console.log("Clean up");
@@ -16,11 +17,13 @@ const WeekCalendar = (value) => {
 
   //날짜 클릭시 해당날짜 데이터 보내기
   const clickDate = (clickDate) => {
+    setClickDay(clickDate);   // 클릭한 날짜 배경색주기
     dispatch(__getMyDaily(clickDate));
   };
 
   const [past, setPast] = useState(0);
   const [future, setFuture] = useState(6);
+
 
   let weekDate = [];
   let now = new Date();
@@ -50,6 +53,14 @@ const WeekCalendar = (value) => {
     setFuture(future - 6);
   };
 
+  //today 표시
+  const getToday = () => {
+    let month = ("0" + (mm + 1)).slice(-2);
+    let day = ("0" + dd).slice(-2);
+    return yyyy + "-" + month + "-" + day;
+  };
+
+
   return (
     <STWeekCalendar>
       <STCalendar>
@@ -74,12 +85,14 @@ const WeekCalendar = (value) => {
                     id={weekday.date}
                     name={value}
                     value={weekday.date}
-                  />
-                  <STLabel
-                    onClick={() => {
+                    checked={clickDay === weekday.back}
+                    onChange={() => {
                       clickDate(weekday.back);
                     }}
+                  />
+                  <STLabel
                     htmlFor={weekday.date}
+                    className={getToday() === weekday.back && "isToday"}
                   >
                     <div className="weekday">{weekday.day}</div>
                     <div className="weekdate">{weekday.date}</div>
@@ -188,16 +201,12 @@ const STDayContainer = styled.div`
       background-color: #5039c8;
       color: white;
     }
-    //today표현
-    &:nth-child(1) {
-      background-color: #b3a5ff;
-      color: #fff;
-    }
+
     //마지막일자는 margin빼기
     &:last-child {
       margin-right: 0;
     }
-
+//input창 가리기
     & input {
       display: none;
       position: absolute;
@@ -222,6 +231,11 @@ const STLabel = styled.label`
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.08);
   font-weight: 600;
 
+  //today표현
+  &.isToday {
+  background-color: #b3a5ff;
+  color: #fff;
+  }
   & .weekday {
     font-size: 10px;
     line-height: 12px;
