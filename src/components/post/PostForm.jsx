@@ -4,7 +4,7 @@ import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
 import { StSubmitBtn } from "../common/ButtonStyle";
 import RepeatDay from "./RepeatDay";
-import { ConfirmToast, ErrorAlert } from "../common/Alert";
+import { CustomAlert } from "../common/Alert";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -71,7 +71,7 @@ const PostForm = () => {
       if (res.type === "addSchedule/rejected") {
         setMsg("설정하지 않은 날짜,시간 혹은 요일이 있습니다");
       } else if (res.type === "addSchedule/fulfilled") {
-        ConfirmToast({ text: "등록이 완료되었습니다" });
+        CustomAlert({ text: "등록이 완료되었습니다" , icon:"success"});
         navigate("/");
       }
     });
