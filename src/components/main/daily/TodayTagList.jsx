@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { __doneMyDaily } from "../../../redux/modules/dailytag";
-import { ConfirmAlert, ErrorAlert } from "../../common/Alert";
+import { CustomAlert } from "../../common/Alert";
 import Swal from "sweetalert2";
 
 import icon0 from "../../../assets/tag/icon0.png"
@@ -53,7 +53,7 @@ const TodayTagList = ({ list,num,bgColor }) => {
             }
           });
         } else if (res.payload[0].first === true) {
-          ConfirmAlert({ text: "20point 가 지급되었습니다" });
+          CustomAlert({ text: "20point 가 지급되었습니다" });
         }
       });
     }
@@ -72,7 +72,7 @@ const TodayTagList = ({ list,num,bgColor }) => {
             if (done === false) {
               navigate("/edit", { state: list });
             } else {
-              ErrorAlert({ text: "이미 완료한 습관입니다" });
+              CustomAlert({ text: "이미 완료한 습관입니다",icon:"warning" });
             }
           }}
           num={num} bgColor={bgColor}
