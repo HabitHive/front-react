@@ -1,10 +1,9 @@
 import Router from "./shared/Router";
 
 import { useDispatch } from "react-redux";
+
 import setToken from "./axios/setToken";
 import { setLogin } from "./redux/modules/user"
-
-
 
 const App = () => {
   const dispatch = useDispatch();

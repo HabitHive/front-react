@@ -29,7 +29,7 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   const tagSubmitHandler = async () => {
     if (bought.period===0) {
       CustomAlert({
-        icon: "error",
+        icon: "warning",
         text: "구매 기간을 선택해 주세요"
       })
       return

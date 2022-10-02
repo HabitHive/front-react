@@ -63,10 +63,12 @@ const StTagBuyWrap = styled.div`
   color: white;
 
   & h1 {
-    font-size: 18px;
+    margin: 12% 0;
+    font-weight: 700; 
+    font-size: 1.2rem;
     text-align: center;
-    font-weight: 700;
-    margin: 10% auto;
+    color: #FFFFFF;
+    letter-spacing: -0.1rem;
   }
 
   & .soldOut {
