@@ -35,6 +35,8 @@ const StListModal = styled.div`
   position: fixed;
   top: 0;
 
+  overflow: scroll;
+
   & .listLayout {
     padding: 0 3vw;
   }

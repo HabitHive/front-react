@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ErrorToast } from '../components/common/Alert'
+import { CustomToast } from '../components/common/Alert'
 
 const instance = axios.create({
     baseURL: process.env.REACT_APP_ENDPOINT,
@@ -19,8 +19,9 @@ instance.interceptors.response.use(
     error => {
         if (error.response.status===401) {
             localStorage.removeItem("accessToken")
-            ErrorToast({
-                text: "토큰 만료. 다시 로그인해 주세요"
+            CustomToast({
+                icon: "error",
+                text: "토큰 만료. 다시 로그인해 주세요",
             }) 
             setTimeout(()=>{
                 window.location.reload("/")

@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components"
 import { BsStars } from "react-icons/bs";
-import { ErrorAlert, rabbitAlert } from "../common/Alert"
+import { CustomAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/ButtonStyle";
 
 import { useEffect, useState } from "react";
@@ -38,14 +38,16 @@ const Pet = () => {
 
   const feedPet = () => {
     if(petInfo.level >= 4 ) {
-      rabbitAlert({
+      CustomAlert({
+        icon: "info",
         text: "다음 레벨을 준비 중입니다!"
       })
       return
     }
     dispatch(__setPetXP())
     .catch((err)=>{
-      ErrorAlert({
+      CustomAlert({
+        icon: "error",
         text: "다시 시도해 주세요"
       })
     })
