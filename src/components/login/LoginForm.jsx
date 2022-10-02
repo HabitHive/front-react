@@ -11,7 +11,7 @@ import { StSubmitBtn } from "../common/ButtonStyle";
 import mainLogo from "../../assets/loginImg/mainLogo.png"
 import loginBG from "../../assets/loginImg/loginBG.png"
 import { BsFillChatFill } from "react-icons/bs"
-import { ConfirmToast } from "../common/Alert";
+import { CustomToast } from "../common/Alert";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -48,13 +48,13 @@ const LoginForm = () => {
       } else if (res.payload===404) {
         setMsg("연결이 불안정합니다. 잠시 후 다시 시도해 주세요")
       } else if (res.type==="basicLogin/fulfilled") {  // 로그인 성공
-        ConfirmToast({
+        CustomToast({
+          icon: "success",
           text: "환영합니다!"
         })
       }
     })
   };
-
 
   // 카카오 로그인 시 쿼리문으로 token 값을 받아온다
   const onSubmitKakao = () => {
@@ -71,12 +71,14 @@ const LoginForm = () => {
       dispatch(__kakaoLogin(socialToken))
       .then((res)=>{
         if (exUser===false) {
-          ConfirmToast({
+          CustomToast({
+            icon: "success",
             text: "회원가입을 축하합니다!"
           })
           navigate("/onboarding")
         } else {
-          ConfirmToast({
+          CustomToast({
+            icon: "success",
             text: "환영합니다!"
           })
           navigate("/")

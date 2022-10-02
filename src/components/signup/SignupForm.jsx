@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ConfirmAlert, ErrorAlert } from "../common/Alert"
+import { CustomAlert, CustomToast } from "../common/Alert"
 import { FiAlertCircle } from "react-icons/fi"
 
 import { useForm } from "react-hook-form";
@@ -42,15 +42,18 @@ const SignupForm = () => {
     await dispatch(__signup(data))
     .then((res) => {
       if (res.payload===403) {
-        ErrorAlert({
+        CustomAlert({
+          icon: "error",
           text: "이미 존재하는 이메일입니다"
         })
       } else if (res.payload >= 400) {
-        ErrorAlert({
+        CustomAlert({
+          icon: "error",
           text: "Error: 관리자에게 문의 바랍니다"
         }) 
       } else if (res.type==="signup/fulfilled") {
-        ConfirmAlert({
+        CustomToast({
+          icon: "success",
           text: "회원가입을 축하합니다!"
         })
         navigate("/onboarding", { state: path })

@@ -52,7 +52,7 @@ const UserTags = ({setModal}) => {
         </StTagTitle>
           { stillTags?.length === 0 ? 
             <StTagHelpTxt> 현재 진행 중인 <br/> 습관이 없습니다 </StTagHelpTxt> :
-            <Tag lists={preTags} shadow={true}/>
+            <Tag lists={preTags} shadow={true} disabled={"disabled"}/>
           }
         <StTagTitle>
           도전했던 습관

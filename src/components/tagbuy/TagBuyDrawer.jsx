@@ -1,5 +1,5 @@
 import styled, {keyframes} from "styled-components"
-import { ConfirmToast, ErrorAlert } from "../../components/common/Alert"
+import { CustomAlert, CustomToast } from "../../components/common/Alert"
 import { VscChromeClose } from "react-icons/vsc"
 import { BsStars } from "react-icons/bs"
 
@@ -28,7 +28,8 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
 
   const tagSubmitHandler = async () => {
     if (bought.period===0) {
-      ErrorAlert({
+      CustomAlert({
+        icon: "error",
         text: "구매 기간을 선택해 주세요"
       })
       return
@@ -36,11 +37,15 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
     await dispatch(__addTag(bought))
     .then((res) => {
       if (res.type==="addTag/fulfilled") {
-        ConfirmToast({text: "구매 완료"})
+        CustomToast({
+          icon: "success",
+          text: "구매 완료"
+        })
         navigate("/")
       } else if (res.payload.response.status===400) {
         const cal = Math.abs(res.payload.response.data.result)
-        ErrorAlert({
+        CustomAlert({
+          icon: "warning",
           text: `${cal}point가 부족합니다`
         })
       }

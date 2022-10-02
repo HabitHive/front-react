@@ -8,7 +8,7 @@ import { useRef } from "react"
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux"
 import { __userCategory } from "../../redux/modules/user";
-import { ErrorAlert } from "../common/Alert";
+import { CustomAlert } from "../common/Alert";
 
 const Category = ({toSurvey}) => {
   const navigate = useNavigate();
@@ -21,7 +21,8 @@ const Category = ({toSurvey}) => {
     dispatch(__userCategory(category))
     .then((res)=>{
       if (res.type==="userCategory/rejected") {
-        ErrorAlert({
+        CustomAlert({
+          icon: "error",
           text: "Error: 관리자에게 문의바랍니다"
         })
       } else if (res.type==="userCategory/fulfilled") {
