@@ -45,7 +45,7 @@ const EditForm = () => {
   const [endDate, setEndDate] = useState(
     new Date(
       new Date(state.date.split("~")[0]).setDate(
-        new Date(state.date.split("~")[0]).getDate() + state.period
+        new Date(state.date.split("~")[0]).getDate() + state.period-1
       )
     )
   );
