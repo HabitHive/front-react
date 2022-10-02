@@ -4,7 +4,7 @@ import calendarImg from "../assets/images/calendar.png";
 import timeImg from "../assets/images/timeIcon.png";
 import { StSubmitBtn } from "../components/common/ButtonStyle";
 import EditRepeat from "./EditRepeat";
-import { ConfirmToast, ErrorAlert } from "../components/common/Alert";
+import { CustomAlert } from "../components/common/Alert";
 import { HiOutlineTrash } from "react-icons/hi";
 
 import DatePicker from "react-datepicker";
@@ -73,14 +73,14 @@ const EditForm = () => {
     dispatch(
       __updateSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {
-      ConfirmToast({ text: "수정이 완료되었습니다" });
+      CustomAlert({ text: "수정이 완료되었습니다" , icon:"success"});
       navigate("/");
     });
   };
   //스케쥴 삭제
   const deletePost = () => {
     dispatch(__deleteSchedule(state.scheduleId)).then((res) => {
-      ConfirmToast({ text: "삭제가 완료되었습니다" });
+      CustomAlert({ text: "삭제가 완료되었습니다" ,icon:"success"});
       navigate("/");
     });
   };

@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components"
 import { BsStars } from "react-icons/bs";
-import { ErrorAlert, rabbitAlert } from "../common/Alert"
+import { CustomAlert } from "../common/Alert"
 import { StSubmitBtn } from "../common/ButtonStyle";
 
 import { useEffect, useState } from "react";
@@ -38,14 +38,16 @@ const Pet = () => {
 
   const feedPet = () => {
     if(petInfo.level >= 4 ) {
-      rabbitAlert({
+      CustomAlert({
+        icon: "info",
         text: "다음 레벨을 준비 중입니다!"
       })
       return
     }
     dispatch(__setPetXP())
     .catch((err)=>{
-      ErrorAlert({
+      CustomAlert({
+        icon: "error",
         text: "다시 시도해 주세요"
       })
     })
@@ -185,8 +187,6 @@ const StPetBG = styled.div`
 const StPetImg = styled.div`
   width: 248px;
   height: 248px;
-  min-width: 124px;
-  min-height: 124px;
   border-radius: 100%;
  
   background-image:
@@ -197,7 +197,7 @@ const StPetImg = styled.div`
     ), url(${petBox});
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100%;
+  background-size: contain;
 
   cursor: url(${cursor}), pointer;
 `
@@ -243,7 +243,7 @@ const StPetExpLV = styled.div`
 `
 
 const StPetProgress = styled.div`
-  width: 82%;
+  width: 80%;
   height: 14px;
 
   background: #EBEBEB;

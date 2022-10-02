@@ -13,6 +13,9 @@ import LV3 from "../../assets/mypageImg/LV3.png"
 import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs";
 
+//테스트
+import { ConfirmAlert } from "../common/Alert"
+
 const Profile = () => {
   const dispatch = useDispatch();
 

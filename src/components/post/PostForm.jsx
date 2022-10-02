@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Header from "../common/Header";
+import { StSubmitBtn } from "../common/ButtonStyle";
+import { CustomAlert } from "../common/Alert";
+import Tag from "../common/Tag";
+
 import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
-import { StSubmitBtn } from "../common/ButtonStyle";
 import RepeatDay from "./RepeatDay";
-import { ConfirmToast, ErrorAlert } from "../common/Alert";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,18 +18,20 @@ import { useLocation, useNavigate } from "react-router";
 import { __addSchedule } from "../../redux/modules/schedule";
 import { __getMyTag } from "../../redux/modules/mytag";
 
-let now = new Date();
 const PostForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const [startTime, setStartTime] = useState(null); //null값이어야 placeholder내용 보임
   const [endTime, setEndTime] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [finalDate, setFinalDate] = useState(null);
   const [msg, setMsg] = useState("");
-
+  
+  // 선택한 습관
+  const [selectedTag, setSelectedTag] = useState([]);
+  
   const weekday = ["일", "월", "화", "수", "목", "금", "토"];
   const checkInput = useRef([]);
   //체크값 상태관리
@@ -35,9 +39,9 @@ const PostForm = () => {
 
   //보유습관에서 선택한 tag값 가져오기
   const { state } = useLocation();
-
-  const now = new Date();
-  const today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+  console.log(state)
+  let now = new Date();
+  let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 10);
 
@@ -71,7 +75,7 @@ const PostForm = () => {
       if (res.type === "addSchedule/rejected") {
         setMsg("설정하지 않은 날짜,시간 혹은 요일이 있습니다");
       } else if (res.type === "addSchedule/fulfilled") {
-        ConfirmToast({ text: "등록이 완료되었습니다" });
+        CustomAlert({ text: "등록이 완료되었습니다" , icon:"success"});
         navigate("/");
       }
     });
@@ -84,6 +88,7 @@ const PostForm = () => {
         <div className="tagTitle">
           {state.tagName} ( {state.period}일 )
         </div>
+        <Tag lists={selectedTag} disabled={"disabled"}></Tag>
         <div className="startDate">
           <span className="startDateText">날짜 설정</span>
           <DatePicker
