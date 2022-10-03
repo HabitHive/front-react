@@ -31,6 +31,30 @@ export const __addTag = createAsyncThunk(
   }}
 )
 
+// 예외처리 추가하기
+export const __addUsersTag = createAsyncThunk(
+  "addUsersTag",
+  async (payload, api) => {
+  try {
+    const res = await axios.post(`/mytag/create`, payload)
+    return res.data
+  } catch (err) {
+    return api.rejectWithValue(err)
+  }}
+)
+
+// 예외처리 추가하기
+export const __deleteUsersTag = createAsyncThunk(
+  "deleteUsersTag",
+  async (payload, api) => {
+  try {
+    const res = await axios.delete(`/mytag/delete?tagId=${payload}`)
+    return res.data
+  } catch (err) {
+    return api.rejectWithValue(err)
+  }}
+)
+
 // userSlice라는 이름으로 유저 Slice 생성
 export const tagBuySlice = createSlice({
   name: 'tagBuy',

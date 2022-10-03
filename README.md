@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# readme
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 🐇 **HabitRabbit ✨**
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+해빗래빗은 습관을 일정으로 등록해 관리할 수 있는 서비스 입니다 !
 
-### `yarn start`
+![Untitled.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/Untitled.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🐇 [HabitRabbit 서비스 방문해보기 →](https://www.habit-rabbit.shop/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `yarn test`
+# 🐇 프로젝트 소개
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+해빗래빗은 나의 관심사를 기반으로 나에게 필요한 습관을 추천해줍니다.
 
-### `yarn build`
+습관을 구매하고 일정으로 등록해보세요 !
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+등록한 일정대로 해야 할 일을 완수하면 쏟아지는 포인트 !
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+기간 내 매일 일정을 달성하여 추가 포인트도 받아가세요~
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+모인 포인트로 나의 펫🐰을 성장시키세요 !
 
-### `yarn eject`
+# 🛠️ 서비스 아키텍처
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![architecture.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/architecture.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# 🔧 FE기술적 의사 선정
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **Redux Toolkit**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Ingame 페이지에서 관리해야하는 상태가 많아지고 구조가 복잡해지면서 상태관리 시 props 사용이 부담스러웠고, state 갱신에 관한 에러를 방지하기 위해 Redux를 사용
+- Redux Toolkit을 사용하면 Redux의 보일러 플레이트 코드가 줄고, redux devtool, immer, reselect 등의 라이브러리들이 내장되어 있어서 패키지 의존성을 줄여주기 때문에 Redux Tookit 사용을 결정
 
-## Learn More
+# ****💻**** FE 기술 스택
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=Redux&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=Axios&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/styled-components-DB7093?style=flat-square&logo=styled-components&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/JSON Web Tokens-000000?style=flat-square&logo=JSON Web Tokens&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=ffffff"/>
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=ffffff"/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🐇 주요 기능
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+✅ 형성하고자 하는 습관을 구매
 
-### Code Splitting
+![buyPoint2.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/buyPoint2.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+✅ 구매한 습관을 캘린더에 일정으로 등록
 
-### Analyzing the Bundle Size
+![mainDaily.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/mainDaily.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+✅ 등록한 일정대로 완수하면 포인트 지급
 
-### Making a Progressive Web App
+![point.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/point.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+✅ 지급받은 포인트로 다른 습관들 구매
 
-### Advanced Configuration
+![buy.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/buy.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+✅ 모인 포인트로 나의 펫 성장 시키기
 
-### Deployment
+![pet.png](readme%20b3aa00ae83594ef0aae50d29c2e746b5/pet.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `yarn build` fails to minify
+# 📌트러블 슈팅
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 전역상태관리 적용
+    
+    
+    | 문제 상황 | 마운트 할 때 useEffect로 불러오는 데이터를 map함수로 처리하는데 error 가 발생했습니다. |
+    | --- | --- |
+    | 발생 이유 | 비동기 호출에서 데이터 흐름에 의한 에러인 것으로 예상했습니다. |
+    | 해결 방안  | 1.  데이터가 호출될 때까지 로딩화면 적용
+    2.  redux-thunk와 옵셔널 체이닝 이용 |
+    | 의견 결정 | mvp 이후에 프로젝트 확장 가능성과 전역상태관리의 필요성을 고려하여 redux-toolkit을 도입하는 계기가 되었습니다. |
+- UX 개선
+    
+    
+    | 문제 상황 | pet 페이지 마운트 시 깜빡임 현상  |
+    | --- | --- |
+    | 발생 이유 | 게이미피케이션으로 인해 이미지파일(gif)이 큰 용량을 차지하고 있고, 이로 인해 랜더링 속도가 저한된 것으로 예상하였습니다. |
+    | 해결 방안  | 1.  이미지 리사이징
+    2.  로딩화면 추가 |
+    | 의견 결정 | 뷰포트가 작은 화면에서도 gif 파일이 거의 동일한 크기를 가지고 있으며 여전히 깜빡임을 완전히 해결할 수 없다고 판단하여 로딩 화면을 적용하였습니다. |
+
+---
+
+# 👥 팀원
+
+| 이름 | 분담 | 기술 블로그 |
+| --- | --- | --- |
+| 김현지 | 메인-데일리 페이지, 먼슬리 페이지, 습관 추가 페이지, 수정/삭제 페이지 | https://puringles.tistory.com |
+| 이지수 | 로그인·회원가입 페이지, 온보딩페이지, 관심사선택페이지, 구매페이지, 마이페이지, 펫페이지 | https://velog.io/@jisu2281l |

@@ -1,38 +1,24 @@
 import styled from "styled-components"
 
-import spinner from "../../assets/loadingImg/spinner.gif"
 import loadingBG from "../../assets/loadingImg/loadingBG.png"
+import mainLogo from "../../assets/loginImg/mainLogo.png"
 
 const Loading = () => {
   return(
-    <StLoadingBackground>
-      <StLoadingWrap>
-        <img src={spinner} alt="로딩 중..."/>
-        <StLoadingTxt>로딩 중...</StLoadingTxt>
-      </StLoadingWrap>
-    </StLoadingBackground>
+    <StLoadingBackground/>
   )
 }
 export default Loading
 
 const StLoadingBackground = styled.div`
-  width: 360px;
+  width: 450px;
   height: 100vh;
-  margin: auto;
-  background-image: url(${loadingBG});
-  background-size: 100%;
-  background-position: center;
+  background-image: url(${mainLogo}), url(${loadingBG});
+  background-size: 50%, cover;
+  background-position-x: center;
+  background-position-y: 20vh, center;
   background-repeat: no-repeat;
   position: absolute;
   top: 0;
   z-index: 100;
-`
-
-const StLoadingWrap = styled.div`
-  width: fit-content;
-  margin: 300px auto;
-`
-
-const StLoadingTxt = styled.div`
-  width: max-content;
 `

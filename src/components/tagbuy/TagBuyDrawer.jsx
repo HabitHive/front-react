@@ -6,7 +6,7 @@ import { BsStars } from "react-icons/bs"
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { __addTag } from "../../redux/modules/tagbuy";
+import { __addTag, __addUsersTag, __deleteUsersTag } from "../../redux/modules/tagbuy";
 
 import Tag from "../common/Tag"
 import { StSubmitBtn } from "../common/ButtonStyle";
@@ -26,31 +26,73 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   // 유저의 보유 포인트
   const userPoint = useSelector((state)=>state.tagBuy.userPoint)
 
+  // 유저가 작성한 습관
+  const [usersHabit, setUsersHabit] = useState("");
+
   const tagSubmitHandler = async () => {
     if (bought.period===0) {
       CustomAlert({
-        icon: "error",
+        icon: "warning",
         text: "구매 기간을 선택해 주세요"
       })
       return
+    } else if (usersHabit === "" && selectedTag[0].tagId === -100) {
+      CustomAlert({
+        icon: "warning",
+        text: "습관을 입력해 주세요"
+      })
+    } else if (usersHabit !== "" && selectedTag[0].tagId === -100) {
+      await dispatch(__addUsersTag({
+        tagName: usersHabit,
+        period: bought.period
+      }))
+      .then((res) => {
+        if (res.type==="addUsersTag/fulfilled") {
+          CustomToast({
+            icon: "success",
+            text: "구매 완료"
+          })
+          navigate("/")
+        } else if (res.payload.response.status===400) {
+          const cal = Math.abs(res.payload.response.data.result)
+          CustomAlert({
+            icon: "warning",
+            text: `${cal}point가 부족합니다`
+          })
+        }
+      })
+    } else {
+      await dispatch(__addTag(bought))
+      .then((res) => {
+        if (res.type==="addTag/fulfilled") {
+          CustomToast({
+            icon: "success",
+            text: "구매 완료"
+          })
+          navigate("/")
+        } else if (res.payload.response.status===400) {
+          const cal = Math.abs(res.payload.response.data.result)
+          CustomAlert({
+            icon: "warning",
+            text: `${cal}point가 부족합니다`
+          })
+        }
+      })
     }
-    await dispatch(__addTag(bought))
-    .then((res) => {
-      if (res.type==="addTag/fulfilled") {
-        CustomToast({
-          icon: "success",
-          text: "구매 완료"
-        })
-        navigate("/")
-      } else if (res.payload.response.status===400) {
-        const cal = Math.abs(res.payload.response.data.result)
-        CustomAlert({
-          icon: "warning",
-          text: `${cal}point가 부족합니다`
-        })
-      }
-    })
   };
+
+  const tagDeleteHandler = async () => {
+    // 취소 확인 버튼 추가하기
+    await dispatch(__deleteUsersTag(selectedTag[0]?.tagId))
+    .then((res) => {
+      // 예외처리 추가하기
+      CustomToast({
+        icon: "success",
+        text: "습관을 삭제했습니다"
+      })
+      navigate("/")
+    })    
+  }
 
   return (
     <StDrawerBg display={drawer ? null : "none"}> 
@@ -62,8 +104,19 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
             onClick={()=>setDrawer(false)}
           />
         </StDrawerHeader>
-
-        <Tag lists={selectedTag} disabled={"disabled"}/>
+        {
+          selectedTag[0]?.category?.indexOf("내 습관") === -1 ? null :
+          <StTagDeleteBtn
+            onClick={tagDeleteHandler}
+          >
+            내 습관 삭제하기
+          </StTagDeleteBtn>
+        }
+        {
+          selectedTag[0].tagId === -100 ?
+          <Tag lists={selectedTag} disabled={"disabled"} diy={true} setUsersHabit={setUsersHabit}/>
+          : <Tag lists={selectedTag} disabled={"disabled"}/>
+        }
 
         <StDrawerPeriodSelect
           onChange={e=>{
@@ -171,6 +224,9 @@ const StDrawer = styled.div`
   border-radius: 16px 16px 0 0;
   padding: 20px;
 
+  display: flex;
+  flex-direction: column;
+
   animation: ${DrawerUp} 0.5s;
   animation-direction: alternate;
 `
@@ -184,6 +240,18 @@ const StDrawerHeader = styled.div`
   color: #343434;
   font-size: 1rem;
   font-weight: 600;
+`
+
+const StTagDeleteBtn = styled.button`
+  all: unset;
+  cursor: pointer;
+  font-size: .9rem;
+  width: max-content;
+  display: flex;
+  align-self: flex-end;
+  margin: 10px 0 -10px 0;
+  color: #999999;
+  text-decoration: underline;
 `
 
 const StDrawerPeriodSelect = styled.form`

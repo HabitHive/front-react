@@ -10,7 +10,6 @@ const instance = axios.create({
 })
 export default instance
 
-
 // 토큰에 이상이 있는 경우 로그아웃
 instance.interceptors.response.use(
     response => {

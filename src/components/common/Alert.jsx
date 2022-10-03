@@ -2,11 +2,7 @@ import Swal from "sweetalert2"
 import "./AlertStyle.css"
 
 // 아이콘 종류
-// success		
-// error	
-// warning	
-// info	
-// question
+// success, error, warning, info, question
 
 // Alert
 export const CustomAlert = ({text, icon}) => {
