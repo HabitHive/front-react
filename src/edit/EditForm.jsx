@@ -32,7 +32,7 @@ const EditForm = () => {
 
   //nav props로 선택한 태그정보 가져오기
   const { state } = useLocation();
-console.log(state);
+
   //tag정보 분류
   const colorCode = ["#CFEEFF", "#FEE1DD", "#CBF8F5", "#FEEEDF"]
   const colorNum = state.color
@@ -116,7 +116,6 @@ console.log(state);
           onClick={() => deletePost()}
         />
       </STHeaderContainer>
-
       <BodyContainer>
         <STTagBox className="tag" num={colorNum} bgColor={backgroundColor}>
         <div className="tagTitle">{state.tagName} ( {state.period}일 )</div>

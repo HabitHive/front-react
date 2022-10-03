@@ -82,18 +82,15 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const BodyContainer = styled.div``;
+const BodyContainer = styled.div`
+`;
 
 const FooterContainer = styled.div`
   & .dailyBox {
-    position: absolute;
-    bottom: 0;
     width: 100%;
-    height: 300px;
     background: #7a61ff;
     box-shadow: 0px -8px 12px rgba(0, 0, 0, 0.08);
     border-radius: 16px 16px 0px 0px;
-    overflow: auto;
 
     & .topBox {
       display: flex;
@@ -113,6 +110,10 @@ const FooterContainer = styled.div`
         text-align: right;
         color: #ffffff;
       }
+    }
+    & .dailyList {
+      height: 430px;
+      overflow: scroll;
     }
   }
 `;
