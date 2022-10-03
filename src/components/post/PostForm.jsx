@@ -356,15 +356,11 @@ const STTagBox = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  position: relative;
-  bottom: -180px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
   & .button {
     display: block;
-    margin: 0 auto;
     min-width: 180px;
     width: calc(100% - 136px);
+    margin: 15vh auto;
   }
 `;
