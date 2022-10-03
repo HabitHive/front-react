@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import buyBG from "../../assets/buyImg/buyBG.png"
+import buyButton from "../../assets/buyImg/buyButton.png"
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,14 @@ const TagBuylist = () => {
 
   const randomTagList = useSelector((state)=>state.tagBuy.randomTagList)
   const tagAllList = useSelector((state)=>state.tagBuy.tagAllList)
+
+  // 유저 작성 습관 버튼 placeHolder
+  const diyTag = [{
+    category: ["나만의", "습관을","만들면","상점에","추가됩니다!"],
+    tagId: -100,
+    color: 1,
+    tagName: "원하는 습관을 직접 만드세요!"
+  }]
     
   useEffect(()=>{
     dispatch(__getTagBuyList(attention));
@@ -43,6 +52,7 @@ const TagBuylist = () => {
           <h4 className="black"> 전체습관 </h4>
           <SelectBox setAttention={setAttention}/>
         </StSubTittle>
+        <Tag lists={diyTag} setSelectedTag={setSelectedTag} setDrawer={setDrawer} shadow={true}/>
         {
           tagAllList.length === 0 ? <div className="soldOut all"> <p>추천하는 습관이 없습니다</p> </div> :
           <Tag lists={tagAllList} setSelectedTag={setSelectedTag} setDrawer={setDrawer}/>
@@ -56,14 +66,14 @@ export default TagBuylist
 
 const StTagBuyWrap = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 0 20px;
   background-image: url(${buyBG});
   background-repeat: no-repeat;
   background-size: contain; 
   color: white;
 
   & h1 {
-    margin: 12% 0;
+    margin: 6vh 0;
     font-weight: 700; 
     font-size: 1.2rem;
     text-align: center;

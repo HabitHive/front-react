@@ -11,7 +11,7 @@ import mask3 from "../../assets/tag/mask3.png"
 
 import TagWeekday from "../mypage/TagWeekday"
 
-const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow}) => {
+const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow, diy, setUsersHabit}) => {
 
   const mypage = window.location.pathname
 
@@ -34,7 +34,15 @@ const Tag = ({lists, setSelectedTag, setDrawer, disabled, shadow}) => {
           onClick={()=>tagSelectHandler({list})}
           >
             <div className="title">
-              { list.tagName }
+              { diy ? 
+                <StTagInput 
+                  placeholder="습관을 입력하세요(15자)" 
+                  maxLength={15} 
+                  onChange={(e)=>{
+                    setUsersHabit(e.target.value)
+                  }}/> 
+                : list.tagName 
+              }
               { list.dDay ? <div className="dBox"> D-{list.dDay} </div> : null }
             </div>
             <StTagCategories>
@@ -112,6 +120,7 @@ const StTag = styled.div`
 
 const StTagCategories = styled.div`
   display: flex;
+  align-items: flex-end;
 `
 
 const StCategory = styled.div`
@@ -124,4 +133,11 @@ const StCategory = styled.div`
   font-size: 12px;
   font-weight: 500;
   color: white;
+`
+
+const StTagInput = styled.input`
+  all: unset;
+  width: 65%;
+  border-bottom: 1px solid #343434;
+  font: .3rem 500;
 `

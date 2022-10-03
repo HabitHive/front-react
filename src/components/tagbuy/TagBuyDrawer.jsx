@@ -6,7 +6,7 @@ import { BsStars } from "react-icons/bs"
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { __addTag } from "../../redux/modules/tagbuy";
+import { __addTag, __addUsersTag } from "../../redux/modules/tagbuy";
 
 import Tag from "../common/Tag"
 import { StSubmitBtn } from "../common/ButtonStyle";
@@ -26,6 +26,9 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
   // 유저의 보유 포인트
   const userPoint = useSelector((state)=>state.tagBuy.userPoint)
 
+  // 유저가 작성한 습관
+  const [usersHabit, setUsersHabit] = useState("");
+
   const tagSubmitHandler = async () => {
     if (bought.period===0) {
       CustomAlert({
@@ -33,23 +36,49 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
         text: "구매 기간을 선택해 주세요"
       })
       return
+    } else if (usersHabit === "" && selectedTag[0].tagId === -100) {
+      CustomAlert({
+        icon: "warning",
+        text: "습관을 입력해 주세요"
+      })
+    } else if (usersHabit !== "" && selectedTag[0].tagId === -100) {
+      await dispatch(__addUsersTag({
+        tagName: usersHabit,
+        period: bought.period
+      }))
+      .then((res) => {
+        if (res.type==="addUsersTag/fulfilled") {
+          CustomToast({
+            icon: "success",
+            text: "구매 완료"
+          })
+          navigate("/")
+        } else if (res.payload.response.status===400) {
+          const cal = Math.abs(res.payload.response.data.result)
+          CustomAlert({
+            icon: "warning",
+            text: `${cal}point가 부족합니다`
+          })
+        }
+      })
+    } else {
+      await dispatch(__addTag(bought))
+      .then((res) => {
+        if (res.type==="addTag/fulfilled") {
+          CustomToast({
+            icon: "success",
+            text: "구매 완료"
+          })
+          navigate("/")
+        } else if (res.payload.response.status===400) {
+          const cal = Math.abs(res.payload.response.data.result)
+          CustomAlert({
+            icon: "warning",
+            text: `${cal}point가 부족합니다`
+          })
+        }
+      })
     }
-    await dispatch(__addTag(bought))
-    .then((res) => {
-      if (res.type==="addTag/fulfilled") {
-        CustomToast({
-          icon: "success",
-          text: "구매 완료"
-        })
-        navigate("/")
-      } else if (res.payload.response.status===400) {
-        const cal = Math.abs(res.payload.response.data.result)
-        CustomAlert({
-          icon: "warning",
-          text: `${cal}point가 부족합니다`
-        })
-      }
-    })
   };
 
   return (
@@ -63,7 +92,11 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
           />
         </StDrawerHeader>
 
-        <Tag lists={selectedTag} disabled={"disabled"}/>
+        {
+          selectedTag[0].tagId === -100 ?
+          <Tag lists={selectedTag} disabled={"disabled"} diy={true} setUsersHabit={setUsersHabit}/>
+          : <Tag lists={selectedTag} disabled={"disabled"}/>
+        }
 
         <StDrawerPeriodSelect
           onChange={e=>{

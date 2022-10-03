@@ -181,7 +181,7 @@ const StPetBG = styled.div`
     color: #6334FF;
   }
   & h1 {
-    margin: 12% 0;
+    margin: 6vh 0;
     font-weight: 700; 
     font-size: 1.2rem;
     text-align: center;
