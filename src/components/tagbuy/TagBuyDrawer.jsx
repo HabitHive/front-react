@@ -86,11 +86,18 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
     await dispatch(__deleteUsersTag(selectedTag[0]?.tagId))
     .then((res) => {
       // 예외처리 추가하기
-      CustomToast({
-        icon: "success",
-        text: "습관을 삭제했습니다"
-      })
-      navigate("/")
+      if (res.type==="deleteUsersTag/rejected") {
+        CustomAlert({
+          icon: "error",
+          text: "삭제 실패. 다시 시도해 주세요" 
+        })
+      } else {
+        CustomToast({
+          icon: "success",
+          text: "습관을 삭제했습니다"
+        })
+        navigate("/")
+      }
     })    
   }
 

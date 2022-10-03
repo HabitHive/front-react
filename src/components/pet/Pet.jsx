@@ -167,7 +167,7 @@ const StPetBG = styled.div`
   height: 100vh;
   background-color: #E2DCFF;
   background-image: url(${petBG});
-  background-size: cover;
+  background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;

@@ -13,7 +13,7 @@ const Navbar = () => {
   let pathname = window.location.pathname;
 
   return (
-    <StNavContainer>
+    <StNavContainer pathname={pathname}>
       <StNavUl>
         <StNavli
           onClick={() => {
@@ -66,9 +66,13 @@ const Navbar = () => {
 export default Navbar;
 
 const StNavContainer = styled.nav`
+  max-width: 450px;
   width: 100%;
-  position: sticky;
+  position: ${props=>props.pathname==="/pet"? "absolute" : "sticky"};
   bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 `;
 
 const StNavUl = styled.ul`
