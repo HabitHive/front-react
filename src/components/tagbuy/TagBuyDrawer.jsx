@@ -6,7 +6,7 @@ import { BsStars } from "react-icons/bs"
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { __addTag, __addUsersTag } from "../../redux/modules/tagbuy";
+import { __addTag, __addUsersTag, __deleteUsersTag } from "../../redux/modules/tagbuy";
 
 import Tag from "../common/Tag"
 import { StSubmitBtn } from "../common/ButtonStyle";
@@ -81,6 +81,19 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
     }
   };
 
+  const tagDeleteHandler = async () => {
+    // 취소 확인 버튼 추가하기
+    await dispatch(__deleteUsersTag(selectedTag[0]?.tagId))
+    .then((res) => {
+      // 예외처리 추가하기
+      CustomToast({
+        icon: "success",
+        text: "습관을 삭제했습니다"
+      })
+      navigate("/")
+    })    
+  }
+
   return (
     <StDrawerBg display={drawer ? null : "none"}> 
       <StDrawer>  
@@ -91,7 +104,14 @@ const TagBuyDrawer = ({selectedTag, drawer, setDrawer}) => {
             onClick={()=>setDrawer(false)}
           />
         </StDrawerHeader>
-
+        {
+          selectedTag[0]?.category?.indexOf("내 습관") === -1 ? null :
+          <StTagDeleteBtn
+            onClick={tagDeleteHandler}
+          >
+            내 습관 삭제하기
+          </StTagDeleteBtn>
+        }
         {
           selectedTag[0].tagId === -100 ?
           <Tag lists={selectedTag} disabled={"disabled"} diy={true} setUsersHabit={setUsersHabit}/>
@@ -204,6 +224,9 @@ const StDrawer = styled.div`
   border-radius: 16px 16px 0 0;
   padding: 20px;
 
+  display: flex;
+  flex-direction: column;
+
   animation: ${DrawerUp} 0.5s;
   animation-direction: alternate;
 `
@@ -217,6 +240,18 @@ const StDrawerHeader = styled.div`
   color: #343434;
   font-size: 1rem;
   font-weight: 600;
+`
+
+const StTagDeleteBtn = styled.button`
+  all: unset;
+  cursor: pointer;
+  font-size: .9rem;
+  width: max-content;
+  display: flex;
+  align-self: flex-end;
+  margin: 10px 0 -10px 0;
+  color: #999999;
+  text-decoration: underline;
 `
 
 const StDrawerPeriodSelect = styled.form`
