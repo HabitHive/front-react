@@ -16,12 +16,16 @@ import LV2 from "../../assets/mypetImg/LV2.gif"
 import LV3 from "../../assets/mypetImg/LV3.gif"
 import LV4 from "../../assets/mypetImg/LV4.gif"
 import { petData } from "../pet/petData"
+import Loading from "../common/Loading"
 
 const Pet = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state)=>state.profile)
   const petInfo = useSelector((state)=>state.pet)
+
+  // 로딩화면
+  const [isLoad, setIsLoad] = useState(true);
 
   // 클릭 횟수 카운트
   const [count, setCount] = useState(1);
@@ -75,11 +79,16 @@ const Pet = () => {
   useEffect(()=>{
     dispatch(__getPetData())
     dispatch(__getProfile())
+    .then((res)=>{
+      setTimeout(()=>{
+        setIsLoad(false)
+      },800)
+    })
   },[petInfo])
 
   return (
     <StPetBG>
-      
+      { isLoad ? <Loading/> : null }
       <h1>
         <span>{user.nickname}</span> &nbsp; 님의 펫
       </h1>
@@ -172,7 +181,7 @@ const StPetBG = styled.div`
     color: #6334FF;
   }
   & h1 {
-    margin: 12% 0;
+    margin: 6vh 0;
     font-weight: 700; 
     font-size: 1.2rem;
     text-align: center;

@@ -2,7 +2,14 @@ import styled from "styled-components";
 import Header from "../common/Header";
 import { StSubmitBtn } from "../common/ButtonStyle";
 import { CustomAlert } from "../common/Alert";
-import Tag from "../common/Tag";
+import icon0 from "../../assets/tag/icon0.png"
+import icon1 from "../../assets/tag/icon1.png"
+import icon2 from "../../assets/tag/icon2.png"
+import icon3 from "../../assets/tag/icon3.png"
+import mask0 from "../../assets/tag/mask0.png"
+import mask1 from "../../assets/tag/mask1.png"
+import mask2 from "../../assets/tag/mask2.png"
+import mask3 from "../../assets/tag/mask3.png"
 
 import calendarImg from "../../assets/images/calendar.png";
 import timeImg from "../../assets/images/timeIcon.png";
@@ -40,6 +47,13 @@ const PostForm = () => {
   //보유습관에서 선택한 tag값 가져오기
   const { state } = useLocation();
   console.log(state)
+  //tag정보 분류
+  const colorCode = ["#CFEEFF", "#FEE1DD", "#CBF8F5", "#FEEEDF"]
+  const colorNum = state.color
+  const backgroundColor = colorCode[colorNum]
+const category = state.category
+
+
   let now = new Date();
   let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
     .toISOString()
@@ -85,10 +99,18 @@ const PostForm = () => {
     <div>
       <Header text={"데일리 설정"} />
       <BodyContainer>
-        <div className="tagTitle">
-          {state.tagName} ( {state.period}일 )
-        </div>
-        <Tag lists={selectedTag} disabled={"disabled"}></Tag>
+        <STTagBox className="tag" num={colorNum} bgColor={backgroundColor}>
+        <div className="tagTitle">{state.tagName} ( {state.period}일 )</div>
+          <div className="tagCategories">
+            {category?.map((category, i) => {
+              return (
+                <div className="category" key={i}>
+                  {category}
+                </div>
+              );
+            })}
+          </div>
+        </STTagBox>
         <div className="startDate">
           <span className="startDateText">날짜 설정</span>
           <DatePicker
@@ -177,26 +199,7 @@ const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  //선택한 습관
-  & .tagTitle {
-    background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
-    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
-    border-radius: 12px 12px 12px 0px;
 
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    text-align: center;
-    color: #ffffff;
-    /* 습관박스 css */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: calc(100% - 40px);
-    height: 62px;
-    margin: 16px auto 0 auto;
-  }
   & .startDate {
     width: 100%;
     padding: 0 20px;
@@ -310,6 +313,55 @@ const BodyContainer = styled.div`
     margin: 24px 0 0 -30%;
   }
 `;
+const STTagBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: calc(100% - 40px);
+  min-height: 82px;
+  padding: 12px 12px 7px 12px;
+  margin: 16px auto 0 auto;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
+  border-radius: 12px 12px 12px 0px;
+
+  background-image: url(
+  ${ props => props.num === 0 ? icon0 : 
+    props=>props.num === 1 ? icon1 : 
+    props=>props.num === 2 ? icon2 : icon3 }),
+    url(
+  ${ props => props.num === 0 ? mask0 : 
+    props=>props.num === 1 ? mask1 : 
+    props=>props.num === 2 ? mask2 : mask3 });
+  background-repeat: no-repeat;
+  background-position: 95%, right;
+  background-color: ${(props)=>props.bgColor};
+  //선택한 습관
+  & .tagTitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 21px;
+  color: #343434;
+  }
+
+  //카테고리들
+  & .tagCategories {
+  display: flex;
+  flex-wrap: wrap;
+  & .category {
+    background-color: #B3A5FF;
+    padding: 2px 6px;
+    border-radius: 4px;
+    align-items: center;
+    width: fit-content;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 200;
+    color: white;
+    margin: 0 5px 5px 0;
+  }
+}
+`;
+
 const ButtonContainer = styled.div`
   position: relative;
   bottom: -180px;

@@ -11,10 +11,7 @@ import LV1 from "../../assets/mypageImg/LV1.png"
 import LV2 from "../../assets/mypageImg/LV2.png"
 import LV3 from "../../assets/mypageImg/LV3.png"
 import LV4 from "../../assets/mypageImg/LV4.png"
-import { BsStars } from "react-icons/bs";
-
-//테스트
-import { ConfirmAlert } from "../common/Alert"
+import { BsStars } from "react-icons/bs"
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -32,7 +29,7 @@ const Profile = () => {
   return(
   <>
     <StProfileWrap>
-      <span>마이메뉴</span>
+      <h1>마이메뉴</h1>
       <div></div>
       <StUserImg>
         <StPetImg level={profile.petLevel}/>
@@ -56,12 +53,13 @@ const StProfileWrap = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 0 0 16px 16px;
-  & > span {
-    font-weight: 700;
-    font-size: 18px;
+  & h1 {
+    margin: 6vh 0;
+    font-weight: 700; 
+    font-size: 1.2rem;
+    text-align: center;
     color: #343434;
-    letter-spacing: -0.3px;
-    margin: 7% 0 5% 0;
+    letter-spacing: -0.1rem;
   }
   & p {
     font-weight: 800;
@@ -75,7 +73,7 @@ const StUserImg = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 100%;
-  margin: 12px auto 15px auto;
+  margin-bottom: 5px;
   background-image: url(${userIMG});
   background-position: center;
   background-size: contain;
