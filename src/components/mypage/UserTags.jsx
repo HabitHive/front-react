@@ -47,7 +47,7 @@ const UserTags = ({setModal}) => {
           <button
             onClick={()=>setModal(true)}
           >
-            전체목록 
+            전체목록 {stillTags.length}개
           <IoIosArrowForward className="icon"/> </button>
         </StTagTitle>
           { stillTags?.length === 0 ? 

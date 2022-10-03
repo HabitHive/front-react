@@ -68,12 +68,6 @@ export const tagBuySlice = createSlice({
       state.tagAllList = action.payload.tagAllList
       state.userPoint = action.payload.userPoint
     })
-    .addCase(__addTag.fulfilled, (state, action) => {
-
-    })
-    .addCase(__addTag.rejected, (state, action) => {
-
-    })
   }
 });
 
