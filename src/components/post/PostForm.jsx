@@ -34,8 +34,9 @@ const PostForm = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [finalDate, setFinalDate] = useState(null);
-  const [msg, setMsg] = useState("");
-  
+  const [msg, setMsg] = useState("설정하신 날짜에 맞게 요일을 꼭 맞춰주세요 !");
+  const [ msgColor, setMsgColor ] = useState(false);
+
   // 선택한 습관
   const [selectedTag, setSelectedTag] = useState([]);
   
@@ -46,13 +47,12 @@ const PostForm = () => {
 
   //보유습관에서 선택한 tag값 가져오기
   const { state } = useLocation();
-  console.log(state)
+
   //tag정보 분류
   const colorCode = ["#CFEEFF", "#FEE1DD", "#CBF8F5", "#FEEEDF"]
   const colorNum = state.color
   const backgroundColor = colorCode[colorNum]
-const category = state.category
-
+  const category = state.category
 
   let now = new Date();
   let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
@@ -85,9 +85,10 @@ const category = state.category
     dispatch(
       __addSchedule([startDate, startTime, endTime, inputCheck, state])
     ).then((res) => {
-      console.log(res);
+
       if (res.type === "addSchedule/rejected") {
         setMsg("설정하지 않은 날짜,시간 혹은 요일이 있습니다");
+        setMsgColor(true);
       } else if (res.type === "addSchedule/fulfilled") {
         CustomAlert({ text: "등록이 완료되었습니다" , icon:"success"});
         navigate("/");
@@ -180,10 +181,7 @@ const category = state.category
             })}
           </div>
         </div>
-        <p className="helpTXT">
-          {"설정하신 날짜에 맞게 요일을 꼭 맞춰주세요 !"}
-        </p>
-        {msg !== "" ? <p className="errTXT">{msg}</p> : null}
+        {msg !== "" ? <p className={msgColor===false?null:"helpTXT"}>{msg}</p> : null}
       </BodyContainer>
       <ButtonContainer>
         <StSubmitBtn className="button" onClick={() => savePost()}>
@@ -295,23 +293,18 @@ const BodyContainer = styled.div`
       margin-top: 24px;
     }
   }
-  //에러메시지
-  & .errTXT {
-    color: #f53232;
-    font-weight: 500;
-    font-size: 14px;
-    letter-spacing: -0.3px;
-    line-height: 18px;
-    margin: 24px 0 0 -30%;
-  }
-  & .helpTXT {
+  & p {
     color: #999999;
     font-weight: 500;
     font-size: 14px;
     letter-spacing: -0.3px;
     line-height: 18px;
-    margin: 24px 0 0 -30%;
+    margin: 24px auto 0 auto;
+    &.helpTXT {
+    color: red;
   }
+  }
+
 `;
 const STTagBox = styled.div`
   display: flex;
@@ -363,15 +356,11 @@ const STTagBox = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  position: relative;
-  bottom: -180px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
   & .button {
     display: block;
-    margin: 0 auto;
     min-width: 180px;
     width: calc(100% - 136px);
+    margin: 15vh auto;
   }
 `;
