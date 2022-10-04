@@ -14,9 +14,11 @@ import mask1 from "../../../assets/tag/mask1.png"
 import mask2 from "../../../assets/tag/mask2.png"
 import mask3 from "../../../assets/tag/mask3.png"
 
-const TodayTagList = ({ list,num,bgColor }) => {
+const TodayTagList = ({ list,num,bgColor,disabled }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const pathName = window.location.pathname
 
   //props분류
   const id = list.scheduleId;
@@ -31,51 +33,58 @@ const TodayTagList = ({ list,num,bgColor }) => {
   
 
   const clickInput = () => {
-    if (done === false) {
-      dispatch(__doneMyDaily({ id, date: today })).then((res) => {
-        if (res.payload[0].first === true && res.payload[0].bonus === true) {
-          Swal.fire({
-            text: "20point가 지급되었습니다!",
-            icon: "success",
-            width: 300,
+    if ( disabled === true ) {
+      return
+      }else if (done === false) {
+        dispatch(__doneMyDaily({ id, date: today })).then((res) => {
+          if (res.payload[0].first === true && res.payload[0].bonus === true) {
+            Swal.fire({
+              text: "20point가 지급되었습니다!",
+              icon: "success",
+              width: 300,
+  
+              confirmButtonColor: "#3085d6", // 확인 버튼 색깔 지정
+              confirmButtonText: "확인", // 확인 버튼 텍스트 지정
+              reverseButtons: true, // 버튼 순서 거꾸로,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // 만약 확인 버튼을 눌렀다면
+                Swal.fire({
+                  text: `완료 추가보너스 ${res.payload[0].bonusPoint}Point가 지급되었습니다!`,
+                  icon: "success",
+                  width: 300,
+                });
+              }
+            });
+          } else if (res.payload[0].first === true) {
+            CustomAlert({ text: "20point 가 지급되었습니다" });
+          }
+        });
+      }
 
-            confirmButtonColor: "#3085d6", // 확인 버튼 색깔 지정
-            confirmButtonText: "확인", // 확인 버튼 텍스트 지정
-            reverseButtons: true, // 버튼 순서 거꾸로,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // 만약 확인 버튼을 눌렀다면
-              Swal.fire({
-                text: `완료 추가보너스 ${res.payload[0].bonusPoint}Point가 지급되었습니다!`,
-                icon: "success",
-                width: 300,
-              });
-            }
-          });
-        } else if (res.payload[0].first === true) {
-          CustomAlert({ text: "20point 가 지급되었습니다" });
-        }
-      });
-    }
   };
 
   return (
     <>
-      <STTodayTagList>
+      <STTodayTagList pathName={pathName}>
         <div className="checkBox">
-          <STLabel onClick={clickInput} isChecked={done}  ></STLabel>
+          <STLabel onClick={clickInput} isChecked={done} pathName={pathName} ></STLabel>
           <STInputCheckbox type="checkbox" isChecked={done}></STInputCheckbox>
         </div>
         <STTagListBox
           className={done ? "doneTag" : "tagListbox"}
           onClick={() => {
-            if (done === false) {
-              navigate("/edit", { state: list });
-            } else {
-              CustomAlert({ text: "이미 완료한 습관입니다",icon:"warning" });
-            }
+            if ( disabled === true ) {
+              return
+              } else if (done === false) {
+                navigate("/edit", { state: list });
+              } else {
+                CustomAlert({ text: "이미 완료한 습관입니다",icon:"warning" });
+              }
           }}
-          num={num} bgColor={bgColor}
+          num={num} 
+          bgColor={bgColor}
+          disabled={disabled}
         >
           <div className="tagCycle">{timeCycle}</div>
           <div className="tagTitle">{tagName}</div>
@@ -101,7 +110,6 @@ const STTodayTagList = styled.div`
   display: flex;
   margin: 0 20px 12px 20px;
 
-
   & .checkBox {
     flex-shrink: 0;
     width: 30px;
@@ -111,15 +119,13 @@ const STTodayTagList = styled.div`
 
   //말풍선 영역
   & .tagListbox {
+    cursor: ${(props)=>props.pathName==="/monthly"? null : "pointer" };
 
-
-    cursor: pointer;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 12px 0px;
     min-height: 82px;
     padding: 12px 12px 7px 12px;
     flex-grow: 1;
-
     //타임사이클
     & .tagCycle {
       font-size: 12px;
@@ -217,7 +223,7 @@ const STLabel = styled.label`
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 50%;
-  cursor: pointer;
+  cursor: ${(props)=>props.pathName==="/monthly"? null : "pointer" };
   width: 28px;
   height: 28px;
   position: absolute;

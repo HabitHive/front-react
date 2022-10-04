@@ -12,9 +12,9 @@ import { __getMonth } from "../redux/modules/month";
 const MonthlyPage = () => {
   const dispatch = useDispatch();
 
-  let now = new Date();
   const pick = useSelector((state) => state.getMyDaily.myDaily[1]);
-
+  
+  let now = new Date();
   let pickMonth = new Date(now).toLocaleString("en-US", { month: "long" });
   let pickDay = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
     .toISOString()
@@ -33,6 +33,7 @@ const MonthlyPage = () => {
 
   const [value, setValue] = useState(now);
   const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
+
 
   useEffect(() => {
     dispatch(__getMonth(pickDate));
@@ -56,7 +57,7 @@ const MonthlyPage = () => {
             </div>
           </div>
           <div className="dailyList">
-            <DailyTag />
+            <DailyTag disabled={true}/>
           </div>
         </div>
       </FooterContainer>
