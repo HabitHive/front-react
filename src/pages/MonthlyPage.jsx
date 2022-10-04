@@ -13,7 +13,7 @@ const MonthlyPage = () => {
   const dispatch = useDispatch();
 
   const pick = useSelector((state) => state.getMyDaily.myDaily[1]);
-  
+
   let now = new Date();
   let pickMonth = new Date(now).toLocaleString("en-US", { month: "long" });
   let pickDay = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
@@ -33,7 +33,6 @@ const MonthlyPage = () => {
 
   const [value, setValue] = useState(now);
   const [pickDate, SetPickDate] = useState(moment(value).format("YYYY-MM-DD"));
-
 
   useEffect(() => {
     dispatch(__getMonth(pickDate));
@@ -57,7 +56,7 @@ const MonthlyPage = () => {
             </div>
           </div>
           <div className="dailyList">
-            <DailyTag disabled={true}/>
+            <DailyTag disabled={true} />
           </div>
         </div>
       </FooterContainer>
@@ -83,8 +82,7 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const BodyContainer = styled.div`
-`;
+const BodyContainer = styled.div``;
 
 const FooterContainer = styled.div`
   & .dailyBox {
