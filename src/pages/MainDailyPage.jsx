@@ -41,7 +41,7 @@ const MainDailyPage = () => {
           <WeekCalendar />
         </StHeaderContainer>
         <StBodyContainer>
-          <DailyTag />
+          <DailyTag disabled={false}/>
           {modal === false ? (
             <STModal
               onClick={() => {

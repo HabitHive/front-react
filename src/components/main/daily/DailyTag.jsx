@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import TodayTagList from "./TodayTagList";
 
-const DailyTag = () => {
+const DailyTag = ({disabled}) => {
   const state = useSelector((state) => state.getMyDaily.myDaily);
   //목록 분류
   const myDaily = state[0];
@@ -27,6 +27,7 @@ const DailyTag = () => {
                 setBeChecked={setBeChecked}
                 num={list.color}
                 bgColor={colorCode[list.color]}
+                disabled={disabled}
               />
             );
           })
