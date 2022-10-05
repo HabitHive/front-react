@@ -15,42 +15,40 @@ import monthlyCalendarImg from "../../../assets/monthly/monthlyCalendarImg.png";
 const MonthlyCalendar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  //완료한 습관 갯수 리스트 
+
+  const [month, setMonth] = useState("2022-10-06");
+  //완료한 습관 갯수 리스트
   const { doneList } = useSelector((state) => state.getMonth);
 
   /** toISOString에 맞춰진 한국RFC */
   const krTime = (time) => {
-    const krRFC =new Date(time.getTime() - time.getTimezoneOffset() * 60000)
-    return krRFC
-  }
+    const krRFC = new Date(time.getTime() - time.getTimezoneOffset() * 60000);
+    return krRFC;
+  };
 
   /** "년-월-일" 형식 구하는 함수 */
   const stringTime = (time) => {
-    const string = time.toISOString().slice(0, 10)
-    return string
-  }
+    const string = time.toISOString().slice(0, 10);
+    return string;
+  };
   const now = new Date();
   const [value, onChange] = useState(now);
   const today = stringTime(krTime(now));
 
-  //클릭한날짜의 데일리일정
+  //클릭한날짜의 데일리일정 가져오기
   const pickDate = (value) => {
     const pick = stringTime(krTime(value));
     dispatch(__getMyDaily(pick));
   };
 
   const dbClickDate = (value) => {
-    const clickDate = 
-    stringTime(krTime(value));
+    const clickDate = stringTime(krTime(value));
     navigate("/", { state: clickDate });
   };
 
   useEffect(() => {
-    dispatch(__getMonth(stringTime(krTime(value))));
-  }, []);
-
-
+    dispatch(__getMonth(month));
+  }, [month]);
 
   return (
     <>
@@ -66,13 +64,14 @@ const MonthlyCalendar = () => {
           next2Label={null} //년도변경버튼 숨기기
           locale="en"
           tileContent={({ date, view }) => {
+            // console.log(date.toISOString().slice(0, 10));
+            setMonth(date.toISOString().slice(0, 10));
             return (
               <>
                 <STTile
                   data={
                     doneList[ //01~09일까지는 0을 떼고 10일부터는 그대로
-                      krTime(date).toISOString().slice(8, 10)
-                        .startsWith("0")
+                      krTime(date).toISOString().slice(8, 10).startsWith("0")
                         ? krTime(date).toISOString().slice(9, 10)
                         : krTime(date).toISOString().slice(8, 10)
                     ]
@@ -152,6 +151,20 @@ const SWrapper = styled.div`
       background-color: #eee;
       width: calc(100% - 40px);
     }
+
+    //년도버튼 투명버튼으로 가리기
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 20px;
+      width: 136px;
+      height: 44px;
+      background-color: transparent;
+      cursor: pointer;
+      z-index: 10;
+    }
+
     & button {
       height: 44px;
       align-items: center;
@@ -166,6 +179,7 @@ const SWrapper = styled.div`
         background-color: #674ded;
         margin-left: 20px;
         flex-grow: 0 !important;
+        position: relative;
       }
 
       &.react-calendar__navigation__next-button {
