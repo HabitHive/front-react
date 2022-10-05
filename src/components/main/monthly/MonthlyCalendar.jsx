@@ -188,7 +188,7 @@ const SWrapper = styled.div`
       box-sizing: border-box;
 
       &.react-calendar__navigation__label {
-        width: 136px;
+        min-width: 136px;
         color: white;
         font-size: 18px;
         font-weight: 600;
