@@ -32,19 +32,22 @@
 .react-calendar button:enabled:hover {
   cursor: pointer;
 }
+
+/* 헤더부분 */
 .react-calendar__navigation {
   display: flex;
+  /* justify-content: ; */
   height: 44px;
-  margin-bottom: 1em;
-  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
-border-radius: 6px;
+  /* margin-bottom: 1em; */
+  /* background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%); */
+  border-radius: 6px;
 }
 .react-calendar__navigation__label {
-  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
+  background: linear-gradient(197.06deg, #907cf9 -6.2%, #6334ff 101.13%);
   border-radius: 6px;
 }
 .react-calendar__navigation button {
-  min-width: 44px;
+  /* min-width: 44px; */
   background: none;
 }
 .react-calendar__navigation button:disabled {
@@ -69,7 +72,7 @@ border-radius: 6px;
   justify-content: center;
   font-size: 0.75em;
   font-weight: bold;
-  height:100px;
+  height: 100px;
 }
 .react-calendar__month-view__days__day--weekend {
   color: #d10000;
@@ -85,7 +88,7 @@ border-radius: 6px;
 }
 .react-calendar__tile {
   max-width: 100%;
-  padding: 10px 6.6667px;
+  /* padding: 10px 6.6667px; */
   background: none;
   text-align: center;
   line-height: 16px;
@@ -96,10 +99,11 @@ border-radius: 6px;
 /* 커서 따라다닐때,날짜 클릭했을 때 */
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
-  color:white;
-  border-radius: 8px;
+  /* background-color: #674ded; */
+  /* color: white; */
+  /* border-radius: 50%; */
 }
+
 .react-calendar__tile--now {
   /* background: #674DED;
   border: 1px solid #674DED;
@@ -107,31 +111,48 @@ border-radius: 6px;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
-  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
-  color:white;
-  border-radius: 8px;
+  /* background-color: #674ded; */
+  /* color: white; */
+  /* border-radius: 50%; */
 }
 /* 년도로 갔을 때 */
 .react-calendar__tile--hasActive {
-  background: #674DED;
+  /* background: #674ded; */
 }
 /* 년도 호버됐을 때 */
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: #674DED;
+  /* background: #674ded; */
 }
-/* 오늘날짜표시 =>따로 안하기로함*/
+/* 오늘날짜표시*/
 .react-calendar__tile--active {
-  /* background: #006edc;
-  border: 3px solid #674DED;
-  border-radius: 8px; */
+  /* background-color: #b3a5ff; */
+  color: white;
 }
+
+/* 투데이 표현 */
+.react-calendar__tile--active abbr::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background-color: #674ded;
+  z-index: -1;
+} /* border-radius: 50%; */
+
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: linear-gradient(197.06deg, #907CF9 -6.2%, #6334FF 101.13%);
-  color:white;
-  border-radius: 8px;
+  /* background-color: #674ded; */
+  /* color: white; */
+  /* border-radius: 50%; */
 }
+
 .react-calendar--selectRange .react-calendar__tile--hover {
-  background-color: #e6e6e6;
+  /* background-color: #674ded; */
 }
