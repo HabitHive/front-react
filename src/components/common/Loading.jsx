@@ -5,7 +5,9 @@ import mainLogo from "../../assets/loginImg/mainLogo.png"
 
 const Loading = () => {
   return(
-    <StLoadingBackground/>
+    <StLoadingBackground>
+      로딩 중...
+    </StLoadingBackground>
   )
 }
 export default Loading
@@ -21,4 +23,12 @@ const StLoadingBackground = styled.div`
   position: absolute;
   top: 0;
   z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Jua', sans-serif;
+  font-size: 1.5rem;
+  color: white;
 `
