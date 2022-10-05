@@ -22,8 +22,10 @@ const MonthlyCalendar = () => {
     .toISOString()
     .slice(0, 10);
 
+  //완료한 습관 갯수 리스트 
   const { doneList } = useSelector((state) => state.getMonth);
-  // console.log(doneList);
+
+  //클릭한날짜의 데일리일정
   const pickDate = (value) => {
     const pick = new Date(value.getTime() - value.getTimezoneOffset() * 60000)
       .toISOString()
@@ -44,9 +46,6 @@ const MonthlyCalendar = () => {
     dispatch(__getMonth("2022-10-04"));
   }, []);
 
-  //doneList에는 [0~32의 리스트에 값이 들어오고]
-  //1일에는 donelist[1]의 값이 필요함
-
   return (
     <>
       <SWrapper doneList={doneList}>
@@ -61,25 +60,6 @@ const MonthlyCalendar = () => {
           next2Label={null} //년도변경버튼 숨기기
           locale="en"
           tileContent={({ date, view }) => {
-            console.log(
-              new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-                .toISOString()
-                .slice(8, 10)
-                .startsWith("0")
-                ? new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-                    .toISOString()
-                    .slice(9, 10)
-                : new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-                    .toISOString()
-                    .slice(8, 10)
-            );
-            // console.log(d00);
-            // if (mark.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-
-            // doneList.map((data) => {
-
-            // console.log(doneList[])
-            // console.log(doneList[new]);
             return (
               <>
                 <STTile
@@ -108,10 +88,6 @@ const MonthlyCalendar = () => {
                 </STTile>
               </>
             );
-
-            // });
-
-            // }
           }}
         />
       </SWrapper>
@@ -238,7 +214,7 @@ const SWrapper = styled.div`
     }
   }
 `;
-
+//완료한 습관 갯수에 따라 점점 진해지는 색상코드
 const STTile = styled.div`
   background-color: ${(props) =>
     props.data === 0
