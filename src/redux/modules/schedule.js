@@ -48,7 +48,7 @@ const initialState = {
       startTime:"",
       endTime:"",
       weekCycle: [],
-    startDate : ""
+      startDate : ""
     },
     ]
 }
