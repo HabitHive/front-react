@@ -82,15 +82,13 @@ const STMyTag = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    cursor: pointer;
     & .myTitle {
       font-style: normal;
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
       color: #5039c8;
-    }
-    & .downIcon {
-      cursor: pointer;
     }
   }
 

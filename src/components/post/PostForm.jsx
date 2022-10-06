@@ -54,10 +54,20 @@ const PostForm = () => {
   const backgroundColor = colorCode[colorNum]
   const category = state.category
 
+  /** toISOString에 맞춰진 한국RFC */
+  const krTime = (time) => {
+    const krRFC = new Date(time.getTime() - time.getTimezoneOffset() * 60000);
+    return krRFC;
+  };
+
+  /** "년-월-일" 형식 구하는 함수 */
+  const stringTime = (time) => {
+    const string = time.toISOString().slice(0, 10);
+    return string;
+  };
+
   let now = new Date();
-  let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
-    .toISOString()
-    .slice(0, 10);
+  const today = stringTime(krTime(now));
 
   useEffect(() => {
     dispatch(__getMyTag());

@@ -16,6 +16,7 @@ import { __getMyDaily } from "../redux/modules/dailytag";
 const MainDailyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [modal, setModal] = useState(true);
 
   useEffect(() => {
@@ -90,6 +91,7 @@ const STModal = styled.div`
     border-radius: 16px;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.12);
     margin: 0 20px;
+    cursor: pointer;
   }
 
   & .myTitle {
@@ -98,9 +100,6 @@ const STModal = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #5039c8;
-  }
-  & .upIcon {
-    cursor: pointer;
   }
 `;
 
