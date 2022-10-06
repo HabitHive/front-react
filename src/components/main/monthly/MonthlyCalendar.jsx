@@ -16,7 +16,6 @@ const MonthlyCalendar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [month, setMonth] = useState("2022-10-06");
   //완료한 습관 갯수 리스트
   const { doneList } = useSelector((state) => state.getMonth);
 
@@ -31,10 +30,12 @@ const MonthlyCalendar = () => {
     const string = time.toISOString().slice(0, 10);
     return string;
   };
-  const now = new Date();
-  const [value, onChange] = useState(now);
-  const today = stringTime(krTime(now));
 
+  const now = new Date();
+  const today = stringTime(krTime(now));
+  const [value, onChange] = useState(now);
+  const [month, setMonth] = useState(today);
+  
   //클릭한날짜의 데일리일정 가져오기
   const pickDate = (value) => {
     const pick = stringTime(krTime(value));
@@ -64,8 +65,7 @@ const MonthlyCalendar = () => {
           next2Label={null} //년도변경버튼 숨기기
           locale="en"
           tileContent={({ date, view }) => {
-            // console.log(date.toISOString().slice(0, 10));
-            setMonth(date.toISOString().slice(0, 10));
+            setMonth(stringTime(date));
             return (
               <>
                 <STTile
