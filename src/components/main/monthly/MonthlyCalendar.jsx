@@ -1,12 +1,12 @@
+import styled from "styled-components";
 import Calendar from "react-calendar";
 import "./Calendar.css";
 
 import React, { useState, useEffect } from "react";
-import { __getMonth } from "../../../redux/modules/month";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { __getMonth } from "../../../redux/modules/month";
 import { __getMyDaily } from "../../../redux/modules/dailytag";
-import styled from "styled-components";
 
 import rightArrow from "../../../assets/monthly/rightArrow.png";
 import leftArrow from "../../../assets/monthly/leftArrow.png";
@@ -16,42 +16,47 @@ const MonthlyCalendar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const now = new Date();
-  const [value, onChange] = useState(now);
-  const today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
-    .toISOString()
-    .slice(0, 10);
-
-  //완료한 습관 갯수 리스트 
+  //완료한 습관 갯수 리스트
   const { doneList } = useSelector((state) => state.getMonth);
 
-  //클릭한날짜의 데일리일정
+  /** toISOString에 맞춰진 한국RFC */
+  const krTime = (time) => {
+    const krRFC = new Date(time.getTime() - time.getTimezoneOffset() * 60000);
+    return krRFC;
+  };
+
+  /** "년-월-일" 형식 구하는 함수 */
+  const stringTime = (time) => {
+    const string = time.toISOString().slice(0, 10);
+    return string;
+  };
+
+  const now = new Date();
+  const today = stringTime(krTime(now));
+  const [value, onChange] = useState(now);
+  const [month, setMonth] = useState(today);
+  
+  //클릭한날짜의 데일리일정 가져오기
   const pickDate = (value) => {
-    const pick = new Date(value.getTime() - value.getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 10);
+    const pick = stringTime(krTime(value));
     dispatch(__getMyDaily(pick));
   };
 
   const dbClickDate = (value) => {
-    const clickDate = new Date(
-      value.getTime() - value.getTimezoneOffset() * 60000
-    )
-      .toISOString()
-      .slice(0, 10);
+    const clickDate = stringTime(krTime(value));
     navigate("/", { state: clickDate });
   };
 
   useEffect(() => {
-    dispatch(__getMonth("2022-10-04"));
-  }, []);
+    dispatch(__getMonth(month));
+  }, [month]);
 
   return (
     <>
       <SWrapper doneList={doneList}>
         <Calendar
           onChange={onChange}
-          value={value} //클릭한 날짜값(new Date()형식)
+          value={value} //클릭한 날짜값(RFC형식)
           onClickDay={pickDate}
           ondblclick={dbClickDate}
           showNeighboringMonth={false}
@@ -60,27 +65,15 @@ const MonthlyCalendar = () => {
           next2Label={null} //년도변경버튼 숨기기
           locale="en"
           tileContent={({ date, view }) => {
+            setMonth(stringTime(date));
             return (
               <>
                 <STTile
                   data={
-                    doneList[
-                      new Date(
-                        date.getTime() - date.getTimezoneOffset() * 60000
-                      )
-                        .toISOString()
-                        .slice(8, 10)
-                        .startsWith("0")
-                        ? new Date(
-                            date.getTime() - date.getTimezoneOffset() * 60000
-                          )
-                            .toISOString()
-                            .slice(9, 10)
-                        : new Date(
-                            date.getTime() - date.getTimezoneOffset() * 60000
-                          )
-                            .toISOString()
-                            .slice(8, 10)
+                    doneList[ //01~09일까지는 0을 떼고 10일부터는 그대로
+                      krTime(date).toISOString().slice(8, 10).startsWith("0")
+                        ? krTime(date).toISOString().slice(9, 10)
+                        : krTime(date).toISOString().slice(8, 10)
                     ]
                   }
                 >
@@ -158,13 +151,27 @@ const SWrapper = styled.div`
       background-color: #eee;
       width: calc(100% - 40px);
     }
+
+    //년도버튼 투명버튼으로 가리기
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 20px;
+      width: 136px;
+      height: 44px;
+      background-color: transparent;
+      cursor: pointer;
+      z-index: 10;
+    }
+
     & button {
       height: 44px;
       align-items: center;
       box-sizing: border-box;
 
       &.react-calendar__navigation__label {
-        width: 136px;
+        min-width: 136px;
         color: white;
         font-size: 18px;
         font-weight: 600;
@@ -172,6 +179,7 @@ const SWrapper = styled.div`
         background-color: #674ded;
         margin-left: 20px;
         flex-grow: 0 !important;
+        position: relative;
       }
 
       &.react-calendar__navigation__next-button {
@@ -183,8 +191,8 @@ const SWrapper = styled.div`
         height: 22px;
         padding: 0;
         border-radius: 50%;
-        background-color: #674ded;
 
+        background-color: #674ded;
         background-image: url(${rightArrow});
         background-position: center;
         background-repeat: no-repeat;
