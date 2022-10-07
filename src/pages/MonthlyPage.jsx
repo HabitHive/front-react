@@ -87,7 +87,7 @@ const BodyContainer = styled.div``;
 const FooterContainer = styled.div`
   & .dailyBox {
     width: 100%;
-    background: #7a61ff;
+    background-color: #7a61ff;
     box-shadow: 0px -8px 12px rgba(0, 0, 0, 0.08);
     border-radius: 16px 16px 0px 0px;
 
@@ -95,6 +95,7 @@ const FooterContainer = styled.div`
       display: flex;
       justify-content: space-between;
       padding: 24px 20px 0 20px;
+
       & .titleText {
         font-weight: 600;
         font-size: 16px;
@@ -112,6 +113,7 @@ const FooterContainer = styled.div`
     }
     & .dailyList {
       height: 430px;
+      background-color: #7a61ff;
       overflow: scroll;
     }
   }
