@@ -49,7 +49,8 @@ const Pet = () => {
       return
     }
     dispatch(__setPetXP())
-    .catch((err)=>{
+    .then((res)=>{
+      console.log(res)
       CustomAlert({
         icon: "error",
         text: "다시 시도해 주세요"
@@ -78,6 +79,8 @@ const Pet = () => {
 
   useEffect(()=>{
     dispatch(__getPetData())
+    .then((res)=>{
+    })
     dispatch(__getProfile())
     .then((res)=>{
       setTimeout(()=>{

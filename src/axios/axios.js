@@ -24,7 +24,7 @@ instance.interceptors.response.use(
             }) 
             setTimeout(()=>{
                 window.location.reload("/")
-            }, 3000) 
+            }, 1000) 
         }
         return Promise.reject(error);
     }
