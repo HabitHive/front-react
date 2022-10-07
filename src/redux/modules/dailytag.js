@@ -21,7 +21,6 @@ export const __doneMyDaily = createAsyncThunk(
   "doneMyDaily",
   async (payload)=> {
     const res = await axios.post(`/tag/done`,{scheduleId:payload.id,date:payload.date})
-    console.log(res.data);
     return [res.data.result,payload]
   }
 )
@@ -51,7 +50,7 @@ export const myDailySlice = createSlice({
       state.myDaily[0][idx].done = true
     })
     .addCase(__doneMyDaily.rejected,(state,action)=> {
-      console.log(state.myDaily,action)
+      // console.log(state.myDaily,action)
       })
   }
 });
