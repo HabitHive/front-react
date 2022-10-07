@@ -240,5 +240,4 @@ const STTile = styled.div`
   width: calc(100% - 4px);
   height: 11px;
   border-radius: 0 0 8px 8px;
-  /* background-color: #e2dcff; */
 `;

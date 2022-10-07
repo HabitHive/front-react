@@ -48,7 +48,7 @@ export const __deleteUsersTag = createAsyncThunk(
   "deleteUsersTag",
   async (payload, api) => {
   try {
-    const res = await axios.delete(`/mytag/delete?tagId=${payload}`)
+    const res = await axios.post(`/mytag/delete?tagId=${payload}`)
     return res.data
   } catch (err) {
     return api.rejectWithValue(err)
