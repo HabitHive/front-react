@@ -50,11 +50,12 @@ const Pet = () => {
     }
     dispatch(__setPetXP())
     .then((res)=>{
-      console.log(res)
-      CustomAlert({
-        icon: "error",
-        text: "다시 시도해 주세요"
-      })
+      if (res.type==="setPetXP/rejected") {
+        CustomAlert({
+          icon: "error",
+          text: "다시 시도해 주세요"
+        }) 
+      }
     })
   }
 
