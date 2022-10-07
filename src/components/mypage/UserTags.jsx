@@ -3,6 +3,7 @@ import { IoIosArrowForward } from "react-icons/io"
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CustomAlert } from "../common/Alert";
 
 import { __getUserTags } from "../../redux/modules/mypage";
 import Tag from "../common/Tag"
@@ -38,6 +39,14 @@ const UserTags = ({setModal}) => {
 
   useEffect(()=>{
     dispatch(__getUserTags())
+    .then((res)=>{
+      if (res.type === "getUserTags/rejected") {
+        CustomAlert({
+          icon: "error",
+          text: "데이터를 불러올 수 없습니다"
+        })
+      }
+    })
   },[])
 
   return(

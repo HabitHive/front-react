@@ -14,11 +14,10 @@ export const __getPetData = createAsyncThunk(
   "getPetData",
   async (payload, api) => {
     try {
-      const res = await axios.get(`/pet`) // 백서버 연결할 때 사용
+      const res = await axios.get(`/pet`)
       return res.data.result
     } catch (err) {
-      // console.log(err) 예외처리 할 때 확인
-      api.rejectWithValue(err)
+      api.rejectWithValue(err.payload)
     }
   }
 )

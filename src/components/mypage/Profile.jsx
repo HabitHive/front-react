@@ -12,6 +12,7 @@ import LV2 from "../../assets/mypageImg/LV2.png"
 import LV3 from "../../assets/mypageImg/LV3.png"
 import LV4 from "../../assets/mypageImg/LV4.png"
 import { BsStars } from "react-icons/bs"
+import { CustomAlert } from "../common/Alert";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,14 @@ const Profile = () => {
 
   const getUserInfo = async () => {
     dispatch(__getProfile())
+    .then((res)=>{
+      if (res.type === "getProfile/rejected") {
+        CustomAlert({
+          icon: "error",
+          text: "데이터를 불러올 수 없습니다"
+        })
+      }
+    })
   };
 
   useEffect(()=>{
