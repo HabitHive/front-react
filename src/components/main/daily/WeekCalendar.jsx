@@ -13,8 +13,6 @@ const WeekCalendar = (value) => {
     // return () => console.log("Clean up");
   }, []);
 
-  const week = useRef(null);
-
   //날짜 클릭시 해당날짜 데이터 보내기
   const clickDate = (clickDate) => {
     setClickDay(clickDate);   // 클릭한 날짜 배경색주기
@@ -31,6 +29,7 @@ const WeekCalendar = (value) => {
   const mm = now.getMonth();
   const dd = now.getDate();
 
+  //백엔드로 보낼 데이터 정제
   for (let i = past; i < future; i++) {
     let weekCal = new Date(now.setFullYear(yyyy, mm, dd + i));
     weekDate.push({
