@@ -40,7 +40,7 @@ export const myDailySlice = createSlice({
         .addCase(__getMyDaily.fulfilled, (state, action) => {
       state.myDaily = action.payload
     })
-        // .addCase(__getMyDaily.rejected, (state, action) => {
+    // .addCase(__getMyDaily.rejected, (state, action) => {
     //   console.log(action.payload)
     // })
     .addCase(__doneMyDaily.fulfilled,(state,action) => {

@@ -26,13 +26,14 @@ const TodayTagList = ({ list,num,bgColor,disabled }) => {
   const done = list.done;
   const timeCycle = list.timeCycle;
   const tagName = list.tagName;
+  const date = list.date;
   let now = new Date();
   let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 10);
-  
+  console.log(today<"2022-11-08");
 
-  const clickInput = () => {
+  const clickInput = (date) => {
     if ( disabled === true ) {
       return
       }else if (done === false) {
@@ -68,7 +69,7 @@ const TodayTagList = ({ list,num,bgColor,disabled }) => {
     <>
       <STTodayTagList pathName={pathName}>
         <div className="checkBox">
-          <STLabel onClick={clickInput} isChecked={done} pathName={pathName} ></STLabel>
+          <STLabel onClick={clickInput(list.date)} isChecked={done} pathName={pathName} ></STLabel>
           <STInputCheckbox type="checkbox" isChecked={done}></STInputCheckbox>
         </div>
         <STTagListBox
@@ -78,7 +79,14 @@ const TodayTagList = ({ list,num,bgColor,disabled }) => {
               return
               } else if (done === false) {
                 navigate("/edit", { state: list });
-              } else {
+              } else if (done === false && today<date.slice(0,10)) {
+                Swal.fire({
+                  text: "시작되지 않은 일정입니다",
+                  icon: "error",
+                  width: 300,
+                })
+              }
+              else {
                 CustomAlert({ text: "이미 완료한 습관입니다",icon:"warning" });
               }
           }}
