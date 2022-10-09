@@ -31,9 +31,9 @@ const TodayTagList = ({ list,num,bgColor,disabled }) => {
   let today = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 10);
-  console.log(today<"2022-11-08");
+  // console.log(today<=today);
 
-  const clickInput = (date) => {
+  const clickInput = () => {
     if ( disabled === true ) {
       return
       }else if (done === false) {
@@ -56,6 +56,8 @@ const TodayTagList = ({ list,num,bgColor,disabled }) => {
                   width: 300,
                 });
               }
+            }).catch((err) => {
+console.log(err);
             });
           } else if (res.payload[0].first === true) {
             CustomAlert({ text: "20point 가 지급되었습니다" });
@@ -77,9 +79,9 @@ const TodayTagList = ({ list,num,bgColor,disabled }) => {
           onClick={() => {
             if ( disabled === true ) {
               return
-              } else if (done === false) {
+              } else if (done === false) {  //완료되지 않은 습관에 대해서는 시작된 습관도(남은날짜) 수정가능
                 navigate("/edit", { state: list });
-              } else if (done === false && today<date.slice(0,10)) {
+              } else if (done === false && today<=date.slice(0,10)) { // 미래일정에 대해서는 완료불가
                 Swal.fire({
                   text: "시작되지 않은 일정입니다",
                   icon: "error",
